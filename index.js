@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 
-require('dotenv').config()
+// require('dotenv').config()
 // require('dotenv').config({ path: '../.env' })
 
 // const token =
@@ -10,12 +10,13 @@ require('dotenv').config()
 //         ? process.env.TELEGRAM_BOT_TOKEN
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
 
-const token = process.env.TELEGRAM_BOT_TOKEN_testing
+const token = '6134674568:AAEOCLFEBqjHhz82wa6AZqXuIrxgD3YECbU'
+// const token = process.env.TELEGRAM_BOT_TOKEN_testing
 
 // console.log('token :>> ', token)
 
 // const token = '5336424335:AAGk0uyo0qqRCrKgvr2J7GrYKK1S0MF8878';
-const webAppUrl = 'https://ornate-selkie-c27577.netlify.app'
+const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
 
 const bot = new TelegramBot(token, { polling: true })
 const app = express()

@@ -12,6 +12,9 @@ require('dotenv').config({ path: './.env' })
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
 
 const token = process.env.TELEGRAM_BOT_TOKEN_testing
+const HOST = process.env.HOST
+const PORT = process.env.PORT
+
 // const token = '6134674568:AAEOCLFEBqjHhz82wa6AZqXuIrxgD3YECbU'
 
 console.log('token :>> ', token)
@@ -93,7 +96,7 @@ app.post('/web-data', async (req, res) => {
     }
 })
 
-var server = app.listen(process.env.PORT, process.env.HOST, () => {
+var server = app.listen(PORT, HOST, () => {
     const host = server.address().address
     const port = server.address().port
     console.log('Web server started at http://%s:%s', host, port)

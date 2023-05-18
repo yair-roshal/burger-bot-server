@@ -28,7 +28,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-bot.onText(/\/start/,async (msg) => {
+bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id
 
     await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
@@ -44,7 +44,6 @@ bot.onText(/\/start/,async (msg) => {
         },
     })
 
-    
     await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
         reply_markup: {
             inline_keyboard: [
@@ -57,20 +56,17 @@ bot.onText(/\/start/,async (msg) => {
             ],
         },
     })
-    
 })
-
-
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id
- 
-    console.log('msg?.web_app_data :>> ', msg?.web_app_data);
-   
+
+    console.log('msg?.web_app_data :>> ', msg?.web_app_data)
+
     if (msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
-            console.log("data==",data)
+            console.log('data==', data)
             await bot.sendMessage(chatId, 'Спасибо за обратную связь!')
             await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
@@ -112,9 +108,8 @@ bot.on('contact', (msg) => {
     )
 })
 
-// let PORT = '8000'
-// let PORT = '8999'
-let PORT = '9000'
+let PORT = '8000'
+
 app.listen(PORT, () => {
     console.log('Web server started at port : ', PORT)
 })

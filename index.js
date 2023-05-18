@@ -96,7 +96,7 @@ app.post('/web-data', async (req, res) => {
     }
 })
 
-var server = app.listen(PORT, HOST, () => {
+var server = app.listen(HOST, PORT, () => {
     const host = server.address().address
     const port = server.address().port
     console.log('Web server started at http://%s:%s', host, port)

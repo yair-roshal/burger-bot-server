@@ -2,19 +2,20 @@ const TelegramBot = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 
-require('dotenv').config()
+// require('dotenv').config()
+require('dotenv').config({ path: './.env' })
 // require('dotenv').config({ path: '../.env' })
 
 // const token =
 //     process.env.NODE_ENV === 'prod'
 //         ? process.env.TELEGRAM_BOT_TOKEN
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
- 
+
 const token = process.env.TELEGRAM_BOT_TOKEN_testing
 
 console.log('token :>> ', token)
 
- const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
+const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
 
 const bot = new TelegramBot(token, { polling: true })
 const app = express()
@@ -91,11 +92,8 @@ app.post('/web-data', async (req, res) => {
     }
 })
 
- 
-var server = app.listen(process.env.PORT,process.env.HOST, () => {
-     const host = server.address().address
+var server = app.listen(process.env.PORT, process.env.HOST, () => {
+    const host = server.address().address
     const port = server.address().port
     console.log('Web server started at http://%s:%s', host, port)
 })
-
- 

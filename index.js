@@ -2,21 +2,19 @@ const TelegramBot = require('node-telegram-bot-api')
 const express = require('express')
 const cors = require('cors')
 
-// require('dotenv').config()
+require('dotenv').config()
 // require('dotenv').config({ path: '../.env' })
 
 // const token =
 //     process.env.NODE_ENV === 'prod'
 //         ? process.env.TELEGRAM_BOT_TOKEN
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
+ 
+const token = process.env.TELEGRAM_BOT_TOKEN_testing
 
-const token = '6134674568:AAEOCLFEBqjHhz82wa6AZqXuIrxgD3YECbU'
-// const token = process.env.TELEGRAM_BOT_TOKEN_testing
+console.log('token :>> ', token)
 
-// console.log('token :>> ', token)
-
-// const token = '5336424335:AAGk0uyo0qqRCrKgvr2J7GrYKK1S0MF8878';
-const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
+ const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
 
 const bot = new TelegramBot(token, { polling: true })
 const app = express()
@@ -28,6 +26,7 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id
     const text = msg.text
 
+    console.log('text :>> ', text)
     if (text === '/start') {
         await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
             reply_markup: {
@@ -42,22 +41,18 @@ bot.on('message', async (msg) => {
             },
         })
 
-        await bot.sendMessage(
-            chatId,
-            'Заходи в наш интернет магазин по кнопке ниже',
-            {
-                reply_markup: {
-                    inline_keyboard: [
-                        [
-                            {
-                                text: 'Сделать заказ',
-                                web_app: { url: webAppUrl },
-                            },
-                        ],
+        await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'Сделать заказ',
+                            web_app: { url: webAppUrl },
+                        },
                     ],
-                },
+                ],
             },
-        )
+        })
     }
 
     if (msg?.web_app_data?.data) {
@@ -69,10 +64,7 @@ bot.on('message', async (msg) => {
             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
 
             setTimeout(async () => {
-                await bot.sendMessage(
-                    chatId,
-                    'Всю информацию вы получите в этом чате',
-                )
+                await bot.sendMessage(chatId, 'Всю информацию вы получите в этом чате')
             }, 3000)
         } catch (e) {
             console.log(e)
@@ -99,6 +91,11 @@ app.post('/web-data', async (req, res) => {
     }
 })
 
-const PORT = 8000
+ 
+var server = app.listen(process.env.PORT,process.env.HOST, () => {
+     const host = server.address().address
+    const port = server.address().port
+    console.log('Web server started at http://%s:%s', host, port)
+})
 
-app.listen(PORT, () => console.log('server started on PORT ' + PORT))
+ 

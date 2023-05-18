@@ -10,6 +10,7 @@ require('dotenv').config({ path: './.env' })
 //     process.env.NODE_ENV === 'prod'
 //         ? process.env.TELEGRAM_BOT_TOKEN
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
+const chatIdAdmin = process.env.CHAT_ID_ADMIN
 
 const token = process.env.TELEGRAM_BOT_TOKEN_testing
 // const HOST = process.env.HOST
@@ -27,43 +28,49 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+bot.onText(/\/start/,async (msg) => {
+    const chatId = msg.chat.id
+
+    await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
+        reply_markup: {
+            keyboard: [
+                [
+                    {
+                        text: 'Заполнить форму',
+                        web_app: { url: webAppUrl + '/form' },
+                    },
+                ],
+            ],
+        },
+    })
+
+    
+    await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Сделать заказ',
+                        web_app: { url: webAppUrl },
+                    },
+                ],
+            ],
+        },
+    })
+    
+})
+
+
+
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id
-    const text = msg.text
-
-    console.log('text :>> ', text)
-    if (text === '/start') {
-        await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
-            reply_markup: {
-                keyboard: [
-                    [
-                        {
-                            text: 'Заполнить форму',
-                            web_app: { url: webAppUrl + '/form' },
-                        },
-                    ],
-                ],
-            },
-        })
-
-        await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
-            reply_markup: {
-                inline_keyboard: [
-                    [
-                        {
-                            text: 'Сделать заказ',
-                            web_app: { url: webAppUrl },
-                        },
-                    ],
-                ],
-            },
-        })
-    }
-
+ 
+    console.log('msg?.web_app_data :>> ', msg?.web_app_data);
+   
     if (msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
-            console.log(data)
+            console.log("data==",data)
             await bot.sendMessage(chatId, 'Спасибо за обратную связь!')
             await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
@@ -94,6 +101,15 @@ app.post('/web-data', async (req, res) => {
     } catch (e) {
         return res.status(500).json({})
     }
+})
+
+// send message to admin with ask to add anything
+bot.on('contact', (msg) => {
+    bot.sendMessage(
+        chatIdAdmin,
+        `Message from ${msg.from.first_name}  :
+         ${msg.contact.phone_number}`,
+    )
 })
 
 // let PORT = '8000'

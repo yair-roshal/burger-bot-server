@@ -11,7 +11,8 @@ require('dotenv').config({ path: './.env' })
 //         ? process.env.TELEGRAM_BOT_TOKEN
 //         : process.env.TELEGRAM_BOT_TOKEN_testing
 
-const token = process.env.TELEGRAM_BOT_TOKEN_testing
+// const token = process.env.TELEGRAM_BOT_TOKEN_testing
+const token = '6134674568:AAEOCLFEBqjHhz82wa6AZqXuIrxgD3YECbU'
 
 console.log('token :>> ', token)
 

@@ -67,6 +67,7 @@ bot.on('message', async (msg) => {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)
             console.log('data==', data)
+
             await bot.sendMessage(chatId, 'Спасибо за обратную связь!')
             await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
             await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
@@ -81,7 +82,9 @@ bot.on('message', async (msg) => {
 })
 
 app.post('/web-data', async (req, res) => {
-    const { queryId, products = [], totalPrice } = req.body
+    console.log('req.body :>> ', req.body)
+    const { products = [], totalPrice, queryId } = req.body
+
     try {
         await bot.answerWebAppQuery(queryId, {
             type: 'article',
@@ -108,14 +111,9 @@ bot.on('contact', (msg) => {
     )
 })
 
-let PORT = '8000'
+// let PORT = '8000'
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
     console.log('Web server started at port : ', PORT)
 })
-
-// var server = app.listen(HOST, PORT, () => {
-//     const host = server.address().address
-//     const port = server.address().port
-//     console.log('Web server started at http://%s:%s', host, port)
-// })

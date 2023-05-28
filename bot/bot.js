@@ -18,6 +18,9 @@ const {
     inline_keyboard,
     callToAdminMenu,
 } = require('../constants/menus.js')
+
+const menu = process.env.NODE_ENV === 'prod' ? startMainMenu_Production : startMainMenu_Testing
+
 const { text_message_html } = require('../constants/texts.js')
 
 bot.onText(/\/start/, async (msg) => {
@@ -26,22 +29,13 @@ bot.onText(/\/start/, async (msg) => {
     var photoPath = __dirname + '/images/burger.png'
     console.log('photoPath :>> ', photoPath)
 
-    // var optionsMessage = {
-    //     caption: `Hello this is Burger Shop!!!`,
-    //     reply_markup: JSON.stringify(
-    //         process.env.NODE_ENV === 'prod' ? startMainMenu_Production : startMainMenu_Testing,
-    //     ),
-    // }
-
-    bot.sendPhoto(chatId, photoPath, startMainMenu_Testing)
+    bot.sendPhoto(chatId, photoPath, menu)
         .then(() => {
             console.log('Фотография успешно отправлена')
         })
         .catch((error) => {
             console.error('Ошибка при отправке фотографии:', error.message)
         })
-
-    // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
     // process.env.NODE_ENV === 'prod'
     //     ? await bot.sendMessage(
@@ -50,7 +44,6 @@ bot.onText(/\/start/, async (msg) => {
     //           settings_message,
     //           startMainMenu_Production,
     //       )
-    //     : await bot.sendMessage(chatId, text_message_html, settings_message, startMainMenu_Testing)
 })
 
 bot.on('message', async (msg) => {
@@ -97,41 +90,43 @@ bot.on('message', async (msg) => {
 // })
 
 //send message to admin with ask to add anything
-bot.on('contact', (msg) => {
-    bot.sendMessage(
-        chatIdAdmin,
-        `Message from ${msg.from.first_name}  :
-         ${msg.contact.phone_number}`,
-    )
-})
+// bot.on('contact', (msg) => {
+//     bot.sendMessage(
+//         chatIdAdmin,
+//         `Message from ${msg.from.first_name}  :
+//          ${msg.contact.phone_number}`,
+//     )
+// })
 
 //===========================================
 
-bot.onText(/\/buy/, (msg) => {
-    const chatId = msg.chat.id
-    const options = {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: 'Buy',
-                        pay: true,
-                    },
-                ],
-            ],
-        },
-    }
-    bot.sendInvoice(
-        chatId,
-        'Title',
-        'Title',
-        'PAYMENTS_TOKEN',
-        'some_invoice',
-        'RUB',
-        [{ label: 'example', amount: 100 }],
-        options,
-    )
-})
+// bot.onText(/\/buy/, (msg) => {
+
+//     const chatId = msg.chat.id
+//     const options = {
+//         reply_markup: {
+//             inline_keyboard: [
+//                 [
+//                     {
+//                         text: 'Buy',
+//                         pay: true,
+//                     },
+//                 ],
+//             ],
+//         },
+//     }
+//     bot.sendInvoice(
+//         chatId,
+//         'Title',
+//         'Title',
+//         'PAYMENTS_TOKEN',
+//         'some_invoice',
+//         'RUB',
+//         [{ label: 'example', amount: 100 }],
+//         options,
+//     )
+
+// })
 
 bot.on('pre_checkout_query', (query) => {
     bot.answerPreCheckoutQuery(query.id, true)
@@ -142,9 +137,7 @@ bot.on('successful_payment', (msg) => {
     bot.sendMessage(chatId, 'Payment was successful!')
 })
 
-//===========================================
-
-// callback_query
+// callback_query ===========================================
 bot.on('callback_query', (query) => {
     const chatId = query.message.chat.id
 
@@ -161,20 +154,33 @@ bot.on('callback_query', (query) => {
                 //disable because we don't want show description links
                 disable_web_page_preview: true,
             },
-            startAlwaysMenu_2buttons,
+            menu,
         )
     }
-    if (data === 'open_menu') {
+
+    if (data === 'test_pay') {
         const chatId = msg.chat.id
-        bot.sendMessage(
-            chatId,
-            text_message_html,
-            {
-                parse_mode: 'HTML',
-                //disable because we don't want show description links
-                disable_web_page_preview: true,
+        const options = {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        {
+                            text: 'Buy',
+                            pay: true,
+                        },
+                    ],
+                ],
             },
-            startAlwaysMenu_2buttons,
+        }
+        bot.sendInvoice(
+            chatId,
+            'Title111',
+            'Title222',
+            'PAYMENTS_TOKEN',
+            'some_invoice',
+            'RUB',
+            [{ label: 'example', amount: 100 }],
+            options,
         )
     }
 })

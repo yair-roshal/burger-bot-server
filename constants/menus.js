@@ -1,4 +1,5 @@
-const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
+const webAppUrl = 'https://heroic-puffpuff-e7da0d.netlify.app'
+// const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
 
 const settings_message = {
     parse_mode: 'HTML',
@@ -21,7 +22,7 @@ const startMainMenu_Production = {
 const startMainMenu_Testing = {
     reply_markup: {
         // keyboard: [
-            inline_keyboard: [
+        inline_keyboard: [
             [
                 {
                     text: 'Open menu',
@@ -39,8 +40,14 @@ const startMainMenu_Testing = {
             [
                 {
                     text: 'About',
-                    // request_contact: true,
                     callback_data: 'about',
+                },
+            ],
+
+            [
+                {
+                    text: 'Test Pay',
+                    callback_data: 'test_pay',
                 },
             ],
         ],

@@ -185,4 +185,14 @@ bot.on('callback_query', (query) => {
     }
 })
 
+bot.on('webAppData', (webAppMes) => {
+    console.log(webAppMes) // вся информация о сообщении
+    console.log(webAppMes.webAppData) // конкретно то, что мы передали в бота
+    bot.sendMessage(
+        webAppMes.chat.id,
+        `получили информацию из веб-приложения: ${webAppMes.webAppData}`,
+    )
+    // отправляем сообщение в ответ на отправку данных из веб-приложения
+})
+
 module.exports = { bot }

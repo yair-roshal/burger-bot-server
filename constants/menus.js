@@ -1,5 +1,4 @@
 const webAppUrl = 'https://heroic-puffpuff-e7da0d.netlify.app'
-// const webAppUrl = 'https://serene-moonbeam-93eead.netlify.app'
 
 const settings_message = {
     parse_mode: 'HTML',
@@ -11,7 +10,7 @@ const startMainMenu_Production = {
         keyboard: [
             [
                 {
-                    text: 'Заполнить форму',
+                    text: 'Fill out the Delivery form',
                     web_app: { url: webAppUrl + '/form' },
                 },
             ],

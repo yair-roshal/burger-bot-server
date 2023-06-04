@@ -97,5 +97,5 @@ module.exports = {
     startMainMenu_Production,
     startMainMenu_Testing,
     // inline_keyboard,
-    callToAdminMenu,
+    // callToAdminMenu,
 }

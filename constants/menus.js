@@ -5,18 +5,9 @@ const settings_message = {
     //disable because we don't want show description links
     disable_web_page_preview: true,
 }
-const startMainMenu_Production = {
-    reply_markup: {
-        keyboard: [
-            [
-                {
-                    text: 'Fill out the Delivery form',
-                    web_app: { url: webAppUrl + '/form' },
-                },
-            ],
-        ],
-    },
-}
+
+
+
 
 const startMainMenu_Testing = {
     reply_markup: {
@@ -54,32 +45,50 @@ const startMainMenu_Testing = {
         one_time_keyboard: true,
     },
 }
+
 //===================================
-const inline_keyboard = {
-    reply_markup: {
-        inline_keyboard: [
-            [
-                {
-                    text: 'Open menu',
-                    callback_data: 'open_menu',
-                },
-            ],
-        ],
-    },
-}
-//==================================
-const callToAdminMenu = {
+
+const startMainMenu_Production = {
     reply_markup: {
         keyboard: [
             [
                 {
-                    text: 'Contact the admin',
-                    request_contact: true,
+                    text: 'Fill out the Delivery form',
+                    web_app: { url: webAppUrl + '/form' },
                 },
             ],
         ],
     },
 }
+
+
+
+//==================================================================
+// const inline_keyboard = {
+//     reply_markup: {
+//         inline_keyboard: [
+//             [
+//                 {
+//                     text: 'Open menu',
+//                     callback_data: 'open_menu',
+//                 },
+//             ],
+//         ],
+//     },
+// }
+//==================================
+// const callToAdminMenu = {
+//     reply_markup: {
+//         keyboard: [
+//             [
+//                 {
+//                     text: 'Contact the admin',
+//                     request_contact: true,
+//                 },
+//             ],
+//         ],
+//     },
+// }
 
 module.exports = {
     webAppUrl,

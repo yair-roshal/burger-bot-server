@@ -5,23 +5,25 @@ const token =
         : process.env.TELEGRAM_BOT_TOKEN_testing
 
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
+console.log('token :>> ', token)
 const bot = new TelegramBot(token, { polling: true })
 // const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const formatDate = require('./utils/formatDate.js')
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
 const {
-    settings_message,
-
+    // settings_message,
     startMainMenu_Production,
     startMainMenu_Testing,
-    inline_keyboard,
-    callToAdminMenu,
+    // inline_keyboard,
+    // callToAdminMenu,
 } = require('../constants/menus.js')
 
 const menu = process.env.NODE_ENV === 'prod' ? startMainMenu_Production : startMainMenu_Testing
 
 const { text_message_html } = require('../constants/texts.js')
+
+//=========================
 
 bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id
@@ -46,6 +48,8 @@ bot.onText(/\/start/, async (msg) => {
     //       )
 })
 
+//=========================
+
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id
 
@@ -67,74 +71,6 @@ bot.on('message', async (msg) => {
             console.log(e)
         }
     }
-})
-
-// app.post('/web-data', async (req, res) => {
-//      const { products = [], totalPrice, queryId } = req.body
-
-//     try {
-//         await bot.answerWebAppQuery(queryId, {
-//             type: 'article',
-//             id: queryId,
-//             title: 'Успешная покупка',
-//             input_message_content: {
-//                 message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
-//                     .map((item) => item.title)
-//                     .join(', ')}`,
-//             },
-//         })
-//         return res.status(200).json({})
-//     } catch (e) {
-//         return res.status(500).json({})
-//     }
-// })
-
-//send message to admin with ask to add anything
-// bot.on('contact', (msg) => {
-//     bot.sendMessage(
-//         chatIdAdmin,
-//         `Message from ${msg.from.first_name}  :
-//          ${msg.contact.phone_number}`,
-//     )
-// })
-
-//===========================================
-
-// bot.onText(/\/buy/, (msg) => {
-
-//     const chatId = msg.chat.id
-//     const options = {
-//         reply_markup: {
-//             inline_keyboard: [
-//                 [
-//                     {
-//                         text: 'Buy',
-//                         pay: true,
-//                     },
-//                 ],
-//             ],
-//         },
-//     }
-//     bot.sendInvoice(
-//         chatId,
-//         'Title',
-//         'Title',
-//         'PAYMENTS_TOKEN',
-//         'some_invoice',
-//         'RUB',
-//         [{ label: 'example', amount: 100 }],
-//         options,
-//     )
-
-// })
-
-bot.on('pre_checkout_query', (query) => {
-    bot.answerPreCheckoutQuery(query.id, true)
-})
-
-bot.on('successful_payment', (msg) => {
-    const chatId = msg.chat.id
-    bot.sendMessage(chatId, 'Payment was successful!')
 })
 
 // callback_query ===========================================
@@ -184,6 +120,82 @@ bot.on('callback_query', (query) => {
         )
     }
 })
+
+//=========================
+
+app.post('/web-data', async (req, res) => {
+    const { products = [], totalPrice, queryId } = req.body
+
+    try {
+        await bot.answerWebAppQuery(queryId, {
+            type: 'article',
+            id: queryId,
+            title: 'Успешная покупка',
+            input_message_content: {
+                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
+                    .map((item) => item.title)
+                    .join(', ')}`,
+            },
+        })
+        return res.status(200).json({})
+    } catch (e) {
+        return res.status(500).json({})
+    }
+})
+
+// send message to admin with ask to add anything
+bot.on('contact', (msg) => {
+    bot.sendMessage(
+        chatIdAdmin,
+        `Message from ${msg.from.first_name}  :
+         ${msg.contact.phone_number}`,
+    )
+})
+
+// ===========================================
+
+bot.onText(/\/buy/, (msg) => {
+    const chatId = msg.chat.id
+    const options = {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Buy',
+                        pay: true,
+                    },
+                ],
+            ],
+        },
+    }
+    bot.sendInvoice(
+        chatId,
+        'Title',
+        'Title',
+        'PAYMENTS_TOKEN',
+        'some_invoice',
+        'RUB',
+        [{ label: 'example', amount: 100 }],
+        options,
+    )
+})
+
+// Подскажите, пожалуйста, как сделать отправку данных как в офф примере @durgerkingbot?
+
+// Надо вызвать метод answerWebAppQuery. Аргументом передать query_id полученный из initData. В качестве result использовать InlineQueryResultArticle.
+
+//Как я и сказал: получить его на фронте с помощью JS-скрипта Telegram из initData. Далее отправить любым удобным способом на ваш бек средствами того же JS. Подобная интеграция не простая и требует полноценный API, который умеет общаться с фронтом, Bot API тут не обойтись.
+
+bot.on('pre_checkout_query', (query) => {
+    bot.answerPreCheckoutQuery(query.id, true)
+})
+
+bot.on('successful_payment', (msg) => {
+    const chatId = msg.chat.id
+    bot.sendMessage(chatId, 'Payment was successful!')
+})
+
+//======================
 
 bot.on('webAppData', (webAppMes) => {
     console.log(webAppMes) // вся информация о сообщении

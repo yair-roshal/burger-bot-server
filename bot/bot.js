@@ -28,7 +28,7 @@ const { text_message_html } = require('../constants/texts.js')
 bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id
 
-    var photoPath = __dirname + '/images/burger.png'
+    var photoPath = __dirname + '/images/PosterBurger.jpg'
     console.log('photoPath :>> ', photoPath)
 
     bot.sendPhoto(chatId, photoPath, menu)

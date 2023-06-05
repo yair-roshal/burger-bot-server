@@ -9,4 +9,3 @@ module.exports = Object.freeze({
     },
     ANOTHER_CONSTANT: 'another value',
 })
- 

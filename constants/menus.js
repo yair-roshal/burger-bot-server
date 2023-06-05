@@ -6,9 +6,6 @@ const settings_message = {
     disable_web_page_preview: true,
 }
 
-
-
-
 const startMainMenu_Testing = {
     reply_markup: {
         // keyboard: [
@@ -60,8 +57,6 @@ const startMainMenu_Production = {
         ],
     },
 }
-
-
 
 //==================================================================
 // const inline_keyboard = {

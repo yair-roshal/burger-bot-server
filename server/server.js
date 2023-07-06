@@ -13,8 +13,7 @@ module.exports = (bot) => {
   app.use(
     cors({
       credentials: true,
-      origin: CLIENT_ORIGIN,
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       allowedHeaders: [
         "Origin",
         "X-Requested-With",

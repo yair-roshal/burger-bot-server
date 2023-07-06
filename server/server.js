@@ -6,15 +6,29 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 
 module.exports = (bot) => {
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
-  app.use(cors())
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+
+  // Enable CORS and set the necessary headers
+  app.use(
+    cors({
+      credentials: true,
+      origin: CLIENT_ORIGIN,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      allowedHeaders: [
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+      ],
+    })
+  );
 
   // app.use('/', routes)
 
   app.post("/web-data", async (req, res) => {
-    res.header("Access-Control-Allow-Credentials", true)
-
+ 
+    
     const { queryId, products = [], totalPrice } = req.body
     // console.log("req :>> ", req)
     console.log("req.body :>> ", req.body)

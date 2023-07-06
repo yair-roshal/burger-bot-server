@@ -10,7 +10,7 @@ module.exports = {
             // merge_logs: true,
             time: true,
 
-            log_date_format: 'DD-MM-YYYY HH:mm:ss',
+            logDateFormat: 'HH:mm:ss',
             // log_type: 'json',
 
             watch: true,

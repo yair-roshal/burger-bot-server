@@ -13,6 +13,8 @@ module.exports = (bot) => {
   // app.use('/', routes)
 
   app.post("/web-data", async (req, res) => {
+    res.header("Access-Control-Allow-Credentials", true)
+
     const { queryId, products = [], totalPrice } = req.body
     // console.log("req :>> ", req)
     console.log("req.body :>> ", req.body)
@@ -32,7 +34,7 @@ module.exports = (bot) => {
       })
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
-        console.log("e :>> ", e)
+      console.log("e :>> ", e)
       return res.status(500).json({ titleStatus: "fail-500" })
     }
   })

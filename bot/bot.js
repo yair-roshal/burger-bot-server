@@ -55,6 +55,7 @@ bot.on('message', async (msg) => {
 
     console.log('msg?.web_app_data :>> ', msg?.web_app_data)
 
+    // для обычных кнопок внизу бота===================================
     if (msg?.web_app_data?.data) {
         try {
             const data = JSON.parse(msg?.web_app_data?.data)

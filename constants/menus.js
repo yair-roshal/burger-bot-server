@@ -13,7 +13,7 @@ const startMainMenu_Testing = {
         inline_keyboard: [
             [
                 {
-                    text: 'Open menu - herokuapp',
+                    text: 'Open menu - heroku app',
                     web_app: { url: webAppUrl },
                 },
             ],

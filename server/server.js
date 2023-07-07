@@ -10,14 +10,34 @@ module.exports = (bot) => {
   app.use(bodyParser.json())
 
   // Enable CORS and set the necessary headers
-  app.use(
-    cors({
-      credentials: true,
-      origin: "https://heroic-puffpuff-e7da0d.netlify.app",
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-      allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-    })
-  );
+  // app.use(
+  //   cors({
+  //     credentials: true,
+  //     origin: "https://heroic-puffpuff-e7da0d.netlify.app",
+  //     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  //     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  //   })
+  // );
+  
+  app.use(cors());
+  
+  app.use((req, res, next) => {
+    const allowedOrigins = ["https://heroic-puffpuff-e7da0d.netlify.app", "http://localhost:8889"];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.header("Access-Control-Allow-Origin", origin);
+    }
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+  
+  // app.use((req, res, next) => {
+  //   res.header("Access-Control-Allow-Origin", "http://localhost:8889");
+  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //   next();
+  // });
   
   // app.use(
   //   cors({

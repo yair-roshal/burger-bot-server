@@ -1,4 +1,5 @@
-const webAppUrl = 'https://heroic-puffpuff-e7da0d.netlify.app'
+const webAppUrl = 'https://burger-app-heroku-9654db42ebb1.herokuapp.com/'
+// const webAppUrl = 'https://heroic-puffpuff-e7da0d.netlify.app'
 
 const settings_message = {
     parse_mode: 'HTML',

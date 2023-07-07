@@ -13,10 +13,19 @@ module.exports = (bot) => {
   app.use(
     cors({
       credentials: true,
+      origin: "https://heroic-puffpuff-e7da0d.netlify.app",
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
     })
-  )
+  );
+  
+  // app.use(
+  //   cors({
+  //     credentials: true,
+  //     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  //     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  //   })
+  // )
 
   // app.use('/', routes)
 
@@ -47,7 +56,7 @@ module.exports = (bot) => {
 
   app.post("/test", async (req, res) => {
     
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "POST");
     res.header("Access-Control-Allow-Headers", "Content-Type");
 

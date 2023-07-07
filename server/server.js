@@ -6,28 +6,21 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 
 module.exports = (bot) => {
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json())
 
   // Enable CORS and set the necessary headers
   app.use(
     cors({
       credentials: true,
-       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-      allowedHeaders: [
-        "Origin",
-        "X-Requested-With",
-        "Content-Type",
-        "Accept",
-      ],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
     })
-  );
+  )
 
   // app.use('/', routes)
 
   app.post("/web-data", async (req, res) => {
- 
-    
     const { queryId, products = [], totalPrice } = req.body
     // console.log("req :>> ", req)
     console.log("req.body :>> ", req.body)
@@ -49,6 +42,16 @@ module.exports = (bot) => {
     } catch (e) {
       console.log("e :>> ", e)
       return res.status(500).json({ titleStatus: "fail-500" })
+    }
+  })
+
+  app.post("/test", async (req, res) => {
+    console.log("req.body :>> ", req.body)
+    try {
+      return res.status(200).json({ titleStatus: "test---success-200" })
+    } catch (e) {
+      console.log("e :>> ", e)
+      return res.status(500).json({ titleStatus: "test---fail-500" })
     }
   })
 

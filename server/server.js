@@ -17,6 +17,7 @@ module.exports = (bot) => {
     "https://heroic-puffpuff-e7da0d.netlify.app",
     "https://master--serene-moonbeam-93eead.netlify.app",
     "http://localhost:8889",
+    "https://api.telegram.org",
   ]
 
   const corsOptions = {

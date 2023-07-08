@@ -9,15 +9,10 @@ module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
-  const app = express()
   app.use(cors())
 
-  
-    //=======================================================================
+  //=======================================================================
 
-    
-    
-  // const app = express()
   // const allowedOrigins = [
   //   "https://heroic-puffpuff-e7da0d.netlify.app",
   //   "http://localhost:8889",
@@ -35,7 +30,7 @@ module.exports = (bot) => {
   // app.use(cors(corsOptions))
 
   //=======================================================================
-  
+
   // app.use(
   //   cors({
   //     credentials: true,

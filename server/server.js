@@ -9,7 +9,32 @@ module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
+  const app = express()
+  app.use(cors())
+
   
+    //=======================================================================
+
+    
+    
+  // const app = express()
+  // const allowedOrigins = [
+  //   "https://heroic-puffpuff-e7da0d.netlify.app",
+  //   "http://localhost:8889",
+  // ]
+  // const corsOptions = {
+  //   origin: function (origin, callback) {
+  //     if (allowedOrigins.includes(origin) || !origin) {
+  //       callback(null, true)
+  //     } else {
+  //       callback(new Error("Not allowed by CORS"))
+  //     }
+  //   },
+  // }
+
+  // app.use(cors(corsOptions))
+
+  //=======================================================================
   
   // app.use(
   //   cors({
@@ -20,10 +45,8 @@ module.exports = (bot) => {
   //   })
   // );
 
-  
   // app.use('/', routes)
-  
-  
+
   // Enable CORS and set the necessary headers
   // app.use(
   //   cors({
@@ -33,22 +56,20 @@ module.exports = (bot) => {
   //     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   //   })
   // );
-  
+
   // // app.use(cors());
-  
-  app.use((req, res, next) => {
-    const allowedOrigins = ["https://heroic-puffpuff-e7da0d.netlify.app", "http://localhost:8889"];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin);
-    }
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-  
-  
-  
+
+  // app.use((req, res, next) => {
+  //   const allowedOrigins = ["https://heroic-puffpuff-e7da0d.netlify.app", "http://localhost:8889"];
+  //   const origin = req.headers.origin;
+  //   if (allowedOrigins.includes(origin)) {
+  //     res.header("Access-Control-Allow-Origin", origin);
+  //   }
+  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //   next();
+  // });
+
   // app.use(
   //   cors({
   //     credentials: true,
@@ -62,11 +83,10 @@ module.exports = (bot) => {
   app.post("/test", async (req, res) => {
     console.log("req.body :>> ", req.body)
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "POST");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
+    // res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Methods", "POST");
+    // res.header("Access-Control-Allow-Headers", "Content-Type");
 
-    
     try {
       return res.status(200).json({ titleStatus: "test---success-200" })
     } catch (e) {
@@ -74,7 +94,7 @@ module.exports = (bot) => {
       return res.status(500).json({ titleStatus: "test---fail-500" })
     }
   })
-  
+
   app.post("/web-data", async (req, res) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
@@ -99,8 +119,6 @@ module.exports = (bot) => {
       return res.status(500).json({ titleStatus: "fail-500" })
     }
   })
-
-
 
   const PORT = process.env.PORT || 8000
 

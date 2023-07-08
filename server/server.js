@@ -96,12 +96,27 @@ module.exports = (bot) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
     // console.log("req :>> ", req)
+
+    function generateId() {
+      let id = ""
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+      for (let i = 0; i < 16; i++) {
+        id += characters.charAt(Math.floor(Math.random() * characters.length))
+      }
+
+      return id
+    }
+
+    // Пример использования
+    const generatedId = generateId()
+
     try {
-      
-      
       await bot.answerWebAppQuery(queryId, {
         type: "article",
-         title: "Успешная покупка",
+        id: generatedId,
+        title: "Успешная покупка",
         input_message_content: {
           message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}`,
         },
@@ -111,15 +126,12 @@ module.exports = (bot) => {
         //     .join(", ")}`,
         // },
       })
-      
-     
-        
-      
+
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
       console.log("e :>> ", e)
       return res.status(500).json({ titleStatus: "fail-500", error: e })
-     }
+    }
   })
 
   const PORT = process.env.PORT || 8000

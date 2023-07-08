@@ -118,14 +118,14 @@ module.exports = (bot) => {
         type: "article",
         id: generatedId,
         title: "Успешная покупка",
-        input_message_content: {
-          message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}`,
-        },
         // input_message_content: {
-        //   message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
-        //     .map((item) => item.title)
-        //     .join(", ")}`,
+        //   message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}`,
         // },
+        input_message_content: {
+          message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
+            .map((item) => item.title)
+            .join(", ")}`,
+        },
       })
 
       return res.status(200).json({ titleStatus: "success-200" })

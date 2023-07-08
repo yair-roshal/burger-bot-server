@@ -59,6 +59,22 @@ module.exports = (bot) => {
 
   // app.use('/', routes)
 
+  app.post("/test", async (req, res) => {
+    console.log("req.body :>> ", req.body)
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+
+    
+    try {
+      return res.status(200).json({ titleStatus: "test---success-200" })
+    } catch (e) {
+      console.log("e :>> ", e)
+      return res.status(500).json({ titleStatus: "test---fail-500" })
+    }
+  })
+  
   app.post("/web-data", async (req, res) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
@@ -84,21 +100,7 @@ module.exports = (bot) => {
     }
   })
 
-  app.post("/test", async (req, res) => {
-    
-    // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "POST");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
 
-    
-    console.log("req.body :>> ", req.body)
-    try {
-      return res.status(200).json({ titleStatus: "test---success-200" })
-    } catch (e) {
-      console.log("e :>> ", e)
-      return res.status(500).json({ titleStatus: "test---fail-500" })
-    }
-  })
 
   const PORT = process.env.PORT || 8000
 

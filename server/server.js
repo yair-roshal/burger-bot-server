@@ -17,21 +17,27 @@ module.exports = (bot) => {
     "https://heroic-puffpuff-e7da0d.netlify.app",
     "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
     "https://serene-moonbeam-93eead.netlify.app/static/js",
-    
+
     "https://master--serene-moonbeam-93eead.netlify.app",
-    
+
     "http://localhost:8889",
     "https://api.telegram.org",
   ]
 
   const corsOptions = {
-    origin: function (origin, callback) {
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true)
-      } else {
-        callback(new Error("Not allowed by CORS"))
-      }
-    },
+    // origin: function (origin, callback) {
+    //   if (allowedOrigins.includes(origin) || !origin) {
+    //     callback(null, true)
+    //   } else {
+    //     callback(new Error("Not allowed by CORS"))
+    //   }
+    // },
+
+    origin: "*", // Разрешить запросы с любого источника
+
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   }
 
   app.use(cors(corsOptions))

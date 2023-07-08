@@ -18,7 +18,7 @@ module.exports = (bot) => {
     "https://master--serene-moonbeam-93eead.netlify.app",
     "http://localhost:8889",
   ]
-  
+
   const corsOptions = {
     origin: function (origin, callback) {
       if (allowedOrigins.includes(origin) || !origin) {
@@ -113,8 +113,8 @@ module.exports = (bot) => {
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
       console.log("e :>> ", e)
-      return res.status(500).json({ titleStatus: "fail-500" })
-    }
+      return res.status(500).json({ titleStatus: "fail-500", error: e })
+     }
   })
 
   const PORT = process.env.PORT || 8000

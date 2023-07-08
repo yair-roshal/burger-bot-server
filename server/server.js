@@ -15,7 +15,10 @@ module.exports = (bot) => {
 
   const allowedOrigins = [
     "https://heroic-puffpuff-e7da0d.netlify.app",
+    "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
+    
     "https://master--serene-moonbeam-93eead.netlify.app",
+    
     "http://localhost:8889",
     "https://api.telegram.org",
   ]
@@ -118,9 +121,7 @@ module.exports = (bot) => {
         type: "article",
         id: generatedId,
         title: "Успешная покупка",
-        // input_message_content: {
-        //   message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}`,
-        // },
+
         input_message_content: {
           message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
             .map((item) => item.title)

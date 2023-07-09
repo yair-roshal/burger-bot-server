@@ -99,7 +99,7 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(
         chatId,
-        `Total price:  <b>${data?.totalPrice.toFixed(2)} $</b>`,
+        `Total price:  <b>${data?.totalPrice} $</b>`,
         optionsMessage
       )
 

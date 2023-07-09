@@ -56,8 +56,9 @@ bot.onText(/\/start/, async (msg) => {
 //=========================
 
 bot.on("message", async (msg) => {
-  const chatId = msg.chat.id
-
+  const chatId = msg.chat.id;
+  const text = msg.text;
+  
   console.log("msg?.web_app_data :>> ", msg?.web_app_data)
 
   if (text === "/start") {

@@ -56,9 +56,9 @@ bot.onText(/\/start/, async (msg) => {
 //=========================
 
 bot.on("message", async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
-  
+  const chatId = msg.chat.id
+  const text = msg.text
+
   console.log("msg?.web_app_data :>> ", msg?.web_app_data)
 
   if (text === "/start") {
@@ -73,14 +73,19 @@ bot.on("message", async (msg) => {
   }
 
   // для обычных кнопок внизу бота===================================
+
   if (msg?.web_app_data?.data) {
+    // const data = {
+    //   queryId,
+    //   products: cartItems,
+    //   totalPrice: getTotalPrice(cartItems),
+    // }
+
     try {
       const data = JSON.parse(msg?.web_app_data?.data)
-      console.log("data==", data)
-
-      await bot.sendMessage(chatId, "Спасибо за обратную связь!")
-      // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
-      // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
+      console.log(data)
+      await bot.sendMessage(chatId, "queryId:" + data?.queryId)
+      await bot.sendMessage(chatId, "totalPrice:" + data?.totalPrice)
 
       setTimeout(async () => {
         await bot.sendMessage(chatId, "Всю информацию вы получите в этом чате")
@@ -89,6 +94,23 @@ bot.on("message", async (msg) => {
       console.log(e)
     }
   }
+
+  // if (msg?.web_app_data?.data) {
+  //   try {
+  //     const data = JSON.parse(msg?.web_app_data?.data)
+  //     console.log("data==", data)
+
+  //     await bot.sendMessage(chatId, "Спасибо за обратную связь!")
+  //     // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
+  //     // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
+
+  //     setTimeout(async () => {
+  //       await bot.sendMessage(chatId, "Всю информацию вы получите в этом чате")
+  //     }, 3000)
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
 })
 
 // callback_query ===========================================

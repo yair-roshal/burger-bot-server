@@ -94,7 +94,7 @@ bot.on("message", async (msg) => {
           " = " +
           totalPrice +
           " $"
-        await sendMessage(chatId, message)
+        await bot.sendMessage(chatId, message)
       }
 
       // data.products.forEach(async (item) => {

@@ -84,6 +84,26 @@ bot.on("message", async (msg) => {
       const data = JSON.parse(msg?.web_app_data?.data)
       console.log("data==", data)
 
+      let textMessageHtml = `<b>_______________________________</b>
+      <b>Hello my Friend</b> 
+      
+      This is a telegram bot for sending your card with translation, pronunciation, examples and link to all meanings
+      
+      At the moment giveMeWord bot can :
+      
+      -   send messages with the required timer,
+      -   the words from the dictionary are output absolutely randomly.
+       
+      Link to this Bot : <a href="${link_to_bot}">Give Me Word Bot</a> 
+      
+      Our Group in Telegram : <a href="${link_to_public}">Very Simple English</a>
+      
+      💬 If you have any questions or suggestions, email admin @yair770.
+      
+      🔥 To start getting words, click on start below 👇🏻 or here /start
+      
+       `
+
       for (const item of data.products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
         const message =
@@ -97,7 +117,10 @@ bot.on("message", async (msg) => {
         await bot.sendMessage(chatId, message)
       }
 
-      await bot.sendMessage(chatId, "Total price: " + data?.totalPrice.toFixed(2) + " $")
+      await bot.sendMessage(
+        chatId,
+        `Total price:  <b>${data?.totalPrice.toFixed(2)} $</b>`
+      )
 
       setTimeout(async () => {
         await bot.sendMessage(chatId, "Thanks! Your order №14846")

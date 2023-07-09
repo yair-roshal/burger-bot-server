@@ -25,6 +25,7 @@ const menu =
     : startMainMenu_Testing
 
 const { text_message_html } = require("../constants/texts.js")
+const { webAppUrl } = require("../constants/constants.js")
 
 //=========================
 
@@ -58,6 +59,17 @@ bot.on("message", async (msg) => {
   const chatId = msg.chat.id
 
   console.log("msg?.web_app_data :>> ", msg?.web_app_data)
+
+  if (text === "/start") {
+    await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
+      reply_markup: {
+        keyboard: [
+          [{ text: "Menu", web_app: { url: webAppUrl } }],
+          // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
+        ],
+      },
+    })
+  }
 
   // для обычных кнопок внизу бота===================================
   if (msg?.web_app_data?.data) {

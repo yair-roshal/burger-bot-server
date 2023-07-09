@@ -13,34 +13,7 @@ module.exports = (bot) => {
 
   //=======================================================================
 
-  const allowedOrigins = [
-    "https://heroic-puffpuff-e7da0d.netlify.app",
-    "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
-    "https://serene-moonbeam-93eead.netlify.app/static/js",
 
-    "https://master--serene-moonbeam-93eead.netlify.app",
-
-    "http://localhost:8889",
-    "https://api.telegram.org",
-  ]
-
-  const corsOptions = {
-    // origin: function (origin, callback) {
-    //   if (allowedOrigins.includes(origin) || !origin) {
-    //     callback(null, true)
-    //   } else {
-    //     callback(new Error("Not allowed by CORS"))
-    //   }
-    // },
-
-    origin: "*", // Разрешить запросы с любого источника
-
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-  }
-
-  app.use(cors(corsOptions))
 
   //=======================================================================
 
@@ -78,13 +51,7 @@ module.exports = (bot) => {
   //   next();
   // });
 
-  app.use(
-    cors({
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-      allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-    })
-  )
+
 
   // app.use('/', routes)
 
@@ -102,12 +69,41 @@ module.exports = (bot) => {
   //     return res.status(500).json({ titleStatus: "test---fail-500" })
   //   }
   // })
+  
+  
+  //=========================================================================
+  
+  const allowedOrigins = [
+    "https://heroic-puffpuff-e7da0d.netlify.app",
+    "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
+    "https://serene-moonbeam-93eead.netlify.app/static/js",
+    "https://master--serene-moonbeam-93eead.netlify.app",
+    "http://localhost:8889",
+    "https://api.telegram.org",
+  ]
 
+  const corsOptions = {
+    // origin: function (origin, callback) {
+    //   if (allowedOrigins.includes(origin) || !origin) {
+    //     callback(null, true)
+    //   } else {
+    //     callback(new Error("Not allowed by CORS"))
+    //   }
+    // },
+
+    origin: "*", // Разрешить запросы с любого источника
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  }
+  app.use(cors(corsOptions))
+  
+  //=========================================================================
+  
   app.post("/web-data", async (req, res) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
-    // console.log("req :>> ", req)
-
+ 
     function generateId() {
       let id = ""
       const characters =
@@ -120,13 +116,10 @@ module.exports = (bot) => {
       return id
     }
 
-    // Пример использования
-    const generatedId = generateId()
-
     try {
       await bot.answerWebAppQuery(queryId, {
         type: "article",
-        id: generatedId,
+        id: generateId(),
         title: "Успешная покупка",
 
         input_message_content: {
@@ -138,7 +131,6 @@ module.exports = (bot) => {
 
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
-      console.log("e :>> ", e)
       return res.status(500).json({ titleStatus: "fail-500", error: e })
     }
   })

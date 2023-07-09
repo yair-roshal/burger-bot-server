@@ -83,24 +83,26 @@ bot.on("message", async (msg) => {
     try {
       const data = JSON.parse(msg?.web_app_data?.data)
       console.log("data==", data)
- 
+
+      var optionsMessage = {
+        parse_mode: "HTML",
+        //disable because we don't want show description links
+        disable_web_page_preview: true,
+      }
+
+      await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
 
       for (const item of data.products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
         const message =
-          "You ordered: " +
-          item.title +
-          " * " +
-          item.quantity +
-          " = " +
-          totalPrice +
-          " $"
+          item.title + " * " + item.quantity + " = " + totalPrice + " $"
         await bot.sendMessage(chatId, message)
       }
 
       await bot.sendMessage(
         chatId,
-        `Total price:  <b>${data?.totalPrice.toFixed(2)} $</b>`
+        `Total price:  <b>${data?.totalPrice.toFixed(2)} $</b>`,
+        optionsMessage
       )
 
       setTimeout(async () => {

@@ -97,20 +97,7 @@ bot.on("message", async (msg) => {
         await bot.sendMessage(chatId, message)
       }
 
-      // data.products.forEach(async (item) => {
-      //   await bot.sendMessage(
-      //     chatId,
-      //     "вы заказали: " +
-      //       item.title +
-      //       " * " +
-      //       item.quantity +
-      //       " = " +
-      //       item.price * item.quantity +
-      //       " $"
-      //   )
-      // })
-
-      await bot.sendMessage(chatId, "Total price: " + data?.totalPrice)
+      await bot.sendMessage(chatId, "Total price: " + data?.totalPrice.toFixed(2) + " $")
 
       setTimeout(async () => {
         await bot.sendMessage(chatId, "Thanks! Your order №14846")

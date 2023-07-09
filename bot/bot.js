@@ -36,7 +36,8 @@ bot.onText(/\/start/, async (msg) => {
   console.log("photoPath :>> ", photoPath)
 
   bot
-    .sendPhoto(chatId, photoPath, menu)
+    // .sendPhoto(chatId, photoPath, menu)
+    .sendPhoto(chatId, photoPath)
     .then(() => {
       console.log("Фотография успешно отправлена")
     })
@@ -45,7 +46,7 @@ bot.onText(/\/start/, async (msg) => {
     })
 
   //==================================
-  await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
+  await bot.sendMessage(chatId, "Click the button below to open the menu", {
     reply_markup: {
       keyboard: [
         [{ text: "Menu", web_app: { url: webAppUrl } }],

@@ -83,20 +83,7 @@ bot.on("message", async (msg) => {
     try {
       const data = JSON.parse(msg?.web_app_data?.data)
       console.log("data==", data)
-
-      let textMessageHtml = `<b>_______________________________</b>
-      <b>Hello my Friend</b> 
  
-      -   the words from the dictionary are output absolutely randomly.
-       
-       
-      Our Group in Telegram : <a href="${link_to_public}">Very Simple English</a>
-      
-      💬 I 
-      
-      🔥 To  👇🏻 o 
-      
-       `
 
       for (const item of data.products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)

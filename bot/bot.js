@@ -84,22 +84,31 @@ bot.on("message", async (msg) => {
       const data = JSON.parse(msg?.web_app_data?.data)
       console.log("data==", data)
 
-      // await bot.sendMessage(chatId, "msg?.web_app_data?.data: " + msg?.web_app_data?.data)
+      for (const item of data.products) {
+        const totalPrice = item.price * item.quantity
+        const message =
+          "Вы заказали: " +
+          item.title +
+          " * " +
+          item.quantity +
+          " = " +
+          totalPrice +
+          " $"
+        await sendMessage(chatId, message)
+      }
 
-      await bot.sendMessage(chatId, "вы заказали: " + data?.products)
-
-      data.products.forEach(async (item) => {
-        await bot.sendMessage(
-          chatId,
-          "вы заказали: " +
-            item.title +
-            "*" +
-            item.quantity +
-            "=" +
-            item.price * item.quantity +
-            "$"
-        )
-      })
+      // data.products.forEach(async (item) => {
+      //   await bot.sendMessage(
+      //     chatId,
+      //     "вы заказали: " +
+      //       item.title +
+      //       " * " +
+      //       item.quantity +
+      //       " = " +
+      //       item.price * item.quantity +
+      //       " $"
+      //   )
+      // })
 
       await bot.sendMessage(chatId, "Total price: " + data?.totalPrice)
 

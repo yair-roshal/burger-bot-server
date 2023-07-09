@@ -32,29 +32,28 @@ const { webAppUrl } = require("../constants/constants.js")
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id
 
-  // var photoPath = __dirname + "/images/PosterBurger.jpg"
-  // console.log("photoPath :>> ", photoPath)
+  var photoPath = __dirname + "/images/PosterBurger.jpg"
+  console.log("photoPath :>> ", photoPath)
 
-  // bot
-  //   .sendPhoto(chatId, photoPath, menu)
-  //   .then(() => {
-  //     console.log("Фотография успешно отправлена")
-  //   })
-  //   .catch((error) => {
-  //     console.error("Ошибка при отправке фотографии:", error.message)
-  //   })
-
-    //==================================
-    await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
-      reply_markup: {
-        keyboard: [
-          [{ text: "Menu", web_app: { url: webAppUrl } }],
-          // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
-        ],
-      },
+  bot
+    .sendPhoto(chatId, photoPath, menu)
+    .then(() => {
+      console.log("Фотография успешно отправлена")
     })
-    
-    
+    .catch((error) => {
+      console.error("Ошибка при отправке фотографии:", error.message)
+    })
+
+  //==================================
+  await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
+    reply_markup: {
+      keyboard: [
+        [{ text: "Menu", web_app: { url: webAppUrl } }],
+        // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
+      ],
+    },
+  })
+
   // process.env.NODE_ENV === 'prod'
   //     ? await bot.sendMessage(
   //           chatId,
@@ -70,11 +69,7 @@ bot.on("message", async (msg) => {
   const chatId = msg.chat.id
   const text = msg.text
 
-  console.log("msg?.web_app_data :>> ", msg?.web_app_data)
-
-  // if (text === "/start") {
-
-  // }
+  console.log("msg?.web_app_data?.data :>> ", msg?.web_app_data?.data)
 
   // для обычных кнопок внизу бота===================================
 
@@ -88,11 +83,11 @@ bot.on("message", async (msg) => {
     try {
       const data = JSON.parse(msg?.web_app_data?.data)
       console.log(data)
-      await bot.sendMessage(chatId, "queryId:" + data?.queryId)
-      await bot.sendMessage(chatId, "totalPrice:" + data?.totalPrice)
+      await bot.sendMessage(chatId, "queryId: " + data?.queryId)
+      await bot.sendMessage(chatId, "totalPrice: " + data?.totalPrice)
 
       setTimeout(async () => {
-        await bot.sendMessage(chatId, "Всю информацию вы получите в этом чате")
+        await bot.sendMessage(chatId, "Thanks! Your order №14846")
       }, 3000)
     } catch (e) {
       console.log(e)

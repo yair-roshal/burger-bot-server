@@ -32,18 +32,29 @@ const { webAppUrl } = require("../constants/constants.js")
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id
 
-  var photoPath = __dirname + "/images/PosterBurger.jpg"
-  console.log("photoPath :>> ", photoPath)
+  // var photoPath = __dirname + "/images/PosterBurger.jpg"
+  // console.log("photoPath :>> ", photoPath)
 
-  bot
-    .sendPhoto(chatId, photoPath, menu)
-    .then(() => {
-      console.log("Фотография успешно отправлена")
-    })
-    .catch((error) => {
-      console.error("Ошибка при отправке фотографии:", error.message)
-    })
+  // bot
+  //   .sendPhoto(chatId, photoPath, menu)
+  //   .then(() => {
+  //     console.log("Фотография успешно отправлена")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Ошибка при отправке фотографии:", error.message)
+  //   })
 
+    //==================================
+    await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
+      reply_markup: {
+        keyboard: [
+          [{ text: "Menu", web_app: { url: webAppUrl } }],
+          // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
+        ],
+      },
+    })
+    
+    
   // process.env.NODE_ENV === 'prod'
   //     ? await bot.sendMessage(
   //           chatId,
@@ -61,16 +72,9 @@ bot.on("message", async (msg) => {
 
   console.log("msg?.web_app_data :>> ", msg?.web_app_data)
 
-  if (text === "/start") {
-    await bot.sendMessage(chatId, "Ниже появится кнопка, заполни форму", {
-      reply_markup: {
-        keyboard: [
-          [{ text: "Menu", web_app: { url: webAppUrl } }],
-          // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
-        ],
-      },
-    })
-  }
+  // if (text === "/start") {
+
+  // }
 
   // для обычных кнопок внизу бота===================================
 

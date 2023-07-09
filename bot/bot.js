@@ -85,7 +85,7 @@ bot.on("message", async (msg) => {
       console.log("data==", data)
 
       for (const item of data.products) {
-        const totalPrice = item.price * item.quantity
+        const totalPrice = (item.price * item.quantity).toFixed(2)
         const message =
           "Вы заказали: " +
           item.title +

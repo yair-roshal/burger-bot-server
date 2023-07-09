@@ -33,8 +33,7 @@ bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
-  console.log("photoPath :>> ", photoPath)
-
+ 
   bot
     // .sendPhoto(chatId, photoPath, menu)
     .sendPhoto(chatId, photoPath)
@@ -96,8 +95,8 @@ bot.on("message", async (msg) => {
       for (const item of data.products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
         const message =
-          item.title + " * " + item.quantity + " = " + totalPrice + " $"
-        await bot.sendMessage(chatId, message)
+        `${item.title} * ${item.quantity} = <b>${totalPrice} $</b>`
+        await bot.sendMessage(chatId, message, optionsMessage)
       }
 
       await bot.sendMessage(
@@ -107,7 +106,7 @@ bot.on("message", async (msg) => {
       )
 
       setTimeout(async () => {
-        await bot.sendMessage(chatId, "Thanks! Your order №14846")
+        await bot.sendMessage(chatId, "Thanks! Your order <b>№14846</b>", optionsMessage )
       }, 3000)
     } catch (e) {
       console.log(e)

@@ -82,6 +82,9 @@ bot.on("message", async (msg) => {
 
     try {
       const data = JSON.parse(msg?.web_app_data?.data)
+
+      const { products, address, comment, totalPrice } = data
+
       console.log("data==", data)
 
       var optionsMessage = {
@@ -91,7 +94,7 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
 
-      for (const item of data.products) {
+      for (const item of products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
         const message = `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $`
         await bot.sendMessage(chatId, message, optionsMessage)
@@ -99,7 +102,7 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(
         chatId,
-        `<b>Total price:</b>  ${data?.totalPrice} $`,
+        `<b>Total price:</b>  ${totalPrice} $`,
         optionsMessage
       )
 
@@ -113,7 +116,7 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(
         chatId,
-        `Total price:  <b> comment</b> :${comment} `,
+        `Your comment:  <b>${comment}</b>`,
         optionsMessage
       )
 
@@ -121,11 +124,6 @@ bot.on("message", async (msg) => {
         await bot.sendMessage(
           chatId,
           `<b>Thanks! Your order №</b>14846`,
-          optionsMessage
-        )
-        await bot.sendMessage(
-          chatId,
-          `Your comment:  <b>${totalPrice}</b>`,
           optionsMessage
         )
       }, 3000)

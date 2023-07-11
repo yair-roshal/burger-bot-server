@@ -102,28 +102,28 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(
         chatId,
-        `<b>Total price:</b>  ${totalPrice} $`,
+        `<b>Total price: </b>  ${totalPrice} $`,
         optionsMessage
       )
 
       await bot.sendMessage(
         chatId,
-        `Total price:  <b> Option Delivery :</b>${
-          address ? address : "on site"
+        `<b> Option Delivery : </b>${
+          address ? `${address}` : "On site"
         } $`,
         optionsMessage
       )
 
       await bot.sendMessage(
         chatId,
-        `Your comment:  <b>${comment}</b>`,
+        `<b>Your comment: </b> ${comment}`,
         optionsMessage
       )
 
       setTimeout(async () => {
         await bot.sendMessage(
           chatId,
-          `<b>Thanks! Your order №</b>14846`,
+          `<b>Thanks! Your order № </b> 14846`,
           optionsMessage
         )
       }, 3000)

@@ -93,20 +93,34 @@ bot.on("message", async (msg) => {
 
       for (const item of data.products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
-        const message = `${item.title} * ${item.quantity} = <b>${totalPrice} $</b>`
+        const message = `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $`
         await bot.sendMessage(chatId, message, optionsMessage)
       }
 
       await bot.sendMessage(
         chatId,
-        `Total price:  <b>${data?.totalPrice} $</b>`,
+        `<b>Total price:</b>  ${data?.totalPrice} $`,
+        optionsMessage
+      )
+
+      await bot.sendMessage(
+        chatId,
+        `Total price:  <b> Option Delivery :</b>${
+          address ? address : "on site"
+        } $`,
+        optionsMessage
+      )
+
+      await bot.sendMessage(
+        chatId,
+        `Total price:  <b> comment</b> :${comment} `,
         optionsMessage
       )
 
       setTimeout(async () => {
         await bot.sendMessage(
           chatId,
-          `Thanks! Your order <b>№14846</b`,
+          `<b>Thanks! Your order №</b>14846`,
           optionsMessage
         )
         await bot.sendMessage(

@@ -110,13 +110,13 @@ bot.on("message", async (msg) => {
         chatId,
         `<b> Option Delivery : </b>${
           address ? `${address}` : "On site"
-        } $`,
+        }`,
         optionsMessage
       )
 
       await bot.sendMessage(
         chatId,
-        `<b>Your comment: </b> ${comment}`,
+        `<b>Your comment: </b> ${comment? comment : "__No comment"}`,
         optionsMessage
       )
 

@@ -11,9 +11,18 @@ const crtPatch = require("./certificates/burgerim.ru.crt")
 var https = require("https") // для организации https
 var fs = require("fs") // для чтения ключевых файлов
 
+const path = require("path")
+
 httpsOptions = {
-  key: fs.readFileSync(keyPatch), // путь к ключу
-  cert: fs.readFileSync(crtPatch), // путь к сертификату
+  // key: fs.readFileSync(keyPatch),
+  // key: fs.readFileSync("./certificates/burgerim.ru.key"),
+  key: fs.readFileSync(
+    path.join(__dirname, "./certificates/burgerim.ru.key"),
+    "utf8"
+  ),
+
+  // cert: fs.readFileSync(crtPatch),
+  cert: fs.readFileSync("./certificates/burgerim.ru.crt"),
 }
 
 module.exports = (bot) => {

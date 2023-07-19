@@ -5,6 +5,14 @@ const routes = require("./routes/index")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 
+var https = require("https") // для организации https
+var fs = require("fs") // для чтения ключевых файлов
+
+httpsOptions = {
+  key: fs.readFileSync("./certificates/burgerim.ru.key"), // путь к ключу
+  cert: fs.readFileSync("./certificates/burgerim.ru.crt"), // путь к сертификату
+}
+
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
@@ -12,8 +20,6 @@ module.exports = (bot) => {
   // app.use(cors())
 
   //=======================================================================
-
-
 
   //=======================================================================
 
@@ -51,8 +57,6 @@ module.exports = (bot) => {
   //   next();
   // });
 
-
-
   // app.use('/', routes)
 
   // app.post("/test", async (req, res) => {
@@ -69,10 +73,9 @@ module.exports = (bot) => {
   //     return res.status(500).json({ titleStatus: "test---fail-500" })
   //   }
   // })
-  
-  
+
   //=========================================================================
-  
+
   const allowedOrigins = [
     "https://heroic-puffpuff-e7da0d.netlify.app",
     "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
@@ -97,13 +100,13 @@ module.exports = (bot) => {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   }
   app.use(cors(corsOptions))
-  
+
   //=========================================================================
-  
+
   app.post("/web-data", async (req, res) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
- 
+
     function generateId() {
       let id = ""
       const characters =
@@ -137,7 +140,12 @@ module.exports = (bot) => {
 
   const PORT = process.env.PORT || 8000
 
-  app.listen(PORT, () => {
-    console.log("Web server started at port : ", PORT)
+  // app.listen(PORT, () => {
+  //   console.log("Web server started at port : ", PORT)
+  // })
+
+  // Create an HTTPS server and listen on port 443
+  https.createServer(httpsOptions, app).listen(443, () => {
+    console.log("Web server started at port : ", 443)
   })
 }

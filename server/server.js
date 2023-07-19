@@ -5,12 +5,15 @@ const routes = require("./routes/index")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 
+const keyPatch = require("./certificates/burgerim.ru.key")
+const crtPatch = require("./certificates/burgerim.ru.crt")
+
 var https = require("https") // для организации https
 var fs = require("fs") // для чтения ключевых файлов
 
 httpsOptions = {
-  key: fs.readFileSync("./certificates/burgerim.ru.key"), // путь к ключу
-  cert: fs.readFileSync("./certificates/burgerim.ru.crt"), // путь к сертификату
+  key: fs.readFileSync(keyPatch), // путь к ключу
+  cert: fs.readFileSync(crtPatch), // путь к сертификату
 }
 
 module.exports = (bot) => {

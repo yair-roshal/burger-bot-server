@@ -18,26 +18,26 @@ const startMainMenu_Testing = {
         },
       ],
 
-      [
-        {
-          text: "Open menu - keyboard button",
-          web_app: { url: webAppUrl + "/form" },
-        },
-      ],
+      // [
+      //   {
+      //     text: "Open menu - keyboard button",
+      //     web_app: { url: webAppUrl + "/form" },
+      //   },
+      // ],
 
-      [
-        {
-          text: "About",
-          callback_data: "about",
-        },
-      ],
+      // [
+      //   {
+      //     text: "About",
+      //     callback_data: "about",
+      //   },
+      // ],
 
-      [
-        {
-          text: "Test Pay",
-          callback_data: "test_pay",
-        },
-      ],
+      // [
+      //   {
+      //     text: "Test Pay",
+      //     callback_data: "test_pay",
+      //   },
+      // ],
     ],
     resize_keyboard: true,
     one_time_keyboard: true,

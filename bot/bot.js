@@ -16,12 +16,12 @@ const {
   startMainMenu_Testing,
 } = require("../constants/menus.js")
 
-const menuENV = startMainMenu_Production
+// const menuENV = startMainMenu_Production
 
-// const menuENV =
-// process.env.NODE_ENV === "prod"
-//   ? startMainMenu_Production
-//   : startMainMenu_Testing
+const menuENV =
+process.env.NODE_ENV === "prod"
+  ? startMainMenu_Production
+  : startMainMenu_Testing
 
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")

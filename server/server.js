@@ -5,8 +5,8 @@ const routes = require("./routes/index")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 
-const keyPatch = require("./certificates/burgerim.ru.key")
-const crtPatch = require("./certificates/burgerim.ru.crt")
+// const keyPatch = require("./certificates/burgerim.ru.key")
+// const crtPatch = require("./certificates/burgerim.ru.crt")
 
 var https = require("https") // для организации https
 var fs = require("fs") // для чтения ключевых файлов
@@ -22,7 +22,11 @@ httpsOptions = {
   ),
 
   // cert: fs.readFileSync(crtPatch),
-  cert: fs.readFileSync("./certificates/burgerim.ru.crt"),
+  cert: fs.readFileSync(
+    path.join(__dirname, "./certificates/burgerim.ru.crt"),
+    "utf8"
+  ),
+  // cert: fs.readFileSync("./certificates/burgerim.ru.crt"),
 }
 
 module.exports = (bot) => {

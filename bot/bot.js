@@ -12,17 +12,16 @@ const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
 const {
-  // settings_message,
   startMainMenu_Production,
   startMainMenu_Testing,
-  // inline_keyboard,
-  // callToAdminMenu,
 } = require("../constants/menus.js")
 
-const menu =
-  process.env.NODE_ENV === "prod"
-    ? startMainMenu_Production
-    : startMainMenu_Testing
+const menuENV = startMainMenu_Production
+
+// const menuENV =
+// process.env.NODE_ENV === "prod"
+//   ? startMainMenu_Production
+//   : startMainMenu_Testing
 
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
@@ -35,7 +34,7 @@ bot.onText(/\/start/, async (msg) => {
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
   bot
-    .sendPhoto(chatId, photoPath, menu)
+    .sendPhoto(chatId, photoPath, menuENV)
     // .sendPhoto(chatId, photoPath)
     .then(() => {
       console.log("Фотография успешно отправлена")
@@ -108,15 +107,13 @@ bot.on("message", async (msg) => {
 
       await bot.sendMessage(
         chatId,
-        `<b> Option Delivery : </b>${
-          address ? `${address}` : "On site"
-        }`,
+        `<b> Option Delivery : </b>${address ? `${address}` : "On site"}`,
         optionsMessage
       )
 
       await bot.sendMessage(
         chatId,
-        `<b>Your comment: </b> ${comment? comment : "__No comment"}`,
+        `<b>Your comment: </b> ${comment ? comment : "__No comment"}`,
         optionsMessage
       )
 
@@ -167,7 +164,7 @@ bot.on("callback_query", (query) => {
         //disable because we don't want show description links
         disable_web_page_preview: true,
       },
-      menu
+      menuENV
     )
   }
 

@@ -51,8 +51,9 @@ const startMainMenu_Production = {
     keyboard: [
       [
         {
-          text: "Fill out the Delivery form",
-          web_app: { url: webAppUrl + "/form" },
+          text: "Open menu",
+          // text: 'Open menu - heroku app',
+          web_app: { url: webAppUrl },
         },
       ],
     ],

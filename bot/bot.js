@@ -35,8 +35,8 @@ bot.onText(/\/start/, async (msg) => {
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
   bot
-    // .sendPhoto(chatId, photoPath, menu)
-    .sendPhoto(chatId, photoPath)
+    .sendPhoto(chatId, photoPath, menu)
+    // .sendPhoto(chatId, photoPath)
     .then(() => {
       console.log("Фотография успешно отправлена")
     })

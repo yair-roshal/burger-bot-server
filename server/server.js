@@ -119,6 +119,11 @@ module.exports = (bot) => {
 
   //=========================================================================
 
+  let optionsMessage = {
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+  }
+
   app.post("/web-data", async (req, res) => {
     console.log("req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
@@ -140,13 +145,17 @@ module.exports = (bot) => {
         type: "article",
         id: generateId(),
         title: "Successful purchase",
+        optionsMessage: optionsMessage,
 
         input_message_content: {
+          optionsMessage: optionsMessage,
+
           message_text: `
           <b>You ordered: </b>
           Congratulations on your purchase,
-           you have purchased an item in the amount of ${totalPrice},
-            ${products.map((item) => item.title).join(", ")}`,
+          you have purchased an item in the amount of ${totalPrice} ₪
+           
+           ${products.map((item) => item.title).join(", ")}`,
         },
       })
 

@@ -68,11 +68,11 @@ bot.on("message", async (msg) => {
   const chatId = msg.chat.id
   const text = msg.text
 
-  console.log("msg?.web_app_data?.data :>> ", msg?.web_app_data?.data)
-
   // для обычных кнопок внизу бота===================================
 
   if (msg?.web_app_data?.data) {
+    console.log("msg?.web_app_data?.data :>> ", msg?.web_app_data?.data)
+
     // const data = {
     //   queryId,
     //   products: cartItems,

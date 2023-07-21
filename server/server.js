@@ -155,7 +155,23 @@ module.exports = (bot) => {
           Congratulations on your purchase,
           you have purchased an item in the amount of ${totalPrice} ₪
            
-           ${products.map((item) => item.title).join(", ")}`,
+           ${products
+             .map((item) => {
+ 
+               `${item.title} ${
+                 item.quantity && item.quantity !== 1
+                   ? `x ${item.quantity} = `
+                   : ""
+               }
+            `
+             })
+             .join("\n")}
+           
+
+           
+           <b>________________ </b>
+
+           `,
         },
       })
 

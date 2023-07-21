@@ -139,10 +139,10 @@ module.exports = (bot) => {
       await bot.answerWebAppQuery(queryId, {
         type: "article",
         id: generateId(),
-        title: "Успешная покупка",
+        title: "Successful purchase",
 
         input_message_content: {
-          message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${totalPrice}, ${products
+          message_text: ` Congratulations on your purchase, you have purchased an item in the amount of ${totalPrice}, ${products
             .map((item) => item.title)
             .join(", ")}`,
         },

@@ -145,11 +145,11 @@ module.exports = (bot) => {
         type: "article",
         id: generateId(),
         title: "Successful purchase",
-        optionsMessage: optionsMessage,
+        // optionsMessage: optionsMessage,
 
         input_message_content: {
-          optionsMessage: optionsMessage,
-
+          // optionsMessage: optionsMessage,
+          parse_mode: "HTML",
           message_text: `
           <b>You ordered: </b>
           Congratulations on your purchase,

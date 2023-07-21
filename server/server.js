@@ -142,15 +142,14 @@ module.exports = (bot) => {
         title: "Successful purchase",
 
         input_message_content: {
-          message_text: ` Congratulations on your purchase, you have purchased an item in the amount of ${totalPrice}, ${products
-            .map((item) => item.title)
-            .join(", ")}`,
+          message_text: `
+          <b>You ordered: </b>
+          Congratulations on your purchase,
+           you have purchased an item in the amount of ${totalPrice},
+            ${products.map((item) => item.title).join(", ")}`,
         },
       })
 
-      
-      
-      
       // await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
 
       // for (const item of products) {
@@ -184,8 +183,7 @@ module.exports = (bot) => {
       //     optionsMessage
       //   )
       // }, 3000)
-      
-      
+
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
       return res.status(500).json({ titleStatus: "fail-500", error: e })

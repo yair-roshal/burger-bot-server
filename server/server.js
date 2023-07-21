@@ -148,6 +148,44 @@ module.exports = (bot) => {
         },
       })
 
+      
+      
+      
+      // await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
+
+      // for (const item of products) {
+      //   const totalPrice = (item.price * item.quantity).toFixed(2)
+      //   const message = `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $`
+      //   await bot.sendMessage(chatId, message, optionsMessage)
+      // }
+
+      // await bot.sendMessage(
+      //   chatId,
+      //   `<b>Total price: </b>  ${totalPrice} $`,
+      //   optionsMessage
+      // )
+
+      // await bot.sendMessage(
+      //   chatId,
+      //   `<b> Option Delivery : </b>${address ? `${address}` : "On site"}`,
+      //   optionsMessage
+      // )
+
+      // await bot.sendMessage(
+      //   chatId,
+      //   `<b>Your comment: </b> ${comment ? comment : "__No comment"}`,
+      //   optionsMessage
+      // )
+
+      // setTimeout(async () => {
+      //   await bot.sendMessage(
+      //     chatId,
+      //     `<b>Thanks! Your order № </b> 14846`,
+      //     optionsMessage
+      //   )
+      // }, 3000)
+      
+      
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
       return res.status(500).json({ titleStatus: "fail-500", error: e })

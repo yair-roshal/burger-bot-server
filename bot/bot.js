@@ -44,14 +44,14 @@ bot.onText(/\/start/, async (msg) => {
     })
 
   //==================================
-  await bot.sendMessage(chatId, "Click the button below to open the menu", {
-    reply_markup: {
-      keyboard: [
-        [{ text: "Menu", web_app: { url: webAppUrl } }],
-        // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
-      ],
-    },
-  })
+  // await bot.sendMessage(chatId, "Click the button below to open the menu", {
+  //   reply_markup: {
+  //     keyboard: [
+  //       [{ text: "Menu", web_app: { url: webAppUrl } }],
+  //       // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
+  //     ],
+  //   },
+  // })
 
   // process.env.NODE_ENV === 'prod'
   //     ? await bot.sendMessage(

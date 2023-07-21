@@ -155,15 +155,21 @@ module.exports = (bot) => {
           Congratulations on your purchase,
           you have purchased an item in the amount of ${totalPrice} ₪
            
-           ${products.map((item) => `${item.title}` ).join("\n")}
+           ${products.map((item) => item.title).join("\n")}
            
+ 
+            
            <b>________________ </b>
 
            `,
-           
- 
         },
       })
+      
+                //        item.quantity && item.quantity !== 1
+          //          ? `x ${item.quantity} = `
+          //          : ""
+          //      }
+ 
 
       // await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
 

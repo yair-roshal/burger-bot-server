@@ -8,19 +8,19 @@ const settings_message = {
 
 //===================================
 
-const startMainMenu_Testing = {
-  reply_markup: {
-    keyboard: [
-      [
-        {
-          text: "Open menu",
-          // text: 'Open menu - heroku app',
-          web_app: { url: webAppUrl },
-        },
-      ],
-    ],
-  },
-}
+// const startMainMenu_Testing = {
+//   reply_markup: {
+//     keyboard: [
+//       [
+//         {
+//           text: "Open menu",
+//           // text: 'Open menu - heroku app',
+//           web_app: { url: webAppUrl },
+//         },
+//       ],
+//     ],
+//   },
+// }
 
 const startMainMenu_Production = {
   reply_markup: {
@@ -90,7 +90,6 @@ module.exports = {
   settings_message,
 
   startMainMenu_Production,
-  startMainMenu_Testing,
-  // inline_keyboard,
+   // inline_keyboard,
   // callToAdminMenu,
 }

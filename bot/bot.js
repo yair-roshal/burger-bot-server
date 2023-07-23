@@ -21,10 +21,7 @@ const bot = new TelegramBot(token, { polling: true })
 const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
-const {
-  startMainMenu_Production,
-  startMainMenu_Testing,
-} = require("../constants/menus.js")
+const { startMainMenu_Production } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
 

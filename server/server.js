@@ -126,7 +126,16 @@ module.exports = (bot) => {
 
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
-    const { queryId, products = [], totalPrice } = req.body
+    const {
+      queryId,
+      products,
+      totalPrice,
+      totalPriceWithDiscount,
+      paymentMethod,
+      comment,
+      address,
+      discount,
+    } = req.body
 
     function generateId() {
       let id = ""
@@ -142,11 +151,11 @@ module.exports = (bot) => {
 
     let generateIdTemp = generateId()
 
-    let messageTemp = ``
+    let productsQuantityPrice = ``
     for (const item of products) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
-      messageTemp =
-        messageTemp +
+      productsQuantityPrice =
+        productsQuantityPrice +
         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
         `\n`
     }
@@ -162,18 +171,20 @@ module.exports = (bot) => {
             
 <b>You ordered: </b>
 
-${messageTemp}
+${productsQuantityPrice}
        
 <b>Total price: </b> ${totalPrice} ₪
 
-<b>Discount: </b>   ${discount} = ${discount} ₪
+<b>Discount: </b> ${discount} = ${discount} ₪
 
 <b>Total price with discount: </b> ${totalPriceWithDiscount} ₪
 
 <b>Option Delivery: </b> ${address ? `address: ${address}` : "OnSite"}
           
 <b>Your comment: </b> ${comment}
-          
+
+<b>Payment method: </b> ${paymentMethod}   
+       
 <b>Thanks! Your order № </b> ${generateIdTemp}
           
 <b>________________ </b>

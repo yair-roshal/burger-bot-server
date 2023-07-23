@@ -6,14 +6,28 @@ const settings_message = {
   disable_web_page_preview: true,
 }
 
+//===================================
+
 const startMainMenu_Testing = {
   reply_markup: {
-    // keyboard: [
-    inline_keyboard: [
+    keyboard: [
       [
         {
           text: "Open menu",
           // text: 'Open menu - heroku app',
+          web_app: { url: webAppUrl },
+        },
+      ],
+    ],
+  },
+}
+
+const startMainMenu_Production = {
+  reply_markup: {
+    inline_keyboard: [
+      [
+        {
+          text: "Open menu",
           web_app: { url: webAppUrl },
         },
       ],
@@ -41,22 +55,6 @@ const startMainMenu_Testing = {
     ],
     resize_keyboard: true,
     one_time_keyboard: true,
-  },
-}
-
-//===================================
-
-const startMainMenu_Production = {
-  reply_markup: {
-    keyboard: [
-      [
-        {
-          text: "Open menu",
-          // text: 'Open menu - heroku app',
-          web_app: { url: webAppUrl },
-        },
-      ],
-    ],
   },
 }
 

@@ -18,7 +18,6 @@ console.log(
 )
 console.log("token :>> ", token)
 const bot = new TelegramBot(token, { polling: true })
-// const chatIdAdmin = process.env.CHAT_ID_ADMIN
 const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
@@ -27,12 +26,14 @@ const {
   startMainMenu_Testing,
 } = require("../constants/menus.js")
 
-// const menuENV = startMainMenu_Production
+const menuENV = startMainMenu_Production
 
-const menuENV =
-  process.env.NODE_ENV === "prod"
-    ? startMainMenu_Production
-    : startMainMenu_Testing
+// const menuENV =
+// process.env.NODE_ENV === "prod"
+//   ? startMainMenu_Production
+//   : process.env.NODE_ENV === "dev"
+//   ? startMainMenu_Production
+//   : startMainMenu_Production
 
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
@@ -53,24 +54,6 @@ bot.onText(/\/start/, async (msg) => {
     .catch((error) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
-
-  //==================================
-  // await bot.sendMessage(chatId, "Click the button below to open the menu", {
-  //   reply_markup: {
-  //     keyboard: [
-  //       [{ text: "Menu", web_app: { url: webAppUrl } }],
-  //       // [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
-  //     ],
-  //   },
-  // })
-
-  // process.env.NODE_ENV === 'prod'
-  //     ? await bot.sendMessage(
-  //           chatId,
-  //           text_message_html,
-  //           settings_message,
-  //           startMainMenu_Production,
-  //       )
 })
 
 //=========================
@@ -80,89 +63,11 @@ bot.on("message", async (msg) => {
   const text = msg.text
 
   // для обычных кнопок внизу бота===================================
-
-  if (msg?.web_app_data?.data) {
-    console.log("msg?.web_app_data?.data :>> ", msg?.web_app_data?.data)
-
-    // const data = {
-    //   queryId,
-    //   products: cartItems,
-    //   totalPrice: getTotalPrice(cartItems),
-    // }
-
-    try {
-      const data = JSON.parse(msg?.web_app_data?.data)
-
-      const { products, address, comment, totalPrice } = data
-
-      console.log("data==", data)
-
-      var optionsMessage = {
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }
-
-      await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
-
-      for (const item of products) {
-        const totalPrice = (item.price * item.quantity).toFixed(2)
-        const message = `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $`
-        await bot.sendMessage(chatId, message, optionsMessage)
-      }
-
-      await bot.sendMessage(
-        chatId,
-        `<b>Total price: </b>  ${totalPrice} $`,
-        optionsMessage
-      )
-
-      await bot.sendMessage(
-        chatId,
-        `<b> Option Delivery : </b>${address ? `${address}` : "On site"}`,
-        optionsMessage
-      )
-
-      await bot.sendMessage(
-        chatId,
-        `<b>Your comment: </b> ${comment ? comment : "__No comment"}`,
-        optionsMessage
-      )
-
-      setTimeout(async () => {
-        await bot.sendMessage(
-          chatId,
-          `<b>Thanks! Your order № </b> 14846`,
-          optionsMessage
-        )
-      }, 3000)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  // if (msg?.web_app_data?.data) {
-  //   try {
-  //     const data = JSON.parse(msg?.web_app_data?.data)
-  //     console.log("data==", data)
-
-  //     await bot.sendMessage(chatId, "Спасибо за обратную связь!")
-  //     // await bot.sendMessage(chatId, 'Ваша страна: ' + data?.country)
-  //     // await bot.sendMessage(chatId, 'Ваша улица: ' + data?.street)
-
-  //     setTimeout(async () => {
-  //       await bot.sendMessage(chatId, "Всю информацию вы получите в этом чате")
-  //     }, 3000)
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  // }
 })
 
 // callback_query ===========================================
 bot.on("callback_query", (query) => {
   const chatId = query.message.chat.id
-
-  // console.log('bot.on callback_query   ---------------:>> ', query)
   const data = query.data
 
   if (data === "about") {
@@ -244,12 +149,6 @@ bot.onText(/\/buy/, (msg) => {
     options
   )
 })
-
-// Подскажите, пожалуйста, как сделать отправку данных как в офф примере @durgerkingbot?
-
-// Надо вызвать метод answerWebAppQuery. Аргументом передать query_id полученный из initData. В качестве result использовать InlineQueryResultArticle.
-
-//Как я и сказал: получить его на фронте с помощью JS-скрипта Telegram из initData. Далее отправить любым удобным способом на ваш бек средствами того же JS. Подобная интеграция не простая и требует полноценный API, который умеет общаться с фронтом, Bot API тут не обойтись.
 
 bot.on("pre_checkout_query", (query) => {
   bot.answerPreCheckoutQuery(query.id, true)

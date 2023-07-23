@@ -140,11 +140,11 @@ module.exports = (bot) => {
       return id
     }
 
-    let message = ``
+    let messageTemp = ``
     for (const item of products) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
-      const message =
-        message +
+      const messageTemp =
+      messageTemp +
         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
         `\n`
     }
@@ -163,7 +163,7 @@ module.exports = (bot) => {
             
 <b>You ordered: </b>
 
-${message}
+${messageTemp}
           
 ${products.map((item) => item.title).join("\n")}
 

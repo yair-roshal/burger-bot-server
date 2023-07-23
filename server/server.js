@@ -125,7 +125,7 @@ module.exports = (bot) => {
   }
 
   app.post("/web-data", async (req, res) => {
-    console.log("req.body :>> ", req.body)
+    console.log("/web-data_req.body :>> ", req.body)
     const { queryId, products = [], totalPrice } = req.body
 
     function generateId() {
@@ -140,6 +140,8 @@ module.exports = (bot) => {
       return id
     }
 
+    let generateIdTemp = generateId()
+    
     let messageTemp = ``
     for (const item of products) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
@@ -154,24 +156,25 @@ module.exports = (bot) => {
         type: "article",
         id: generateId(),
         title: "Successful purchase",
-        // optionsMessage: optionsMessage,
-
         input_message_content: {
-          // optionsMessage: optionsMessage,
           parse_mode: "HTML",
           message_text: `
             
 <b>You ordered: </b>
 
 ${messageTemp}
+       
+<b>Total price: </b> ${totalPrice} ₪
+
+<b>Discount: </b>   ${discount} = ${discount} ₪
+
+<b>Total price with discount: </b> ${totalPriceWithDiscount} ₪
+
+<b>Option Delivery: </b> ${address ? `address: ${address}` : "OnSite"}
           
-<b>Total price: </b>  ${totalPrice} ₪
+<b>Your comment: </b> ${comment}
           
-<b>Option Delivery : </b>On site
-          
-<b>Your comment: </b> __No comment
-          
-<b>Thanks! Your order № </b> 14846
+<b>Thanks! Your order № </b> ${generateIdTemp}
           
 <b>________________ </b>
 
@@ -180,47 +183,6 @@ ${messageTemp}
         },
       })
 
-      //
-
-      //        item.quantity && item.quantity !== 1
-      //          ? `x ${item.quantity} = `
-      //          : ""
-      //      }
-
-      // await bot.sendMessage(chatId, "<b>You ordered: </b>", optionsMessage)
-
-      // for (const item of products) {
-      //   const totalPrice = (item.price * item.quantity).toFixed(2)
-      //   const message = `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $`
-      //   await bot.sendMessage(chatId, message, optionsMessage)
-      // }
-
-      // await bot.sendMessage(
-      //   chatId,
-      //   `<b>Total price: </b>  ${totalPrice} $`,
-      //   optionsMessage
-      // )
-
-      // await bot.sendMessage(
-      //   chatId,
-      //   `<b> Option Delivery : </b>${address ? `${address}` : "On site"}`,
-      //   optionsMessage
-      // )
-
-      // await bot.sendMessage(
-      //   chatId,
-      //   `<b>Your comment: </b> ${comment ? comment : "__No comment"}`,
-      //   optionsMessage
-      // )
-
-      // setTimeout(async () => {
-      //   await bot.sendMessage(
-      //     chatId,
-      //     `<b>Thanks! Your order № </b> 14846`,
-      //     optionsMessage
-      //   )
-      // }, 3000)
-
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (e) {
       return res.status(500).json({ titleStatus: "fail-500", error: e })
@@ -228,10 +190,6 @@ ${messageTemp}
   })
 
   const PORT = process.env.PORT || 8000
-
-  // app.listen(PORT, () => {
-  //   console.log("Web server started at port : ", PORT)
-  // })
 
   // Create an HTTPS server and listen on port 443
   https.createServer(httpsOptions, app).listen(443, () => {

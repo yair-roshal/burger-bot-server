@@ -141,7 +141,7 @@ module.exports = (bot) => {
     }
 
     try {
-      message = ``
+     let message = ``
       for (const item of products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
         const message =

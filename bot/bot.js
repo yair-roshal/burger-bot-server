@@ -1,14 +1,15 @@
 const TelegramBot = require("node-telegram-bot-api")
 
-const dotenv = require('dotenv');
-dotenv.config();
+const dotenv = require("dotenv")
+dotenv.config()
 
 const token =
   process.env.NODE_ENV === "prod"
     ? process.env.TELEGRAM_BOT_TOKEN_prod
     : process.env.NODE_ENV === "dev"
     ? process.env.TELEGRAM_BOT_TOKEN_dev
-    : process.env.TELEGRAM_BOT_TOKEN_dev || "DEFAULT_TOKEN_VALUE"
+    : process.env.TELEGRAM_BOT_TOKEN_dev ||
+      "6325762933:AAGE2pWwGTNoLoqsh8ETOrxNLX8em0SYmCQ"
 
 console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
 console.log(

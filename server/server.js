@@ -143,8 +143,8 @@ module.exports = (bot) => {
     let messageTemp = ``
     for (const item of products) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
-      const messageTemp =
-      messageTemp +
+      messageTemp =
+        messageTemp +
         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
         `\n`
     }

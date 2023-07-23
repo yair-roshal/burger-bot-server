@@ -141,7 +141,7 @@ module.exports = (bot) => {
     }
 
     let generateIdTemp = generateId()
-    
+
     let messageTemp = ``
     for (const item of products) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""

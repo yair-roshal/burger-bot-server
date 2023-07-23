@@ -165,28 +165,18 @@ module.exports = (bot) => {
 
 ${messageTemp}
           
-${products.map((item) => item.title).join("\n")}
-
-          
 <b>Total price: </b>  ${totalPrice} ₪
           
-<b> Option Delivery : </b>On site
+<b>Option Delivery : </b>On site
           
 <b>Your comment: </b> __No comment
           
 <b>Thanks! Your order № </b> 14846
           
 <b>________________ </b>
-          
-          
-Congratulations on your purchase,
-you have purchased an item in the amount of ${totalPrice} ₪
-           
-            
-<b>________________ </b>
+
 
 `,
-          //  ` + message,
         },
       })
 

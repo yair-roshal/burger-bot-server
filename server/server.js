@@ -163,20 +163,20 @@ module.exports = (bot) => {
           message_text:
         `
             
-          <b>You ordered: </b>
+<b>You ordered: </b>
           
-          ${products.map((item) => item.title).join("\n")}
+${products.map((item) => item.title).join("\n")}
 
           
-           <b>Total price: </b>  ${totalPrice} ₪
+<b>Total price: </b>  ${totalPrice} ₪
           
-          <b> Option Delivery : </b>On site
+<b> Option Delivery : </b>On site
           
-          <b>Your comment: </b> __No comment
+<b>Your comment: </b> __No comment
           
-          <b>Thanks! Your order № </b> 14846
+<b>Thanks! Your order № </b> 14846
           
-          <b>________________ </b>
+<b>________________ </b>
           
           
           Congratulations on your purchase,

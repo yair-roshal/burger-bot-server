@@ -8,6 +8,10 @@ const token =
     : process.env.TELEGRAM_BOT_TOKEN_dev || "DEFAULT_TOKEN_VALUE"
 
 console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
+console.log(
+  "process.env.TELEGRAM_BOT_TOKEN_prod :>> ",
+  process.env.TELEGRAM_BOT_TOKEN_prod
+)
 console.log("token :>> ", token)
 const bot = new TelegramBot(token, { polling: true })
 // const chatIdAdmin = process.env.CHAT_ID_ADMIN

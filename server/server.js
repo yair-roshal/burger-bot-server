@@ -141,14 +141,15 @@ module.exports = (bot) => {
     }
 
     try {
-     let message = ``
-      for (const item of products) {
-        const totalPrice = (item.price * item.quantity).toFixed(2)
-        const message =
-          message +
-          `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
-          `\n`
-      }
+      
+    //  let message = ``
+    //   for (const item of products) {
+    //     const totalPrice = (item.price * item.quantity).toFixed(2)
+    //     const message =
+    //       message +
+    //       `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
+    //       `\n`
+    //   }
 
       await bot.answerWebAppQuery(queryId, {
         type: "article",
@@ -163,8 +164,11 @@ module.exports = (bot) => {
         `
             
           <b>You ordered: </b>
-          ${message}
-          <b>Total price: </b>  ${totalPrice} ₪
+          
+          ${products.map((item) => item.title).join("\n")}
+
+          
+           <b>Total price: </b>  ${totalPrice} ₪
           
           <b> Option Delivery : </b>On site
           

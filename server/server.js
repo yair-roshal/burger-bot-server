@@ -163,18 +163,30 @@ module.exports = (bot) => {
         `
             
           <b>You ordered: </b>
+          ${message}
+          <b>Total price: </b>  ${totalPrice} ₪
+          
+          <b> Option Delivery : </b>On site
+          
+          <b>Your comment: </b> __No comment
+          
+          <b>Thanks! Your order № </b> 14846
+          
+          <b>________________ </b>
+          
+          
           Congratulations on your purchase,
           you have purchased an item in the amount of ${totalPrice} ₪
            
-        
             
            <b>________________ </b>
 
-           ` + message,
+           ` ,
+          //  ` + message,
         },
       })
 
-      // ${products.map((item) => item.title).join("\n")}
+      //
 
       //        item.quantity && item.quantity !== 1
       //          ? `x ${item.quantity} = `

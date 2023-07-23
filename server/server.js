@@ -141,6 +141,13 @@ module.exports = (bot) => {
     }
 
     try {
+      
+      message = ``
+            for (const item of products) {
+        const totalPrice = (item.price * item.quantity).toFixed(2)
+        const message = message+ `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` + `\n`
+       }
+      
       await bot.answerWebAppQuery(queryId, {
         type: "article",
         id: generateId(),
@@ -155,18 +162,11 @@ module.exports = (bot) => {
           Congratulations on your purchase,
           you have purchased an item in the amount of ${totalPrice} ₪
            
-           ${products
-             .map((item) => {
-               ;`<b>${item.title}</b> * ${item.quantity} = ${(
-                 item.price * item.quantity
-               ).toFixed(2)} $ `
-             })
-             .join("\n")}
-           
+        
             
            <b>________________ </b>
 
-           `,
+           `+message+`,
         },
       })
 

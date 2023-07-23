@@ -141,13 +141,15 @@ module.exports = (bot) => {
     }
 
     try {
-      
       message = ``
-            for (const item of products) {
+      for (const item of products) {
         const totalPrice = (item.price * item.quantity).toFixed(2)
-        const message = message+ `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` + `\n`
-       }
-      
+        const message =
+          message +
+          `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} $` +
+          `\n`
+      }
+
       await bot.answerWebAppQuery(queryId, {
         type: "article",
         id: generateId(),
@@ -157,7 +159,9 @@ module.exports = (bot) => {
         input_message_content: {
           // optionsMessage: optionsMessage,
           parse_mode: "HTML",
-          message_text: `
+          message_text:
+        `
+            
           <b>You ordered: </b>
           Congratulations on your purchase,
           you have purchased an item in the amount of ${totalPrice} ₪
@@ -166,7 +170,7 @@ module.exports = (bot) => {
             
            <b>________________ </b>
 
-           `+message+`,
+           ` + message,
         },
       })
 

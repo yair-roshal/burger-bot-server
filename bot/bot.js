@@ -1,8 +1,11 @@
 const TelegramBot = require("node-telegram-bot-api")
+
 const token =
   process.env.NODE_ENV === "prod"
-    ? process.env.TELEGRAM_BOT_TOKEN
-    : process.env.TELEGRAM_BOT_TOKEN_testing
+    ? process.env.TELEGRAM_BOT_TOKEN_prod
+    : process.env.NODE_ENV === "dev"
+    ? process.env.TELEGRAM_BOT_TOKEN_dev
+    : process.env.TELEGRAM_BOT_TOKEN_dev || "DEFAULT_TOKEN_VALUE"
 
 console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
 console.log("token :>> ", token)

@@ -4,30 +4,23 @@ const routes = require("./routes/index")
 
 const bodyParser = require("body-parser")
 const cors = require("cors")
-
-// const keyPatch = require("./certificates/burgerim.ru.key")
-// const crtPatch = require("./certificates/burgerim.ru.crt")
-
-var https = require("https") // для организации https
-var fs = require("fs") // для чтения ключевых файлов
+ 
+var https = require("https")  
+var fs = require("fs")  
 
 const path = require("path")
 
-httpsOptions = {
-  // key: fs.readFileSync(keyPatch),
-  // key: fs.readFileSync("./certificates/burgerim.ru.key"),
+httpsOptions = { 
   key: fs.readFileSync(
     path.join(__dirname, "./certificates/burgerim.ru.key"),
     "utf8"
   ),
 
-  // cert: fs.readFileSync(crtPatch),
-  cert: fs.readFileSync(
+   cert: fs.readFileSync(
     path.join(__dirname, "./certificates/burgerim.ru.crt"),
     "utf8"
   ),
-  // cert: fs.readFileSync("./certificates/burgerim.ru.crt"),
-}
+ }
 
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
@@ -35,60 +28,9 @@ module.exports = (bot) => {
 
   // app.use(cors())
 
-  //=======================================================================
-
-  //=======================================================================
-
-  // app.use(
-  //   cors({
-  //     credentials: true,
-  //     origin: "*", // Разрешить запросы с любого источника
-  //     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  //     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-  //   })
-  // );
-
   // app.use('/', routes)
-
-  // Enable CORS and set the necessary headers
-  // app.use(
-  //   cors({
-  //     credentials: true,
-  //     origin: "https://heroic-puffpuff-e7da0d.netlify.app",
-  //     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  //     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-  //   })
-  // );
-
-  // // app.use(cors());
-
-  // app.use((req, res, next) => {
-  //   const allowedOrigins = ["https://heroic-puffpuff-e7da0d.netlify.app", "http://localhost:8889"];
-  //   const origin = req.headers.origin;
-  //   if (allowedOrigins.includes(origin)) {
-  //     res.header("Access-Control-Allow-Origin", origin);
-  //   }
-  //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   next();
-  // });
-
-  // app.use('/', routes)
-
-  // app.post("/test", async (req, res) => {
-  //   console.log("req.body :>> ", req.body)
-
-  //   // res.header("Access-Control-Allow-Origin", "*");
-  //   // res.header("Access-Control-Allow-Methods", "POST");
-  //   // res.header("Access-Control-Allow-Headers", "Content-Type");
-
-  //   try {
-  //     return res.status(200).json({ titleStatus: "test---success-200" })
-  //   } catch (e) {
-  //     console.log("e :>> ", e)
-  //     return res.status(500).json({ titleStatus: "test---fail-500" })
-  //   }
-  // })
+ 
+ 
 
   //=========================================================================
 

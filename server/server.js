@@ -1,26 +1,27 @@
 const express = require("express")
 const app = express()
 const routes = require("./routes/index")
+const getCurrentTimeID = require("./helpers/utils")
 
 const bodyParser = require("body-parser")
 const cors = require("cors")
- 
-var https = require("https")  
-var fs = require("fs")  
+
+var https = require("https")
+var fs = require("fs")
 
 const path = require("path")
 
-httpsOptions = { 
+httpsOptions = {
   key: fs.readFileSync(
     path.join(__dirname, "./certificates/burgerim.ru.key"),
     "utf8"
   ),
 
-   cert: fs.readFileSync(
+  cert: fs.readFileSync(
     path.join(__dirname, "./certificates/burgerim.ru.crt"),
     "utf8"
   ),
- }
+}
 
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
@@ -29,8 +30,6 @@ module.exports = (bot) => {
   // app.use(cors())
 
   // app.use('/', routes)
- 
- 
 
   //=========================================================================
 
@@ -79,18 +78,6 @@ module.exports = (bot) => {
       discount,
     } = req.body
 
-    function generateId() {
-      let id = ""
-      const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-
-      for (let i = 0; i < 16; i++) {
-        id += characters.charAt(Math.floor(Math.random() * characters.length))
-      }
-
-      return id
-    }
-
     let generateIdTemp = generateId()
 
     let productsQuantityPrice = ``
@@ -105,7 +92,7 @@ module.exports = (bot) => {
     try {
       await bot.answerWebAppQuery(queryId, {
         type: "article",
-        id: generateId(),
+        id: generateIdTemp,
         title: "Successful purchase",
         input_message_content: {
           parse_mode: "HTML",

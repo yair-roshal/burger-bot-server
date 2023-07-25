@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const routes = require("./routes/index")
 const getCurrentTimeID = require("./helpers/utils")
+console.log('getCurrentTimeID', getCurrentTimeID)
 
 const bodyParser = require("body-parser")
 const cors = require("cors")

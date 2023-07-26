@@ -6,7 +6,7 @@ dotenv.config()
 const token =
   process.env.NODE_ENV === "prod"
     ? process.env.TELEGRAM_BOT_TOKEN_prod
-    : TELEGRAM_BOT_TOKEN_dev
+    : process.env.TELEGRAM_BOT_TOKEN_dev
 
 console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
 console.log(

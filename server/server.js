@@ -4,8 +4,8 @@ const routes = require("./routes/index")
 
 const { generateId, getCurrentTimeID } = require("./helpers/utils")
 
-console.log("getCurrentTimeID", getCurrentTimeID)
-console.log("generateId", generateId)
+console.log("getCurrentTimeID", getCurrentTimeID())
+console.log("generateId", generateId())
 
 const bodyParser = require("body-parser")
 const cors = require("cors")

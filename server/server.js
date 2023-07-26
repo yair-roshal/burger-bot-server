@@ -2,11 +2,10 @@ const express = require("express")
 const app = express()
 const routes = require("./routes/index")
 
-const getCurrentTimeID = require("./helpers/utils")
-const generateId = require("./helpers/utils")
+const { generateId, getCurrentTimeID } = require("./helpers/utils")
 
-console.log('getCurrentTimeID', getCurrentTimeID)
-console.log('generateId', generateId)
+console.log("getCurrentTimeID", getCurrentTimeID)
+console.log("generateId", generateId)
 
 const bodyParser = require("body-parser")
 const cors = require("cors")

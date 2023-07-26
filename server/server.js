@@ -2,10 +2,15 @@ const express = require("express")
 const app = express()
 const routes = require("./routes/index")
 
-const { generateId, getCurrentTimeID } = require("./helpers/utils")
+const {
+  generateId,
+  getCurrentTimeID,
+  generateDateId,
+} = require("./helpers/utils")
 
 console.log("getCurrentTimeID", getCurrentTimeID())
 console.log("generateId", generateId())
+console.log("generateDateId", generateDateId())
 
 const bodyParser = require("body-parser")
 const cors = require("cors")
@@ -82,7 +87,8 @@ module.exports = (bot) => {
       discount,
     } = req.body
 
-    let generateIdTemp = generateId()
+    let generateIdTemp = generateDateId()
+    // let generateIdTemp = generateId()
 
     let productsQuantityPrice = ``
     for (const item of products) {

@@ -1,12 +1,12 @@
 module.exports = {
     apps: [
         {
-            name: 'newBot',
+            name: 'burger_bot_server',
             script: './index.js',
             max_memory_restart: '300M',
             // Logging
-            out_file: './newBot-out.log',
-            error_file: './newBot-error.log',
+            out_file: './burger_bot_server_out.log',
+            error_file: './burger_bot_server_error.log',
             // merge_logs: true,
             time: true,
 

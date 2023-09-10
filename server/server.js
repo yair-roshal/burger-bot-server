@@ -112,12 +112,14 @@ ________________
         },
       })
 
+      console.log('success-200  !!!--->>>')
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (error) {
-      // return res.status(500).json({ titleStatus: "fail-500", error: e })
+      console.log("error.message !!!--->>>", error.message)
+
       return res
         .status(500)
-        .json({ titleStatus: "fail-500", details: error.message })
+        .json({ titleStatus: "error on server - 500", details: error.message })
     }
   })
 

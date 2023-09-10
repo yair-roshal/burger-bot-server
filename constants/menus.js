@@ -27,7 +27,7 @@ const startMainMenu_Production = {
     inline_keyboard: [
       [
         {
-          text: "Open menu",
+          text: "click to open menu",
           web_app: { url: webAppUrl },
         },
       ],

@@ -79,16 +79,23 @@ module.exports = (bot) => {
 
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
-    const { queryId, cartItems, comment, totalPrice, address, optionDelivery ,paymentMethod} =
-      req.body
+    const {
+      queryId,
+      cartItems,
+      comment,
+      totalPrice,
+      address,
+      optionDelivery,
+      paymentMethod,
+    } = req.body
 
     for (const item of cartItems) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
 
       productsQuantityPrice =
+        `\n` +
         productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪` +
-        `\n`
+        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`
     }
 
     try {
@@ -99,11 +106,13 @@ module.exports = (bot) => {
         input_message_content: {
           parse_mode: "HTML",
           message_text: `
+          
+          
 <b>You ordered: </b>
 ${productsQuantityPrice}
 ________________       
 <b>Total price: </b> ${totalPrice} ₪
-  ________________
+________________
 <b>Option Delivery: </b> ${optionDelivery}
 <b>Your comment: </b> ${comment}
 <b>Payment method: </b> ${paymentMethod}   
@@ -112,7 +121,7 @@ ________________
         },
       })
 
-      console.log('success-200  !!!--->>>')
+      console.log("success-200  !!!--->>>")
       return res.status(200).json({ titleStatus: "success-200" })
     } catch (error) {
       console.log("error.message !!!--->>>", error.message)

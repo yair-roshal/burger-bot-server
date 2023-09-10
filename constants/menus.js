@@ -59,18 +59,19 @@ const startMainMenu_Production = {
 }
 
 //==================================================================
-const inline_keyboard = {
-    reply_markup: {
-        inline_keyboard: [
-            [
-                {
-                    text: 'Open menu',
-                    callback_data: 'open_menu',
-                },
-            ],
-        ],
-    },
-}
+// const inline_keyboard = {
+//     reply_markup: {
+//         inline_keyboard: [
+//             [
+//                 {
+//                     text: 'Open menu',
+//                     callback_data: 'open_menu',
+//                 },
+//             ],
+//         ],
+//     },
+// }
+
 //==================================
 // const callToAdminMenu = {
 //     reply_markup: {
@@ -90,6 +91,6 @@ module.exports = {
   settings_message,
 
   startMainMenu_Production,
-   inline_keyboard,
+  //  inline_keyboard,
   // callToAdminMenu,
 }

@@ -69,29 +69,28 @@ module.exports = (bot) => {
 
   //=========================================================================
 
-  let optionsMessage = {
-    parse_mode: "HTML",
-    disable_web_page_preview: true,
-  }
+  // let optionsMessage = {
+  //   parse_mode: "HTML",
+  //   disable_web_page_preview: true,
+  // }
 
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
     const {
       queryId,
-      products,
-      totalPrice,
-      totalPriceWithDiscount,
-      paymentMethod,
+      cartItems,
       comment,
+      totalPrice,
       address,
-      discount,
+      optionDelivery,
     } = req.body
+    
+     
 
     let generateIdTemp = generateDateId()
-    // let generateIdTemp = generateId()
-
+ 
     let productsQuantityPrice = ``
-    for (const item of products) {
+    for (const item of cartItems) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
       productsQuantityPrice =
         productsQuantityPrice +
@@ -111,11 +110,9 @@ module.exports = (bot) => {
 ${productsQuantityPrice}
 ________________       
 <b>Total price: </b> ${totalPrice} ₪
-<b>Discount: </b> ${discount} = ${discount} ₪
-<b>Total price with discount: </b> ${totalPriceWithDiscount} ₪
-________________
-<b>Option Delivery: </b> ${address ? `address: ${address}` : "On Site"}
-<b>Your comment: </b> ${comment || "No comment"}
+  ________________
+<b>Option Delivery: </b> ${optionDelivery}
+<b>Your comment: </b> ${comment}
 <b>Payment method: </b> ${paymentMethod}   
 <b>Thanks! Your order № </b> ${generateIdTemp}
 `,

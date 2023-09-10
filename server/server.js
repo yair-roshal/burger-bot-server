@@ -79,7 +79,7 @@ module.exports = (bot) => {
 
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
-    const { queryId, cartItems, comment, totalPrice, address, optionDelivery } =
+    const { queryId, cartItems, comment, totalPrice, address, optionDelivery ,paymentMethod} =
       req.body
 
     for (const item of cartItems) {

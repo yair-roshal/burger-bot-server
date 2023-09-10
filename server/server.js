@@ -93,9 +93,8 @@ module.exports = (bot) => {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
 
       productsQuantityPrice =
-        `\n` +
         productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`
+        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
     }
 
     try {
@@ -106,8 +105,6 @@ module.exports = (bot) => {
         input_message_content: {
           parse_mode: "HTML",
           message_text: `
-          
-          
 <b>You ordered: </b>
 ${productsQuantityPrice}
 ________________       
@@ -117,6 +114,7 @@ ________________
 <b>Your comment: </b> ${comment}
 <b>Payment method: </b> ${paymentMethod}   
 <b>Thanks! Your order № </b> ${generateIdTemp}
+______________________________________________
 `,
         },
       })

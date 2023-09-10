@@ -121,7 +121,7 @@ ________________
     }
   })
 
-  const PORT = process.env.PORT || 8000
+  // const PORT = process.env.PORT || 8000
 
   // Create an HTTPS server and listen on port 443
   https.createServer(httpsOptions, app).listen(443, () => {

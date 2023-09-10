@@ -74,16 +74,17 @@ module.exports = (bot) => {
   //   disable_web_page_preview: true,
   // }
 
+  let generateIdTemp = generateDateId()
+  let productsQuantityPrice = ``
+
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
     const { queryId, cartItems, comment, totalPrice, address, optionDelivery } =
       req.body
 
-    let generateIdTemp = generateDateId()
-
-    let productsQuantityPrice = ``
     for (const item of cartItems) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
+
       productsQuantityPrice =
         productsQuantityPrice +
         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪` +
@@ -112,8 +113,11 @@ ________________
       })
 
       return res.status(200).json({ titleStatus: "success-200" })
-    } catch (e) {
-      return res.status(500).json({ titleStatus: "fail-500", error: e })
+    } catch (error) {
+      // return res.status(500).json({ titleStatus: "fail-500", error: e })
+      return res
+        .status(500)
+        .json({ titleStatus: "fail-500", details: error.message })
     }
   })
 

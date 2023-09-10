@@ -41,8 +41,8 @@ bot.onText(/\/start/, async (msg) => {
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
   bot
-    .sendPhoto(chatId, photoPath, menuENV)
-    // .sendPhoto(chatId, photoPath)
+    // .sendPhoto(chatId, photoPath, menuENV) // нижнее меню не работает (не дает ID)
+    .sendPhoto(chatId, photoPath)
     .then(() => {
       console.log("Фотография успешно отправлена")
     })
@@ -74,8 +74,8 @@ bot.on("callback_query", (query) => {
         parse_mode: "HTML",
         //disable because we don't want show description links
         disable_web_page_preview: true,
-      },
-      menuENV
+      }
+      // menuENV
     )
   }
 

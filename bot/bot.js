@@ -8,6 +8,7 @@ const token =
     ? process.env.TELEGRAM_BOT_TOKEN_prod
     : process.env.TELEGRAM_BOT_TOKEN_dev
 
+console.log("____________________________________________ :>> ")
 console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
 console.log(
   "process.env.TELEGRAM_BOT_TOKEN_prod :>> ",

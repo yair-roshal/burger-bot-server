@@ -8,8 +8,8 @@ const {
   generateDateId,
 } = require("./helpers/utils")
 
-console.log("getCurrentTimeID", getCurrentTimeID())
-console.log("generateId", generateId())
+// console.log("getCurrentTimeID", getCurrentTimeID())
+// console.log("generateId", generateId())
 console.log("generateDateId", generateDateId())
 
 const bodyParser = require("body-parser")
@@ -76,19 +76,11 @@ module.exports = (bot) => {
 
   app.post("/web-data", async (req, res) => {
     console.log("/web-data_req.body :>> ", req.body)
-    const {
-      queryId,
-      cartItems,
-      comment,
-      totalPrice,
-      address,
-      optionDelivery,
-    } = req.body
-    
-     
+    const { queryId, cartItems, comment, totalPrice, address, optionDelivery } =
+      req.body
 
     let generateIdTemp = generateDateId()
- 
+
     let productsQuantityPrice = ``
     for (const item of cartItems) {
       const totalPrice = (item.price * item.quantity).toFixed(2) || ""

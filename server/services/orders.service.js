@@ -1,4 +1,4 @@
-const constants = require("../constants/constants")
+const constants = require("../../constants/constants")
 
 const mysql = require("mysql2/promise")
 

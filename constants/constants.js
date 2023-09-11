@@ -1,14 +1,14 @@
-const arrayBlockListSendingGPT = [
-  "/start",
-  "/add_feature",
-  "/clean_context",
-  "Clean context",
-  "Hello!",
-]
-// const URL_BD = `http://localhost:3306`
-const URL_BD = `http://localhost:${process.env.PORT}`
+require('dotenv').config();
 
-// const webAppUrl = 'https://burger-app-heroku-9654db42ebb1.herokuapp.com/'
-const webAppUrl = "https://heroic-puffpuff-e7da0d.netlify.app"
+console.log('DB_HOST', process.env.DB_HOST)
 
-module.exports = { URL_BD, arrayBlockListSendingGPT, webAppUrl }
+module.exports = {
+  sqlConfig: {
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT ,
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'burger_db',
+  },
+  
+};

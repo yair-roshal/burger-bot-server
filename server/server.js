@@ -1,25 +1,17 @@
 const express = require("express")
-const app = express()
-const routes = require("./routes/index")
-
-const {
-  generateId,
-  getCurrentTimeID,
-  generateDateId,
-} = require("./helpers/utils")
-
-// console.log("getCurrentTimeID", getCurrentTimeID())
-// console.log("generateId", generateId())
-console.log("generateDateId", generateDateId())
-
-const bodyParser = require("body-parser")
-const cors = require("cors")
-
 var https = require("https")
 var fs = require("fs")
+const app = express()
+const bodyParser = require("body-parser")
+const cors = require("cors")
+const routes = require("./routes/index")
+
+const { 
+  generateDateId,
+} = require("./helpers/utils") 
+console.log("generateDateId", generateDateId())
 
 const path = require("path")
-
 httpsOptions = {
   key: fs.readFileSync(
     path.join(__dirname, "./certificates/burgerim.ru.key"),
@@ -38,18 +30,18 @@ module.exports = (bot) => {
 
   // app.use(cors())
 
-  // app.use('/', routes)
+  app.use('/', routes)
 
   //=========================================================================
 
-  const allowedOrigins = [
-    "https://heroic-puffpuff-e7da0d.netlify.app",
-    "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
-    "https://serene-moonbeam-93eead.netlify.app/static/js",
-    "https://master--serene-moonbeam-93eead.netlify.app",
-    "http://localhost:8889",
-    "https://api.telegram.org",
-  ]
+  // const allowedOrigins = [
+  //   "https://heroic-puffpuff-e7da0d.netlify.app",
+  //   "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
+  //   "https://serene-moonbeam-93eead.netlify.app/static/js",
+  //   "https://master--serene-moonbeam-93eead.netlify.app",
+  //   "http://localhost:8889",
+  //   "https://api.telegram.org",
+  // ]
 
   const corsOptions = {
     // origin: function (origin, callback) {

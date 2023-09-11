@@ -1,9 +1,8 @@
 const express = require('express'),
     router = express.Router(),
-    messagesRoutes = require('./messages.routes')
+    ordersRoutes = require('./orders.routes')
 
-router.use('/', messagesRoutes)
-// router.use('/web-data', messagesRoutes)
-
+router.use('/', ordersRoutes)
+ 
  
 module.exports = router

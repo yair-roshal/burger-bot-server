@@ -74,16 +74,18 @@ const startMainMenu_Production = {
 
 //==================================
 const callToAdminMenu = {
-    reply_markup: {
-        keyboard: [
-            [
-                {
-                    text: 'Contact the admin',
-                    request_contact: true,
-                },
-            ],
-        ],
-    },
+  reply_markup: {
+    keyboard: [
+      [
+        {
+          text: "Contact the admin",
+          request_contact: true,
+        },
+      ],
+    ],
+    resize_keyboard: true, // Разрешить изменение размера клавиатуры
+    one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+  },
 }
 
 module.exports = {

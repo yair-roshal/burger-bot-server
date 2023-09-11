@@ -53,32 +53,20 @@ bot.onText(/\/start/, async (msg) => {
   //     console.error("Ошибка при отправке фотографии:", error.message)
   //   })
 
-  bot.sendMessage(
-    chatId,
-    "", // Пустое текстовое сообщение
-    {
-      reply_markup: {
-        keyboard: [
-          [
-            {
-              text: "Contact the admin",
-              request_contact: true,
-            },
-          ],
-        ], // Здесь callToAdminMenu должен содержать массив кнопок
-        resize_keyboard: true, // Разрешить изменение размера клавиатуры
-        one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-      },
-    }
-  )
-      .then(() => {
+  bot
+    .sendMessage(
+      chatId,
+      "open keyboard down", // Пустое текстовое сообщение
+      {
+        callToAdminMenu,
+      }
+    )
+    .then(() => {
       console.log("sms успешно отправлена")
     })
     .catch((error) => {
       console.error("Ошибка при отправке sms:", error.message)
     })
-  
-  
 })
 
 //=========================

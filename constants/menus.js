@@ -73,18 +73,18 @@ const startMainMenu_Production = {
 // }
 
 //==================================
-// const callToAdminMenu = {
-//     reply_markup: {
-//         keyboard: [
-//             [
-//                 {
-//                     text: 'Contact the admin',
-//                     request_contact: true,
-//                 },
-//             ],
-//         ],
-//     },
-// }
+const callToAdminMenu = {
+    reply_markup: {
+        keyboard: [
+            [
+                {
+                    text: 'Contact the admin',
+                    request_contact: true,
+                },
+            ],
+        ],
+    },
+}
 
 module.exports = {
   webAppUrl,
@@ -92,5 +92,5 @@ module.exports = {
 
   startMainMenu_Production,
   //  inline_keyboard,
-  // callToAdminMenu,
+  callToAdminMenu,
 }

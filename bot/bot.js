@@ -19,7 +19,7 @@ const bot = new TelegramBot(token, { polling: true })
 const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
-const { startMainMenu_Production } = require("../constants/menus.js")
+const { startMainMenu_Production ,callToAdminMenu } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
 
@@ -49,6 +49,19 @@ bot.onText(/\/start/, async (msg) => {
     .catch((error) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
+    
+    
+  bot.sendMessage(
+    chatId,
+    // text_message_html,
+    // {
+    //   parse_mode: "HTML",
+    //   //disable because we don't want show description links
+    //   disable_web_page_preview: true,
+    // },
+    callToAdminMenu
+  )
+  
 })
 
 //=========================

@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api")
+CHAT_ID_ADMIN = 386212074
 
 const dotenv = require("dotenv")
 dotenv.config()
@@ -15,6 +16,7 @@ console.log(
   process.env.TELEGRAM_BOT_TOKEN_prod
 )
 console.log("token :>> ", token)
+
 const bot = new TelegramBot(token, { polling: true })
 const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
@@ -58,15 +60,37 @@ bot.onText(/\/start/, async (msg) => {
       chatId,
       "open keyboard down", // Пустое текстовое сообщение
       {
-        callToAdminMenu,
+        reply_markup: {
+          keyboard: [
+            [
+              {
+                text: "Contact the admin",
+                request_contact: true,
+              },
+            ],
+          ],
+          resize_keyboard: true, // Разрешить изменение размера клавиатуры
+          one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+        },
       }
     )
     .then(() => {
-      console.log("sms успешно отправлена")
+      console.log("Keyboard successfully displayed")
     })
     .catch((error) => {
-      console.error("Ошибка при отправке sms:", error.message)
+      console.error("Error displaying keyboard:", error.message)
     })
+})
+
+//=========================
+
+// send message to admin with ask to add anything
+bot.on("contact", (msg) => {
+  bot.sendMessage(
+    CHAT_ID_ADMIN,
+    `Message from ${msg.from.first_name}  :
+         ${msg.contact.phone_number}`
+  )
 })
 
 //=========================
@@ -126,15 +150,6 @@ bot.onText(/\/start/, async (msg) => {
 // })
 
 //==========================================================
-
-// send message to admin with ask to add anything
-bot.on("contact", (msg) => {
-  bot.sendMessage(
-    chatIdAdmin,
-    `Message from ${msg.from.first_name}  :
-         ${msg.contact.phone_number}`
-  )
-})
 
 // ===========================================
 

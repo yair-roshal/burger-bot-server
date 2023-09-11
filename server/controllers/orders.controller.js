@@ -1,54 +1,54 @@
-const OrdersService = require('../services/orders.service.js')
+const OrdersService = require("../services/orders.service.js")
 
 class OrdersController {
-    // async getOrdersStartPage(req, res) {
-    //     const result = await OrdersService.getOrdersStartPage(req, res)
+  // async getOrdersStartPage(req, res) {
+  //     const result = await OrdersService.getOrdersStartPage(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 
-    // async getOrder(req, res) {
-    //     const result = await OrdersService.getOrder(req, res)
+  // async getOrder(req, res) {
+  //     const result = await OrdersService.getOrder(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 
-    // async getOrders(req, res) {
-    //     const result = await OrdersService.getOrders(req, res)
+  // async getOrders(req, res) {
+  //     const result = await OrdersService.getOrders(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 
-    async createOrder(req, res) {
-        const result = await OrdersService.createOrder(req, res)
+  async createOrder(req, res) {
+    const result = await OrdersService.createOrder(req, res)
 
-        if (result) return res.status(200).send(result)
-        else return res.status(500).send({ message: 'server_error_createOrder' })
-    }
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "server_error_createOrder" })
+  }
 
-    // async updateOrder(req, res) {
-    //     const result = await OrdersService.updateOrder(req, res)
+  // async updateOrder(req, res) {
+  //     const result = await OrdersService.updateOrder(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 
-    // async deleteOrder(req, res) {
-    //     const result = await OrdersService.deleteOrder(req, res)
+  // async deleteOrder(req, res) {
+  //     const result = await OrdersService.deleteOrder(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 
-    // async deleteTable(req, res) {
-    //     const result = await OrdersService.deleteTable(req, res)
+  // async deleteTable(req, res) {
+  //     const result = await OrdersService.deleteTable(req, res)
 
-    //     if (result) return res.status(200).send(result)
-    //     else return res.status(500).send({ message: 'error.' })
-    // }
+  //     if (result) return res.status(200).send(result)
+  //     else return res.status(500).send({ message: 'error.' })
+  // }
 }
 
 module.exports = new OrdersController()

@@ -43,15 +43,15 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  bot
-    .sendPhoto(chatId, photoPath, menuENV)
-    // .sendPhoto(chatId, photoPath)
-    .then(() => {
-      console.log("Фотография успешно отправлена")
-    })
-    .catch((error) => {
-      console.error("Ошибка при отправке фотографии:", error.message)
-    })
+  // bot
+  //   .sendPhoto(chatId, photoPath, menuENV)
+  //   // .sendPhoto(chatId, photoPath)
+  //   .then(() => {
+  //     console.log("Фотография успешно отправлена")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Ошибка при отправке фотографии:", error.message)
+  //   })
 
   bot.sendMessage(
     chatId,

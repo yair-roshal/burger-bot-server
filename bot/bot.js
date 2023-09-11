@@ -45,35 +45,31 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  // bot
-  //   .sendPhoto(chatId, photoPath, menuENV)
-  //   // .sendPhoto(chatId, photoPath)
-  //   .then(() => {
-  //     console.log("Фотография успешно отправлена")
-  //   })
-  //   .catch((error) => {
-  //     console.error("Ошибка при отправке фотографии:", error.message)
-  //   })
+  bot
+    .sendPhoto(chatId, photoPath, menuENV)
+    // .sendPhoto(chatId, photoPath)
+    .then(() => {
+      console.log("Фотография успешно отправлена")
+    })
+    .catch((error) => {
+      console.error("Ошибка при отправке фотографии:", error.message)
+    })
 
   bot
-    .sendMessage(
-      chatId,
-      "open keyboard down", // Пустое текстовое сообщение
-      {
-        reply_markup: {
-          keyboard: [
-            [
-              {
-                text: "Contact the admin",
-                request_contact: true,
-              },
-            ],
+    .sendMessage(chatId, "Welcome to the BurgerBot! \n\n", {
+      reply_markup: {
+        keyboard: [
+          [
+            {
+              text: "Contact the admin",
+              request_contact: true,
+            },
           ],
-          resize_keyboard: true, // Разрешить изменение размера клавиатуры
-          one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-        },
-      }
-    )
+        ],
+        resize_keyboard: true, // Разрешить изменение размера клавиатуры
+        one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+      },
+    })
     .then(() => {
       console.log("Keyboard successfully displayed")
     })

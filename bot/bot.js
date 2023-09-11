@@ -19,7 +19,10 @@ const bot = new TelegramBot(token, { polling: true })
 const formatDate = require("./utils/formatDate.js")
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
-const { startMainMenu_Production ,callToAdminMenu } = require("../constants/menus.js")
+const {
+  startMainMenu_Production,
+  callToAdminMenu,
+} = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
 
@@ -49,76 +52,85 @@ bot.onText(/\/start/, async (msg) => {
     .catch((error) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
-    
-    
+
   bot.sendMessage(
     chatId,
-    // text_message_html,
-    // {
-    //   parse_mode: "HTML",
-    //   //disable because we don't want show description links
-    //   disable_web_page_preview: true,
-    // },
-    callToAdminMenu
+    "", // Пустое текстовое сообщение
+    {
+      reply_markup: {
+        keyboard: [
+          [
+            {
+              text: "Contact the admin",
+              request_contact: true,
+            },
+          ],
+        ], // Здесь callToAdminMenu должен содержать массив кнопок
+        resize_keyboard: true, // Разрешить изменение размера клавиатуры
+        one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+      },
+    }
   )
+  
+  
   
 })
 
 //=========================
 
-bot.on("message", async (msg) => {
-  const chatId = msg.chat.id
-  const text = msg.text
+// bot.on("message", async (msg) => {
+//   const chatId = msg.chat.id
+//   const text = msg.text
 
-  // для обычных кнопок внизу бота===================================
-})
+//   // для обычных кнопок внизу бота===================================
+// })
 
 // callback_query ===========================================
-bot.on("callback_query", (query) => {
-  const chatId = query.message.chat.id
-  const data = query.data
+// bot.on("callback_query", (query) => {
+//   const chatId = query.message.chat.id
+//   const data = query.data
 
-  if (data === "about") {
-    const chatId = msg.chat.id
-    bot.sendMessage(
-      chatId,
-      text_message_html,
-      {
-        parse_mode: "HTML",
-        //disable because we don't want show description links
-        disable_web_page_preview: true,
-      },
-      menuENV
-    )
-  }
+//   if (data === "about") {
+//     const chatId = msg.chat.id
+//     bot.sendMessage(
+//       chatId,
+//       text_message_html,
+//       {
+//         parse_mode: "HTML",
+//         //disable because we don't want show description links
+//         disable_web_page_preview: true,
+//       },
+//       menuENV
+//     )
+//   }
 
-  if (data === "test_pay") {
-    const chatId = msg.chat.id
-    const options = {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: "Buy",
-              pay: true,
-            },
-          ],
-        ],
-      },
-    }
+//   if (data === "test_pay") {
+//     const chatId = msg.chat.id
+//     const options = {
+//       reply_markup: {
+//         inline_keyboard: [
+//           [
+//             {
+//               text: "Buy",
+//               pay: true,
+//             },
+//           ],
+//         ],
+//       },
+//     }
 
-    bot.sendInvoice(
-      chatId,
-      "Title111",
-      "Title222",
-      "PAYMENTS_TOKEN",
-      "some_invoice",
-      "RUB",
-      [{ label: "example", amount: 100 }],
-      options
-    )
-  }
-})
+//     bot.sendInvoice(
+//       chatId,
+//       "Title111",
+//       "Title222",
+//       "PAYMENTS_TOKEN",
+//       "some_invoice",
+//       "RUB",
+//       [{ label: "example", amount: 100 }],
+//       options
+//     )
+//   }
+// })
 
 //==========================================================
 
@@ -133,51 +145,51 @@ bot.on("contact", (msg) => {
 
 // ===========================================
 
-bot.onText(/\/buy/, (msg) => {
-  const chatId = msg.chat.id
-  const options = {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "Buy",
-            pay: true,
-          },
-        ],
-      ],
-    },
-  }
-  bot.sendInvoice(
-    chatId,
-    "Title",
-    "Title",
-    "PAYMENTS_TOKEN",
-    "some_invoice",
-    "RUB",
-    [{ label: "example", amount: 100 }],
-    options
-  )
-})
+// bot.onText(/\/buy/, (msg) => {
+//   const chatId = msg.chat.id
+//   const options = {
+//     reply_markup: {
+//       inline_keyboard: [
+//         [
+//           {
+//             text: "Buy",
+//             pay: true,
+//           },
+//         ],
+//       ],
+//     },
+//   }
+//   bot.sendInvoice(
+//     chatId,
+//     "Title",
+//     "Title",
+//     "PAYMENTS_TOKEN",
+//     "some_invoice",
+//     "RUB",
+//     [{ label: "example", amount: 100 }],
+//     options
+//   )
+// })
 
-bot.on("pre_checkout_query", (query) => {
-  bot.answerPreCheckoutQuery(query.id, true)
-})
+// bot.on("pre_checkout_query", (query) => {
+//   bot.answerPreCheckoutQuery(query.id, true)
+// })
 
-bot.on("successful_payment", (msg) => {
-  const chatId = msg.chat.id
-  bot.sendMessage(chatId, "Payment was successful!")
-})
+// bot.on("successful_payment", (msg) => {
+//   const chatId = msg.chat.id
+//   bot.sendMessage(chatId, "Payment was successful!")
+// })
 
 //======================
 
-bot.on("webAppData", (webAppMes) => {
-  console.log(webAppMes) // вся информация о сообщении
-  console.log(webAppMes.webAppData) // конкретно то, что мы передали в бота
-  bot.sendMessage(
-    webAppMes.chat.id,
-    `получили информацию из веб-приложения: ${webAppMes.webAppData}`
-  )
-  // отправляем сообщение в ответ на отправку данных из веб-приложения
-})
+// bot.on("webAppData", (webAppMes) => {
+//   console.log(webAppMes) // вся информация о сообщении
+//   console.log(webAppMes.webAppData) // конкретно то, что мы передали в бота
+//   bot.sendMessage(
+//     webAppMes.chat.id,
+//     `получили информацию из веб-приложения: ${webAppMes.webAppData}`
+//   )
+//   // отправляем сообщение в ответ на отправку данных из веб-приложения
+// })
 
 module.exports = { bot }

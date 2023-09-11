@@ -71,7 +71,12 @@ bot.onText(/\/start/, async (msg) => {
       },
     }
   )
-  
+      .then(() => {
+      console.log("sms успешно отправлена")
+    })
+    .catch((error) => {
+      console.error("Ошибка при отправке sms:", error.message)
+    })
   
   
 })

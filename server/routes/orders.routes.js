@@ -18,6 +18,6 @@ router
 // .put(OrderController.updateOrder)
 // .delete(OrderController.deleteOrder)
 
-router.route("/web-data").post(OrderController.createOrder)
+// router.route("/web-data").post(OrderController.createOrder)
 
 module.exports = router

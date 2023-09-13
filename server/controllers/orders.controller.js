@@ -15,12 +15,12 @@ class OrdersController {
   //     else return res.status(500).send({ message: 'error.' })
   // }
 
-  // async getOrders(req, res) {
-  //     const result = await OrdersService.getOrders(req, res)
+  async getOrders(req, res) {
+      const result = await OrdersService.getOrders(req, res)
 
-  //     if (result) return res.status(200).send(result)
-  //     else return res.status(500).send({ message: 'error.' })
-  // }
+      if (result) return res.status(200).send(result)
+      else return res.status(500).send({ message: 'error.' })
+  }
 
   async createOrder(req, res) {
     const result = await OrdersService.createOrder(req, res)

@@ -9,11 +9,10 @@ const OrderController = require("../controllers/orders.controller.js")
 //     .delete(OrderController.deleteTable)
 
 router
-  .route("/")
+  .route("/orders")
   // .route('/:user/:request_id')
   // .route('/:user/:id')
-  // .get(OrderController.getOrder)
-
+  .get(OrderController.getOrders)
   .post(OrderController.createOrder)
 
 // .put(OrderController.updateOrder)

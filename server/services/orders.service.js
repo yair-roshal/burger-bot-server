@@ -2,6 +2,29 @@ const constants = require("../../constants/constants")
 const mysql = require("mysql2/promise")
 
 class OrdersService {
+  async getOrders() {
+    try {
+      const sqlQuery = `SELECT * FROM orders`
+
+      const connection = await mysql.createConnection({
+        host: "194.31.175.248", // Replace with your IP address
+        port: 3306, // Replace with your port
+        user: "gen_user", // Replace with your username
+        password: "w07613vrm1", // Replace with your password
+        database: "burger_db", // Replace with your database name
+      })
+
+      const [results] = await connection.execute(sqlQuery)
+
+      console.log("orders from DB:", results)
+
+      return results
+    } catch (error) {
+      console.error("Error executing SQL query:", error)
+      throw error // Re-throw the error to handle it elsewhere if needed
+    }
+  }
+
   async createOrder(req, res) {
     const orderData = req.body // Assuming req.body contains the order data
 

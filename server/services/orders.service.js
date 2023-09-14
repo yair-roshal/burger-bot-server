@@ -2,11 +2,10 @@ const mysql = require("mysql2/promise")
 const { sqlConfig } = require("../../constants/constants")
 const axios = require("axios")
 const https = require("https")
-const { 
-  generateDateId,
-} = require("../helpers/utils") 
+const { generateDateId } = require("../helpers/utils")
 console.log("generateDateId", generateDateId())
 
+const bot = require("../../bot/bot")
 
 class OrdersService {
   constructor() {
@@ -119,8 +118,8 @@ class OrdersService {
     // await this.connectToDatabase()
 
     // try {
-    //   const sqlQuery = `INSERT INTO orders 
-    //                     (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
+    //   const sqlQuery = `INSERT INTO orders
+    //                     (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod)
     //                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
     //   // const connection = await mysql.createConnection(sqlConfig)
@@ -137,12 +136,11 @@ class OrdersService {
     //   console.error("Error executing SQL query:", error)
     //   throw error // Re-throw the error to handle it elsewhere if needed
     // }
-    
+
     //=========================================================
     let generateIdTemp = generateDateId()
     let productsQuantityPrice = ``
-    
-    
+
     console.log("/orders_req.body :>> ", req.body)
     const {
       queryId,
@@ -159,7 +157,8 @@ class OrdersService {
 
       productsQuantityPrice =
         productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
+        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪` +
+        `\n`
     }
 
     try {
@@ -193,9 +192,6 @@ ______________________________________________
         .status(500)
         .json({ titleStatus: "error on server - 500", details: error.message })
     }
-    
-    
-    
   }
 }
 

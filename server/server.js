@@ -61,13 +61,11 @@ module.exports = (bot) => {
 
   //=========================================================================
 
-  // let optionsMessage = {
-  //   parse_mode: "HTML",
-  //   disable_web_page_preview: true,
-  // }
+   
+  
 
-  let generateIdTemp = generateDateId()
-  let productsQuantityPrice = ``
+//   let generateIdTemp = generateDateId()
+//   let productsQuantityPrice = ``
 
 //   app.post("/orders", async (req, res) => {
 //     console.log("/orders_req.body :>> ", req.body)
@@ -120,7 +118,12 @@ module.exports = (bot) => {
 //         .status(500)
 //         .json({ titleStatus: "error on server - 500", details: error.message })
 //     }
-//   })
+    
+    
+    
+    
+    
+  })
 
   // const PORT = process.env.PORT || 8000
 

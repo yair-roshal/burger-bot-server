@@ -27,8 +27,6 @@ class OrdersService {
       throw error
     }
   }
-  
-  
 
   async createOrder(req, res) {
     const orderData = req.body // Assuming req.body contains the order data
@@ -62,7 +60,7 @@ class OrdersService {
       const [results] = await connection.execute(sqlQuery, values)
 
       console.log("New order saved to DB:", results)
-      console.log('values111', values)
+      console.log("values111", values)
 
       return results
     } catch (error) {

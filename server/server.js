@@ -69,8 +69,8 @@ module.exports = (bot) => {
   let generateIdTemp = generateDateId()
   let productsQuantityPrice = ``
 
-  app.post("/web-data", async (req, res) => {
-    console.log("/web-data_req.body :>> ", req.body)
+  app.post("/orders", async (req, res) => {
+    console.log("/orders_req.body :>> ", req.body)
     const {
       queryId,
       cartItems,

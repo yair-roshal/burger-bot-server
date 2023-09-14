@@ -69,58 +69,58 @@ module.exports = (bot) => {
   let generateIdTemp = generateDateId()
   let productsQuantityPrice = ``
 
-  app.post("/orders", async (req, res) => {
-    console.log("/orders_req.body :>> ", req.body)
-    const {
-      queryId,
-      cartItems,
-      comment,
-      totalPrice,
-      address,
-      optionDelivery,
-      paymentMethod,
-    } = req.body
+//   app.post("/orders", async (req, res) => {
+//     console.log("/orders_req.body :>> ", req.body)
+//     const {
+//       queryId,
+//       cartItems,
+//       comment,
+//       totalPrice,
+//       address,
+//       optionDelivery,
+//       paymentMethod,
+//     } = req.body
 
-    for (const item of cartItems) {
-      const totalPrice = (item.price * item.quantity).toFixed(2) || ""
+//     for (const item of cartItems) {
+//       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
 
-      productsQuantityPrice =
-        productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
-    }
+//       productsQuantityPrice =
+//         productsQuantityPrice +
+//         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
+//     }
 
-    try {
-      await bot.answerWebAppQuery(queryId, {
-        type: "article",
-        id: generateIdTemp,
-        title: "Successful purchase",
-        input_message_content: {
-          parse_mode: "HTML",
-          message_text: `
-<b>You ordered: </b>
-${productsQuantityPrice}
-________________       
-<b>Total price: </b> ${totalPrice} ₪
-________________
-<b>Option Delivery: </b> ${optionDelivery}
-<b>Your comment: </b> ${comment}
-<b>Payment method: </b> ${paymentMethod}   
-<b>Thanks! Your order № </b> ${generateIdTemp}
-______________________________________________
-`,
-        },
-      })
+//     try {
+//       await bot.answerWebAppQuery(queryId, {
+//         type: "article",
+//         id: generateIdTemp,
+//         title: "Successful purchase",
+//         input_message_content: {
+//           parse_mode: "HTML",
+//           message_text: `
+// <b>You ordered: </b>
+// ${productsQuantityPrice}
+// ________________       
+// <b>Total price: </b> ${totalPrice} ₪
+// ________________
+// <b>Option Delivery: </b> ${optionDelivery}
+// <b>Your comment: </b> ${comment}
+// <b>Payment method: </b> ${paymentMethod}   
+// <b>Thanks! Your order № </b> ${generateIdTemp}
+// ______________________________________________
+// `,
+//         },
+//       })
 
-      console.log("success-200  !!!--->>>")
-      return res.status(200).json({ titleStatus: "success-200" })
-    } catch (error) {
-      console.log("error.message !!!--->>>", error.message)
+//       console.log("success-200  !!!--->>>")
+//       return res.status(200).json({ titleStatus: "success-200" })
+//     } catch (error) {
+//       console.log("error.message !!!--->>>", error.message)
 
-      return res
-        .status(500)
-        .json({ titleStatus: "error on server - 500", details: error.message })
-    }
-  })
+//       return res
+//         .status(500)
+//         .json({ titleStatus: "error on server - 500", details: error.message })
+//     }
+//   })
 
   // const PORT = process.env.PORT || 8000
 

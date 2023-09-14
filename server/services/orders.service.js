@@ -111,27 +111,83 @@ class OrdersService {
 
     //=====================================
 
-    await this.connectToDatabase()
+    // await this.connectToDatabase()
+
+    // try {
+    //   const sqlQuery = `INSERT INTO orders 
+    //                     (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
+    //                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+
+    //   // const connection = await mysql.createConnection(sqlConfig)
+
+    //   const [results] = await this.connection.execute(sqlQuery, values)
+
+    //   // const [results] = await connection.execute(sqlQuery, values)
+
+    //   console.log("New order saved to DB:", results)
+    //   console.log("values111", values)
+
+    //   return results
+    // } catch (error) {
+    //   console.error("Error executing SQL query:", error)
+    //   throw error // Re-throw the error to handle it elsewhere if needed
+    // }
+    
+    //=========================================================
+    
+    console.log("/orders_req.body :>> ", req.body)
+    const {
+      queryId,
+      cartItems,
+      comment,
+      totalPrice,
+      address,
+      optionDelivery,
+      paymentMethod,
+    } = req.body
+
+    for (const item of cartItems) {
+      const totalPrice = (item.price * item.quantity).toFixed(2) || ""
+
+      productsQuantityPrice =
+        productsQuantityPrice +
+        `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
+    }
 
     try {
-      const sqlQuery = `INSERT INTO orders 
-                        (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      await bot.answerWebAppQuery(queryId, {
+        type: "article",
+        id: generateIdTemp,
+        title: "Successful purchase",
+        input_message_content: {
+          parse_mode: "HTML",
+          message_text: `
+<b>You ordered: </b>
+${productsQuantityPrice}
+________________       
+<b>Total price: </b> ${totalPrice} ₪
+________________
+<b>Option Delivery: </b> ${optionDelivery}
+<b>Your comment: </b> ${comment}
+<b>Payment method: </b> ${paymentMethod}   
+<b>Thanks! Your order № </b> ${generateIdTemp}
+______________________________________________
+`,
+        },
+      })
 
-      // const connection = await mysql.createConnection(sqlConfig)
-
-      const [results] = await this.connection.execute(sqlQuery, values)
-
-      // const [results] = await connection.execute(sqlQuery, values)
-
-      console.log("New order saved to DB:", results)
-      console.log("values111", values)
-
-      return results
+      console.log("success-200  !!!--->>>")
+      return res.status(200).json({ titleStatus: "success-200" })
     } catch (error) {
-      console.error("Error executing SQL query:", error)
-      throw error // Re-throw the error to handle it elsewhere if needed
+      console.log("error.message !!!--->>>", error.message)
+
+      return res
+        .status(500)
+        .json({ titleStatus: "error on server - 500", details: error.message })
     }
+    
+    
+    
   }
 }
 

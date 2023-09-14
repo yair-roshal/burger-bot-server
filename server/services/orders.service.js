@@ -6,6 +6,7 @@ const { generateDateId } = require("../helpers/utils")
 console.log("generateDateId", generateDateId())
 
 // const bot = require("../../bot/bot")
+const TelegramBot = require("node-telegram-bot-api")
 const bot = new TelegramBot(token, { polling: true })
  
 

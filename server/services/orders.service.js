@@ -1,7 +1,7 @@
 const mysql = require("mysql2/promise")
 const { sqlConfig } = require("../../constants/constants")
-const axios = require('axios');
-const https = require('https');
+const axios = require("axios")
+const https = require("https")
 
 class OrdersService {
   constructor() {
@@ -31,7 +31,6 @@ class OrdersService {
   }
 
   async createOrder(req, res) {
-    
     const orderData = req.body
 
     const values = [
@@ -46,94 +45,73 @@ class OrdersService {
       orderData.order_date,
       orderData.paymentMethod,
     ]
-    
 
-const tranzilaApiHost = 'secure5.tranzila.com';
-const tranzilaApiPath = '/cgi-bin/tranzila71u.cgi';
+    // const tranzilaApiHost = "secure5.tranzila.com"
+    // const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
 
-// Prepare transaction parameters
-const queryParameters = {
-  supplier: 'burger', // 'terminal_name' should be replaced by actual terminal name
-  sum: '45.70',
-  currency: '1', // ILS
-  ccno: '12312312', // Test card number
-  expdate: '0824', // Card expiry date: mmyy
-};
-// const queryParameters = {
-//   supplier: 'burger', // 'terminal_name' should be replaced by actual terminal name
-//   sum: '45.70',
-//   currency: '1', // ILS
-//   ccno: '12312312', // Test card number
-//   expdate: '0824', // Card expiry date: mmyy
-// };
+    // // Prepare transaction parameters
+    // const queryParameters = {
+    //   supplier: "burger", // 'terminal_name' should be replaced by actual terminal name
+    //   sum: "45.70",
+    //   currency: "1", // ILS
+    //   ccno: "12312312", // Test card number
+    //   expdate: "0824", // Card expiry date: mmyy
+    // }
 
-// Prepare query string
-const queryString = Object.entries(queryParameters)
-  .map(([name, value]) => `${name}=${value}`)
-  .join('&');
+    // // Prepare query string
+    // const queryString = Object.entries(queryParameters)
+    //   .map(([name, value]) => `${name}=${value}`)
+    //   .join("&")
 
-// Prepare request URL
-const url = `https://${tranzilaApiHost}${tranzilaApiPath}`;
+    // // Prepare request URL
+    // const url = `https://${tranzilaApiHost}${tranzilaApiPath}`
 
-// Send the request using Axios
-axios.post(url, queryString, {
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  },
-  httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Disable SSL verification (not recommended for production)
-})
-  .then((response) => {
-    const result = response.data;
+    // // Send the request using Axios
+    // axios
+    //   .post(url, queryString, {
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //     httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Disable SSL verification (not recommended for production)
+    //   })
+    //   .then((response) => {
+    //     const result = response.data
 
-    // Preparing associative array with response data
-    const responseArray = result.split('&');
-    const responseAssoc = {};
+    //     // Preparing associative array with response data
+    //     const responseArray = result.split("&")
+    //     const responseAssoc = {}
 
-    for (const value of responseArray) {
-      const [key, val] = value.split('=');
-      responseAssoc[key] = val;
-    }
+    //     for (const value of responseArray) {
+    //       const [key, val] = value.split("=")
+    //       responseAssoc[key] = val
+    //     }
 
-    // Analyze the result string
-    if (!responseAssoc['Response']) {
-      console.log(result);
-      /**
-       * When there is no 'Response' parameter it either means
-       * that some pre-transaction error happened (like authentication
-       * problems), in which case the result string will be in HTML format,
-       * explaining the error, or the request was made for generate token only
-       * (in this case the response string will contain only 'TranzilaTK'
-       * parameter)
-       */
-    } else if (responseAssoc['Response'] !== '000') {
-      console.log(responseAssoc['Response']);
-      // Any other than '000' code means transaction failure
-      // (bad card, expiry, etc..)
-    } else {
-      console.log('Success');
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //     // Analyze the result string
+    //     if (!responseAssoc["Response"]) {
+    //       console.log(result)
+    //       /**
+    //        * When there is no 'Response' parameter it either means
+    //        * that some pre-transaction error happened (like authentication
+    //        * problems), in which case the result string will be in HTML format,
+    //        * explaining the error, or the request was made for generate token only
+    //        * (in this case the response string will contain only 'TranzilaTK'
+    //        * parameter)
+    //        */
+    //     } else if (responseAssoc["Response"] !== "000") {
+    //       console.log(responseAssoc["Response"])
+    //       // Any other than '000' code means transaction failure
+    //       // (bad card, expiry, etc..)
+    //     } else {
+    //       console.log("Success")
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //   })
+
     //=====================================
-    
-    
-    await this.connectToDatabase()
 
+    await this.connectToDatabase()
 
     try {
       const sqlQuery = `INSERT INTO orders 
@@ -141,8 +119,6 @@ axios.post(url, queryString, {
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
       // const connection = await mysql.createConnection(sqlConfig)
-
-
 
       const [results] = await this.connection.execute(sqlQuery, values)
 

@@ -2,6 +2,11 @@ const mysql = require("mysql2/promise")
 const { sqlConfig } = require("../../constants/constants")
 const axios = require("axios")
 const https = require("https")
+const { 
+  generateDateId,
+} = require("./helpers/utils") 
+console.log("generateDateId", generateDateId())
+
 
 class OrdersService {
   constructor() {
@@ -134,6 +139,9 @@ class OrdersService {
     // }
     
     //=========================================================
+    let generateIdTemp = generateDateId()
+    let productsQuantityPrice = ``
+    
     
     console.log("/orders_req.body :>> ", req.body)
     const {

@@ -118,12 +118,8 @@ module.exports = (bot) => {
 //         .status(500)
 //         .json({ titleStatus: "error on server - 500", details: error.message })
 //     }
-    
-    
-    
-    
-    
-  })
+  
+  // })
 
   // const PORT = process.env.PORT || 8000
 

@@ -5,7 +5,10 @@ const https = require("https")
 const { generateDateId } = require("../helpers/utils")
 console.log("generateDateId", generateDateId())
 
-const bot = require("../../bot/bot")
+// const bot = require("../../bot/bot")
+const bot = new TelegramBot(token, { polling: true })
+ 
+
 
 class OrdersService {
   constructor() {

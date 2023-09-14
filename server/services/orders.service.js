@@ -4,7 +4,7 @@ const axios = require("axios")
 const https = require("https")
 const { 
   generateDateId,
-} = require("./helpers/utils") 
+} = require("../helpers/utils") 
 console.log("generateDateId", generateDateId())
 
 

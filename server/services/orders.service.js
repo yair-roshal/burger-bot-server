@@ -5,6 +5,16 @@ const https = require("https")
 const { generateDateId } = require("../helpers/utils")
 console.log("generateDateId", generateDateId())
 
+
+const dotenv = require("dotenv")
+dotenv.config()
+
+const token =
+  process.env.NODE_ENV === "prod"
+    ? process.env.TELEGRAM_BOT_TOKEN_prod
+    : process.env.TELEGRAM_BOT_TOKEN_dev
+
+    
 // const bot = require("../../bot/bot")
 const TelegramBot = require("node-telegram-bot-api")
 const bot = new TelegramBot(token, { polling: true })

@@ -129,6 +129,8 @@ class OrdersService {
           // (bad card, expiry, etc..)
         } else {
           console.log("Success")
+          return result
+
         }
       })
       .catch((error) => {

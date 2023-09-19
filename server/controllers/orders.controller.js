@@ -57,29 +57,29 @@ class OrdersController {
   //   }
   // }
 
-  async pay_credit_card(req, res) {
-    const result = await OrdersService.pay_credit_card(req, res)
-
-    if (result) return res.status(200).send(result)
-    else
-      return res.status(500).send({ message: "server_error_ pay_credit_card" })
-  }
-
-  
   // async pay_credit_card(req, res) {
-  //   try {
-  //     const result = await OrdersService.pay_credit_card(req, res);
-  
-  //     if (result) {
-  //       return res.status(200).send(result);
-  //     } else {
-  //       return res.status(500).send({ message: "server_error_pay_credit_card" });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in pay_credit_card:", error);
-  //     return res.status(500).send({ message: "An error occurred during payment" });
-  //   }
+  //   const result = await OrdersService.pay_credit_card(req, res)
+
+  //   if (result) return res.status(200).send(result)
+  //   else
+  //     return res.status(500).send({ message: "server_error_ pay_credit_card" })
   // }
+
+  
+  async pay_credit_card(req, res) {
+    try {
+      const result = await OrdersService.pay_credit_card(req, res);
+  
+      if (result) {
+        return res.status(200).send(result);
+      } else {
+        return res.status(500).send({ message: "server_error_pay_credit_card" });
+      }
+    } catch (error) {
+      console.error("Error in pay_credit_card:", error);
+      return res.status(500).send({ message: "An error occurred during payment" });
+    }
+  }
 
   
   //=============================================================

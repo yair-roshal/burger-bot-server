@@ -6,9 +6,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
 
-const { 
-  generateDateId,
-} = require("./helpers/utils") 
+const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
 
 const path = require("path")
@@ -24,6 +22,9 @@ httpsOptions = {
   ),
 }
 
+const router = express.Router()
+const OrderController = require("./controllers/orders.controller.js")
+
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
@@ -31,6 +32,51 @@ module.exports = (bot) => {
   // app.use(cors())
 
   app.use('/', routes)
+
+  
+   
+  
+   
+  
+  // app.get(
+  //   "/orders",
+  //   (req, res, next) => {
+  //     req.bot = bot
+  //     next()
+  //   },
+  //   OrderController.getOrders
+  // )
+  // app.post(
+  //   "/orders",
+  //   (req, res, next) => {
+  //     req.bot = bot
+  //     next()
+  //   },
+  //   OrderController.createOrder
+  // )
+
+  
+  
+  
+  
+// // Middleware для передачи `bot` в контроллеры
+// app.use("/orders", (req, res, next) => {
+//   req.bot = bot;
+//   next();
+// });
+
+// // Регистрация контроллера
+// app.use("/orders", OrderController.createOrder);
+
+
+
+
+
+
+  // app.use("/orders", (req, res, next) => {
+  //   req.bot = bot;
+  //   next();
+  // }, OrdersController);
 
   //=========================================================================
 
@@ -59,72 +105,67 @@ module.exports = (bot) => {
   }
   app.use(cors(corsOptions))
 
-  //=========================================================================
+  // =========================================================================
 
-   
-  
+    let generateIdTemp = generateDateId()
+    let productsQuantityPrice = ``
 
-//   let generateIdTemp = generateDateId()
-//   let productsQuantityPrice = ``
+    app.post("/send_sms_tele", async (req, res) => {
+      console.log("/orders_req.body :>> ", req.body)
+      const {
+        queryId,
+        cartItems,
+        comment,
+        totalPrice,
+        address,
+        optionDelivery,
+        paymentMethod,
+      } = req.body
 
-//   app.post("/orders", async (req, res) => {
-//     console.log("/orders_req.body :>> ", req.body)
-//     const {
-//       queryId,
-//       cartItems,
-//       comment,
-//       totalPrice,
-//       address,
-//       optionDelivery,
-//       paymentMethod,
-//     } = req.body
+      for (const item of cartItems) {
+        const totalPrice = (item.price * item.quantity).toFixed(2) || ""
 
-//     for (const item of cartItems) {
-//       const totalPrice = (item.price * item.quantity).toFixed(2) || ""
+        productsQuantityPrice =
+          productsQuantityPrice +
+          `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n`
+      }
 
-//       productsQuantityPrice =
-//         productsQuantityPrice +
-//         `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n` 
-//     }
+      try {
+        await bot.answerWebAppQuery(queryId, {
+          type: "article",
+          id: generateIdTemp,
+          title: "Successful purchase",
+          input_message_content: {
+            parse_mode: "HTML",
+            message_text: `
+  <b>You ordered: </b>
+  ${productsQuantityPrice}
+  ________________
+  <b>Total price: </b> ${totalPrice} ₪
+  ________________
+  <b>Option Delivery: </b> ${optionDelivery}
+  <b>Your comment: </b> ${comment}
+  <b>Payment method: </b> ${paymentMethod}
+  <b>Thanks! Your order № </b> ${generateIdTemp}
+  ______________________________________________
+  `,
+          },
+        })
 
-//     try {
-//       await bot.answerWebAppQuery(queryId, {
-//         type: "article",
-//         id: generateIdTemp,
-//         title: "Successful purchase",
-//         input_message_content: {
-//           parse_mode: "HTML",
-//           message_text: `
-// <b>You ordered: </b>
-// ${productsQuantityPrice}
-// ________________       
-// <b>Total price: </b> ${totalPrice} ₪
-// ________________
-// <b>Option Delivery: </b> ${optionDelivery}
-// <b>Your comment: </b> ${comment}
-// <b>Payment method: </b> ${paymentMethod}   
-// <b>Thanks! Your order № </b> ${generateIdTemp}
-// ______________________________________________
-// `,
-//         },
-//       })
+        console.log("success-200  !!!--->>>")
+        return res.status(200).json({ titleStatus: "success-200" })
+      } catch (error) {
+        console.log("error.message !!!--->>>", error.message)
 
-//       console.log("success-200  !!!--->>>")
-//       return res.status(200).json({ titleStatus: "success-200" })
-//     } catch (error) {
-//       console.log("error.message !!!--->>>", error.message)
+        return res
+          .status(500)
+          .json({ titleStatus: "error on server - 500", details: error.message })
+      }
 
-//       return res
-//         .status(500)
-//         .json({ titleStatus: "error on server - 500", details: error.message })
-//     }
-  
-  // })
+  })
 
-  // const PORT = process.env.PORT || 8000
-
-  // Create an HTTPS server and listen on port 443
-  https.createServer(httpsOptions, app).listen(443, () => {
+ 
+   https.createServer(httpsOptions, app).listen(443, () => {
     console.log("https Web server started at port : ", 443)
   })
 }

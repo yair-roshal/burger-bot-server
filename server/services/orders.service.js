@@ -81,9 +81,7 @@ class OrdersService {
     const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
     const url = `https://${tranzilaApiHost}${tranzilaApiPath}`
 
-    let result = null
-
-    axios
+    return axios
       .post(url, queryString, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -91,7 +89,7 @@ class OrdersService {
         httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Disable SSL verification (not recommended for production)
       })
       .then((response) => {
-        result = response.data
+        const result = response.data
 
         // Preparing associative array with response data
         const responseArray = result.split("&")
@@ -124,15 +122,12 @@ class OrdersService {
             responseAssoc["Response"]
           )
           console.log("result2222", result)
+          return result
         }
       })
       .catch((error) => {
         console.error(error)
       })
-
-      console.log("result_at the end", result)
-
-    return result
   }
 
   async create_order_db(req, res) {

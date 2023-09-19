@@ -29,40 +29,7 @@ module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
-  // app.use(cors())
-
-  app.use("/", routes)
-
-  // app.get(
-  //   "/orders",
-  //   (req, res, next) => {
-  //     req.bot = bot
-  //     next()
-  //   },
-  //   OrderController.getOrders
-  // )
-  // app.post(
-  //   "/orders",
-  //   (req, res, next) => {
-  //     req.bot = bot
-  //     next()
-  //   },
-  //   OrderController.createOrder
-  // )
-
-  // // Middleware для передачи `bot` в контроллеры
-  // app.use("/orders", (req, res, next) => {
-  //   req.bot = bot;
-  //   next();
-  // });
-
-  // // Регистрация контроллера
-  // app.use("/orders", OrderController.createOrder);
-
-  // app.use("/orders", (req, res, next) => {
-  //   req.bot = bot;
-  //   next();
-  // }, OrdersController);
+  
 
   //=========================================================================
 
@@ -90,20 +57,22 @@ module.exports = (bot) => {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   }
   app.use(cors(corsOptions))
+  // app.use(cors())
 
+  app.use("/", routes)
   // =========================================================================
 
   let generateIdTemp = generateDateId()
   let productsQuantityPrice = ``
 
   app.post("/send_sms_tele", async (req, res) => {
-    console.log("/orders_req.body :>> ", req.body)
+    console.log("/send_sms_tele--req.body :>> ", req.body)
     const {
       queryId,
       cartItems,
       comment,
       totalPrice,
-      address,
+      // address,
       optionDelivery,
       paymentMethod,
     } = req.body
@@ -147,7 +116,7 @@ ______________________________________________
 
       return res
         .status(500)
-        .json({ titleStatus: "error on server - 500", details: error.message })
+        .json({ titleStatus: "error on server - 500 _answerWebAppQuery", details: error.message })
     }
   })
 

@@ -78,6 +78,7 @@ module.exports = (bot) => {
     } = req.body
 
     for (const item of cartItems) {
+      console.log('item_send_sms_tele', item)
       const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
       productsQuantityPrice =

@@ -69,7 +69,7 @@ class OrdersController {
   async pay_credit_card(req, res) {
     try {
       const result = await OrdersService.pay_credit_card(req, res);
-      console.log('result', result)
+      console.log('result_pay_credit_card', result)
 
       if (result) {
         return res.status(200).send(result);

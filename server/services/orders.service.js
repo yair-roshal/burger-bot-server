@@ -64,7 +64,7 @@ class OrdersService {
   // pay_credit_card ================================================
 
   async pay_credit_card(req, res) {
-     const queryParameters = {
+    const queryParameters = {
       supplier: "burger", // 'terminal_name' should be replaced by actual terminal name
       sum: "45.70",
       currency: "1", // ILS
@@ -81,7 +81,8 @@ class OrdersService {
     const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
     const url = `https://${tranzilaApiHost}${tranzilaApiPath}`
 
-    // Send the request using Axios
+    let result = null
+
     axios
       .post(url, queryString, {
         headers: {
@@ -90,7 +91,7 @@ class OrdersService {
         httpsAgent: new https.Agent({ rejectUnauthorized: false }), // Disable SSL verification (not recommended for production)
       })
       .then((response) => {
-        const result = response.data
+        result = response.data
 
         // Preparing associative array with response data
         const responseArray = result.split("&")
@@ -103,7 +104,7 @@ class OrdersService {
 
         // Analyze the result string
         if (!responseAssoc["Response"]) {
-          console.log(result)
+          console.log("result_1111", result)
           /**
            * When there is no 'Response' parameter it either means
            * that some pre-transaction error happened (like authentication
@@ -118,15 +119,20 @@ class OrdersService {
           // (bad card, expiry, etc..)
         } else {
           console.log("Success")
-          console.log('responseAssoc["Response"]--->', responseAssoc["Response"])
-          console.log(result)
-
-          return result
+          console.log(
+            'responseAssoc["Response"]--->',
+            responseAssoc["Response"]
+          )
+          console.log("result2222", result)
         }
       })
       .catch((error) => {
         console.error(error)
       })
+
+      console.log("result_at the end", result)
+
+    return result
   }
 
   async create_order_db(req, res) {

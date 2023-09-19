@@ -16,39 +16,34 @@ class OrdersController {
   // }
 
   async getOrders(req, res) {
-      const result = await OrdersService.getOrders(req, res)
+    const result = await OrdersService.getOrders(req, res)
 
-      if (result) return res.status(200).send(result)
-      else return res.status(500).send({ message: 'error.' })
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error." })
   }
 
-  async createOrder(req, res,bot) {
-    const result = await OrdersService.createOrder(req, res,bot)
+  async createOrder(req, res, bot) {
+    const result = await OrdersService.createOrder(req, res, bot)
 
     if (result) return res.status(200).send(result)
     else return res.status(500).send({ message: "server_error_createOrder" })
   }
-  
-  
-  
 
-  async pay_credit_card(req, res,bot) {
-    const result = await OrdersService.pay_credit_card(req, res,bot)
+  async pay_credit_card(req, res, bot) {
+    const result = await OrdersService.pay_credit_card(req, res, bot)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "server_error_ pay_credit_card" })
+    else
+      return res.status(500).send({ message: "server_error_ pay_credit_card" })
   }
-  
 
-  async create_order_db(req, res,bot) {
-    const result = await OrdersService.create_order_db(req, res,bot)
+  async create_order_db(req, res, bot) {
+    const result = await OrdersService.create_order_db(req, res, bot)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "server_error_ create_order_db" })
+    else
+      return res.status(500).send({ message: "server_error_ create_order_db" })
   }
-  
-  
-  
 
   // async updateOrder(req, res) {
   //     const result = await OrdersService.updateOrder(req, res)

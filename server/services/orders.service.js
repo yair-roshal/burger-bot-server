@@ -46,37 +46,25 @@ class OrdersService {
       orderData.order_date,
       orderData.paymentMethod,
     ]
-    
-    axios.post('https://burgerim.ru:3000/pay_credit_card', {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    })
-    .then((res) => {
-      console.log(`statusCode: ${res.statusCode}`)
-      console.log(res)
-    }
-    )
-    .catch((error) => {
-      console.error(error)
-    }
-    )
-    
-    
-    
+
+    axios
+      .post("https://burgerim.ru:3000/pay_credit_card", {
+        firstName: "Fred",
+        lastName: "Flintstone",
+      })
+      .then((res) => {
+        console.log(`statusCode: ${res.statusCode}`)
+        console.log(res)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
-  
-  
   // pay_credit_card ================================================
 
   async pay_credit_card(req, res) {
-
-
-    const tranzilaApiHost = "secure5.tranzila.com"
-    const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
-
-    // Prepare transaction parameters
-    const queryParameters = {
+     const queryParameters = {
       supplier: "burger", // 'terminal_name' should be replaced by actual terminal name
       sum: "45.70",
       currency: "1", // ILS
@@ -89,7 +77,8 @@ class OrdersService {
       .map(([name, value]) => `${name}=${value}`)
       .join("&")
 
-    // Prepare request URL
+    const tranzilaApiHost = "secure5.tranzila.com"
+    const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
     const url = `https://${tranzilaApiHost}${tranzilaApiPath}`
 
     // Send the request using Axios
@@ -129,8 +118,10 @@ class OrdersService {
           // (bad card, expiry, etc..)
         } else {
           console.log("Success")
-          return result
+          console.log('responseAssoc["Response"]--->', responseAssoc["Response"])
+          console.log(result)
 
+          return result
         }
       })
       .catch((error) => {
@@ -141,7 +132,7 @@ class OrdersService {
   async create_order_db(req, res) {
     // saving New order to DB ================================================
     //create_order_db
-    
+
     const orderData = req.body
 
     const values = [

@@ -22,7 +22,8 @@ class OrdersService {
       const sqlQuery = "SELECT * FROM orders"
       const [results] = await this.connection.execute(sqlQuery)
 
-      console.log("Orders from DB:", results)
+      console.log("Orders from DB:", !!results )
+      console.log("results.length:", results.length)
 
       return results
     } catch (error) {
@@ -159,7 +160,7 @@ class OrdersService {
       const [results] = await this.connection.execute(sqlQuery, values)
 
       console.log("New order saved to DB:", results)
-      console.log("values111", values)
+      console.log("values_create_order_db", values)
 
       return results
     } catch (error) {

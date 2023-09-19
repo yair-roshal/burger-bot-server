@@ -31,13 +31,8 @@ module.exports = (bot) => {
 
   // app.use(cors())
 
-  app.use('/', routes)
+  app.use("/", routes)
 
-  
-   
-  
-   
-  
   // app.get(
   //   "/orders",
   //   (req, res, next) => {
@@ -55,23 +50,14 @@ module.exports = (bot) => {
   //   OrderController.createOrder
   // )
 
-  
-  
-  
-  
-// // Middleware для передачи `bot` в контроллеры
-// app.use("/orders", (req, res, next) => {
-//   req.bot = bot;
-//   next();
-// });
+  // // Middleware для передачи `bot` в контроллеры
+  // app.use("/orders", (req, res, next) => {
+  //   req.bot = bot;
+  //   next();
+  // });
 
-// // Регистрация контроллера
-// app.use("/orders", OrderController.createOrder);
-
-
-
-
-
+  // // Регистрация контроллера
+  // app.use("/orders", OrderController.createOrder);
 
   // app.use("/orders", (req, res, next) => {
   //   req.bot = bot;
@@ -107,65 +93,65 @@ module.exports = (bot) => {
 
   // =========================================================================
 
-    let generateIdTemp = generateDateId()
-    let productsQuantityPrice = ``
+  let generateIdTemp = generateDateId()
+  let productsQuantityPrice = ``
 
-    app.post("/send_sms_tele", async (req, res) => {
-      console.log("/orders_req.body :>> ", req.body)
-      const {
-        queryId,
-        cartItems,
-        comment,
-        totalPrice,
-        address,
-        optionDelivery,
-        paymentMethod,
-      } = req.body
+  app.post("/send_sms_tele", async (req, res) => {
+    console.log("/orders_req.body :>> ", req.body)
+    const {
+      queryId,
+      cartItems,
+      comment,
+      totalPrice,
+      address,
+      optionDelivery,
+      paymentMethod,
+    } = req.body
 
-      for (const item of cartItems) {
-        const totalPrice = (item.price * item.quantity).toFixed(2) || ""
+    for (const item of cartItems) {
+      const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-        productsQuantityPrice =
-          productsQuantityPrice +
-          `<b>${item.title}</b> * ${item.quantity} = ${totalPrice} ₪`+ `\n`
-      }
+      productsQuantityPrice =
+        productsQuantityPrice +
+        `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
+        `\n`
+    }
 
-      try {
-        await bot.answerWebAppQuery(queryId, {
-          type: "article",
-          id: generateIdTemp,
-          title: "Successful purchase",
-          input_message_content: {
-            parse_mode: "HTML",
-            message_text: `
-  <b>You ordered: </b>
-  ${productsQuantityPrice}
-  ________________
-  <b>Total price: </b> ${totalPrice} ₪
-  ________________
-  <b>Option Delivery: </b> ${optionDelivery}
-  <b>Your comment: </b> ${comment}
-  <b>Payment method: </b> ${paymentMethod}
-  <b>Thanks! Your order № </b> ${generateIdTemp}
-  ______________________________________________
-  `,
-          },
-        })
+    try {
+      await bot.answerWebAppQuery(queryId, {
+        type: "article",
+        id: generateIdTemp,
+        title: "Successful purchase",
+        input_message_content: {
+          parse_mode: "HTML",
+          message_text: `
+<b>You ordered: </b>
+  
+${productsQuantityPrice}
+________________
+<b>Total price: </b> ${totalPrice} ₪
+________________
+<b>Option Delivery: </b> ${optionDelivery}
+<b>Your comment: </b> ${comment}
+<b>Payment method: </b> ${paymentMethod}
+<b>Thanks! Your order № </b> ${generateIdTemp}
+______________________________________________
+`,
+        },
+      })
 
-        console.log("success-200  !!!--->>>")
-        return res.status(200).json({ titleStatus: "success-200" })
-      } catch (error) {
-        console.log("error.message !!!--->>>", error.message)
+      console.log("success-200  !!!--->>>")
+      return res.status(200).json({ titleStatus: "success-200" })
+    } catch (error) {
+      console.log("error.message !!!--->>>", error.message)
 
-        return res
-          .status(500)
-          .json({ titleStatus: "error on server - 500", details: error.message })
-      }
-
+      return res
+        .status(500)
+        .json({ titleStatus: "error on server - 500", details: error.message })
+    }
   })
 
- 
-   https.createServer(httpsOptions, app).listen(443, () => {
+  https.createServer(httpsOptions, app).listen(443, () => {
     console.log("https Web server started at port : ", 443)
   })
 }

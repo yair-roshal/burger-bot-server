@@ -31,39 +31,39 @@ class OrdersService {
     }
   }
 
-  // async createOrder(req, res) {
-  //   const orderData = req.body
+  async createOrder(req, res) {
+    const orderData = req.body
 
-  //   const values = [
-  //     orderData.queryId,
-  //     JSON.stringify(orderData.cartItems), // Convert cartItems to a JSON string
-  //     orderData.comment,
-  //     orderData.totalPrice,
-  //     orderData.address,
-  //     orderData.optionDelivery,
-  //     orderData.user_id,
-  //     orderData.user_name,
-  //     orderData.order_date,
-  //     orderData.paymentMethod,
-  //   ]
+    const values = [
+      orderData.queryId,
+      JSON.stringify(orderData.cartItems), // Convert cartItems to a JSON string
+      orderData.comment,
+      orderData.totalPrice,
+      orderData.address,
+      orderData.optionDelivery,
+      orderData.user_id,
+      orderData.user_name,
+      orderData.order_date,
+      orderData.paymentMethod,
+    ]
     
-  //   axios.post('https://burgerim.ru:3000/pay_credit_card', {
-  //     firstName: 'Fred',
-  //     lastName: 'Flintstone'
-  //   })
-  //   .then((res) => {
-  //     console.log(`statusCode: ${res.statusCode}`)
-  //     console.log(res)
-  //   }
-  //   )
-  //   .catch((error) => {
-  //     console.error(error)
-  //   }
-  //   )
+    axios.post('https://burgerim.ru:3000/pay_credit_card', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then((res) => {
+      console.log(`statusCode: ${res.statusCode}`)
+      console.log(res)
+    }
+    )
+    .catch((error) => {
+      console.error(error)
+    }
+    )
     
     
     
-  // }
+  }
 
   
   

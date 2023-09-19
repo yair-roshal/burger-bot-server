@@ -70,20 +70,7 @@ class OrdersService {
   // pay_credit_card ================================================
 
   async pay_credit_card(req, res) {
-    const orderData = req.body
 
-    const values = [
-      orderData.queryId,
-      JSON.stringify(orderData.cartItems), // Convert cartItems to a JSON string
-      orderData.comment,
-      orderData.totalPrice,
-      orderData.address,
-      orderData.optionDelivery,
-      orderData.user_id,
-      orderData.user_name,
-      orderData.order_date,
-      orderData.paymentMethod,
-    ]
 
     const tranzilaApiHost = "secure5.tranzila.com"
     const tranzilaApiPath = "/cgi-bin/tranzila71u.cgi"
@@ -152,6 +139,21 @@ class OrdersService {
   async create_order_db(req, res) {
     // saving New order to DB ================================================
     //create_order_db
+    
+    const orderData = req.body
+
+    const values = [
+      orderData.queryId,
+      JSON.stringify(orderData.cartItems), // Convert cartItems to a JSON string
+      orderData.comment,
+      orderData.totalPrice,
+      orderData.address,
+      orderData.optionDelivery,
+      orderData.user_id,
+      orderData.user_name,
+      orderData.order_date,
+      orderData.paymentMethod,
+    ]
 
     await this.connectToDatabase()
 

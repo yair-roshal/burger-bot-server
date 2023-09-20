@@ -29,33 +29,12 @@ class OrdersService {
     return this.executeQuery(sqlQuery, [])
   }
 
+  // createOrder ================================================
+
   async createOrder(req, res) {
     const orderData = req.body
-    const values = [
-      orderData.queryId,
-      JSON.stringify(orderData.cartItems),
-      orderData.comment,
-      orderData.totalPrice,
-      orderData.address,
-      orderData.optionDelivery,
-      orderData.user_id,
-      orderData.user_name,
-      orderData.order_date,
-      orderData.paymentMethod,
-    ]
 
-    // Ваш код для отправки запроса к другой службе
-    try {
-      const response = await axios.post("https://burgerim.ru:3000/pay_credit_card", {
-        firstName: "Fred",
-        lastName: "Flintstone",
-      })
-      console.log(`statusCode: ${response.status}`)
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error sending request to another service:", error)
-      throw error
-    }
+    console.log("orderData", orderData)
   }
 
   // pay_credit_card ================================================
@@ -65,6 +44,7 @@ class OrdersService {
 
   async create_order_db(req, res) {
     const orderData = req.body
+
     const values = [
       orderData.queryId,
       JSON.stringify(orderData.cartItems),

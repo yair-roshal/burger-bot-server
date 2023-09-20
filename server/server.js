@@ -87,8 +87,7 @@ module.exports = (bot) => {
     //     `\n`
     // }
     
-    for (const order of orders) {
-      const cartItems = JSON.parse(order.cartItems);
+   
     
       for (const item of cartItems) {
         console.log('item_send_sms_tele', item);
@@ -107,8 +106,7 @@ module.exports = (bot) => {
     
         console.log("Products and Prices:\n" + productsQuantityPrice);
       }
-    }
-
+ 
     try {
       await bot.answerWebAppQuery(queryId, {
         type: "article",

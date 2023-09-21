@@ -105,7 +105,6 @@ class OrdersService {
       })
   }
 
-
   async create_order_db(req, res) {
     const orderData = req.body
 
@@ -126,7 +125,17 @@ class OrdersService {
                       (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-    return this.executeQuery(sqlQuery, values)
+    try {
+      // Выполняем SQL-запрос
+      await this.executeQuery(sqlQuery, values)
+
+      // Возвращаем успешный ответ
+      res.status(200).json({ message: "create_order_db_ Заказ успешно создан" })
+    } catch (error) {
+      // Обрабатываем ошибку
+      console.error("create_order_db Ошибка при создании заказа:", error)
+      res.status(500).json({ error: "create_order_db Произошла ошибка при создании заказа" })
+    }
   }
 }
 

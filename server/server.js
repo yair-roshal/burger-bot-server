@@ -21,7 +21,6 @@ httpsOptions = {
     "utf8"
   ),
 }
- 
 
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
@@ -79,7 +78,7 @@ module.exports = (bot) => {
 
       productsQuantityPrice =
         productsQuantityPrice +
-        `<b>${item.title} = </b>${item.price} ₪ * ${item.quantity} = ${itemPrice} ₪` +
+        `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
         `\n`
 
       if (item.toppings && item.toppings.length > 0) {
@@ -88,7 +87,7 @@ module.exports = (bot) => {
             const toppingPrice =
               (topping.price * topping.count).toFixed(2) || ""
             productsQuantityPrice +=
-              ` - ${topping.title} = ${topping.price} ₪ * ${topping.count} = ${toppingPrice} ₪` +
+              ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
               "\n"
           }
         }
@@ -107,7 +106,7 @@ module.exports = (bot) => {
   
 ${productsQuantityPrice}
 ________________
-<b>Total price: </b> ${totalPrice} ₪
+<b>Total price: </b> ${totalPrice}₪
 ________________
 <b>Option Delivery: </b> ${optionDelivery}
 <b>Your comment: </b> ${comment}
@@ -123,12 +122,10 @@ ______________________________________________
     } catch (error) {
       console.log("error.message !!!--->>>", error.message)
 
-      return res
-        .status(500)
-        .json({
-          titleStatus: "error on server - 500 _answerWebAppQuery",
-          details: error.message,
-        })
+      return res.status(500).json({
+        titleStatus: "error on server - 500 _answerWebAppQuery",
+        details: error.message,
+      })
     }
   })
 

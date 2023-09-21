@@ -21,9 +21,7 @@ httpsOptions = {
     "utf8"
   ),
 }
-
-const router = express.Router()
-const OrderController = require("./controllers/orders.controller.js")
+ 
 
 module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))

@@ -108,6 +108,7 @@ class OrdersService {
 
   async create_order_db(req, res) {
     const orderData = req.body
+    const timeOrder =   generateDateTime() 
 
     const values = [
       orderData.queryId,
@@ -118,7 +119,7 @@ class OrdersService {
       orderData.optionDelivery,
       orderData.user_id,
       orderData.user_name,
-      generateDateTime()  ,
+      timeOrder  ,
       // orderData.order_date,
       orderData.paymentMethod,
     ]

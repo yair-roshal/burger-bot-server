@@ -79,7 +79,7 @@ module.exports = (bot) => {
 
       productsQuantityPrice =
         productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
+        `<b>${item.title} = </b>${item.price} * ${item.quantity} = ${itemPrice} ₪` +
         `\n`
 
       if (item.toppings && item.toppings.length > 0) {
@@ -88,7 +88,7 @@ module.exports = (bot) => {
             const toppingPrice =
               (topping.price * topping.count).toFixed(2) || ""
             productsQuantityPrice +=
-              ` - ${topping.title} * ${topping.count} = ${toppingPrice} ₪` +
+              ` - ${topping.title} = ${topping.price} * ${topping.count} = ${toppingPrice} ₪` +
               "\n"
           }
         }

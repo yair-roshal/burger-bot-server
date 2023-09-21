@@ -85,7 +85,7 @@ module.exports = (bot) => {
         for (const topping of item.toppings) {
           if (topping.count > 0) {
             const toppingPrice =
-              (topping.price * topping.count).toFixed(2) || ""
+              (topping.price * item.quantity).toFixed(2) || ""
             productsQuantityPrice +=
               ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
               "\n"

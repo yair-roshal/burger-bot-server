@@ -108,7 +108,8 @@ class OrdersService {
 
   async create_order_db(req, res) {
     const orderData = req.body
-    const timeOrder =   generateDateTime() 
+    // const timeOrder =   generateDateTime()
+    const timeOrder = new Date()
 
     const values = [
       orderData.queryId,
@@ -119,7 +120,7 @@ class OrdersService {
       orderData.optionDelivery,
       orderData.user_id,
       orderData.user_name,
-      timeOrder  ,
+      timeOrder,
       // orderData.order_date,
       orderData.paymentMethod,
     ]
@@ -137,7 +138,9 @@ class OrdersService {
     } catch (error) {
       // Обрабатываем ошибку
       console.error("create_order_db Ошибка при создании заказа:", error)
-      res.status(500).json({ error: "create_order_db Произошла ошибка при создании заказа" })
+      res
+        .status(500)
+        .json({ error: "create_order_db Произошла ошибка при создании заказа" })
     }
   }
 }

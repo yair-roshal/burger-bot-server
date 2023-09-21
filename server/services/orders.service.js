@@ -2,6 +2,7 @@ const mysql = require("mysql2/promise")
 const { sqlConfig } = require("../../constants/constants")
 const axios = require("axios")
 const https = require("https")
+const { generateDateTime } = require("../helpers/utils")
 
 class OrdersService {
   constructor() {
@@ -117,7 +118,8 @@ class OrdersService {
       orderData.optionDelivery,
       orderData.user_id,
       orderData.user_name,
-      orderData.order_date,
+      generateDateTime()  ,
+      // orderData.order_date,
       orderData.paymentMethod,
     ]
 

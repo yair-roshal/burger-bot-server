@@ -29,8 +29,6 @@ module.exports = (bot) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
 
-  
-
   //=========================================================================
 
   // const allowedOrigins = [
@@ -78,25 +76,27 @@ module.exports = (bot) => {
     } = req.body
 
     for (const item of cartItems) {
-      console.log('item_send_sms_tele', item)
+      console.log("item_send_sms_tele", item)
       const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
       productsQuantityPrice =
         productsQuantityPrice +
         `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
         `\n`
-        
-        if (item.toppings && item.toppings.length > 0) {
-          for (const topping of item.toppings) {
-            const toppingPrice = (topping.price * topping.count).toFixed(2) || "";
+
+      if (item.toppings && item.toppings.length > 0) {
+        for (const topping of item.toppings) {
+          if (topping.count > 0) {
+            const toppingPrice =
+              (topping.price * topping.count).toFixed(2) || ""
             productsQuantityPrice +=
-              ` - ${topping.title} * ${topping.count} = ${toppingPrice} ₪` + "\n";
+              ` - ${topping.title} * ${topping.count} = ${toppingPrice} ₪` +
+              "\n"
           }
         }
+      }
     }
-    
- 
- 
+
     try {
       await bot.answerWebAppQuery(queryId, {
         type: "article",
@@ -127,7 +127,10 @@ ______________________________________________
 
       return res
         .status(500)
-        .json({ titleStatus: "error on server - 500 _answerWebAppQuery", details: error.message })
+        .json({
+          titleStatus: "error on server - 500 _answerWebAppQuery",
+          details: error.message,
+        })
     }
   })
 

@@ -77,25 +77,15 @@ module.exports = (bot) => {
       paymentMethod,
     } = req.body
 
-    // for (const item of cartItems) {
-    //   console.log('item_send_sms_tele', item)
-    //   const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+    for (const item of cartItems) {
+      console.log('item_send_sms_tele', item)
+      const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-    //   productsQuantityPrice =
-    //     productsQuantityPrice +
-    //     `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
-    //     `\n`
-    // }
-    
-   
-    
-      for (const item of cartItems) {
-        console.log('item_send_sms_tele', item);
-        const itemPrice = (item.price * item.quantity).toFixed(2) || "";
-    
-        let productsQuantityPrice =
-          `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` + "\n";
-    
+      productsQuantityPrice =
+        productsQuantityPrice +
+        `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
+        `\n`
+        
         if (item.toppings && item.toppings.length > 0) {
           for (const topping of item.toppings) {
             const toppingPrice = (topping.price * topping.count).toFixed(2) || "";
@@ -103,9 +93,9 @@ module.exports = (bot) => {
               ` - ${topping.title} * ${topping.count} = ${toppingPrice} ₪` + "\n";
           }
         }
+    }
     
-        console.log("Products and Prices:\n" + productsQuantityPrice);
-      }
+ 
  
     try {
       await bot.answerWebAppQuery(queryId, {

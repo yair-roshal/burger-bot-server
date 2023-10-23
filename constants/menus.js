@@ -1,9 +1,14 @@
 const { webAppUrl } = require("../constants/constants.js")
 
-const settings_message = {
-  parse_mode: "HTML",
-  //disable because we don't want show description links
-  disable_web_page_preview: true,
+const give_me_keyboard = {
+  inline_keyboard: [
+      [
+          {
+              text: 'give me new word',
+              callback_data: 'give_me',
+          },
+      ],
+  ],
 }
 
 //===================================
@@ -91,10 +96,18 @@ const callToAdminMenu = {
   },
 }
 
+
+const settings_message = {
+  parse_mode: "HTML",
+  //disable because we don't want show description links
+  disable_web_page_preview: true,
+}
+
+
 module.exports = {
   webAppUrl,
   settings_message,
-
+  give_me_keyboard,
   startMainMenu_Production,
   //  inline_keyboard,
   callToAdminMenu,

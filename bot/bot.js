@@ -24,6 +24,7 @@ const formatDate = require("./utils/formatDate.js")
 const {
   startMainMenu_Production,
   callToAdminMenu,
+  give_me_keyboard
 } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
@@ -38,6 +39,22 @@ const menuENV = startMainMenu_Production
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
 
+
+
+// callback_query ===============================================
+bot.on("callback_query", (query) => {
+  const chatId = query.from.id
+  // console.log('query ---------------:>> ', query)
+
+  if (query.data === "give_me") {
+    // sendingWordMessage(dictionary, bot, chatId)
+    
+    
+    
+  }
+})
+
+
 //=========================
 
 bot.onText(/\/start/, async (msg) => {
@@ -45,15 +62,49 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  await bot
-    .sendPhoto(chatId, photoPath, startMainMenu_Production)
-    // .sendPhoto(chatId, photoPath)
-    .then(() => {
-      console.log("Фотография успешно отправлена")
-    })
-    .catch((error) => {
-      console.error("Ошибка при отправке фотографии:", error.message)
-    })
+  // await bot
+  //   .sendPhoto(chatId, photoPath, startMainMenu_Production)
+  //   // .sendPhoto(chatId, photoPath)
+  //   .then(() => {
+  //     console.log("Фотография успешно отправлена")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Ошибка при отправке фотографии:", error.message)
+  //   })
+    
+  
+
+    
+  var optionsMessage = {
+    caption:   `
+    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+     `,
+    reply_markup: JSON.stringify(give_me_keyboard),
+  }
+
+  // await bot.sendPhoto(chatId, photoPath, optionsMessage)
+  
+  
+   const text = 'Click the button to open the web app:';
+  const keyboard = {
+    inline_keyboard: [
+      [
+        {
+          text: 'Open Web App',
+          url: webAppUrl,
+        },
+      ],
+    ],
+  };
+
+  // web_app: { url: webAppUrl },
+
+  
+  bot.sendMessage(chatId, text, {
+    reply_markup: JSON.stringify(keyboard),
+  });
+  
 
   // bot
   //   .sendMessage(

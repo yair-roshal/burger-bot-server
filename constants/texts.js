@@ -1,15 +1,15 @@
 // let link_to_bot = 't.me/gptOriginalBot'
 // let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
 
-let text_html = `
- Welcome to the BurgerBot 🍔🍔🍔  
-🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
- `
-
 // let text_html = `
-// <b>Welcome to the BurgerBot 🍔🍔🍔 </b>
+//  Welcome to the BurgerBot 🍔🍔🍔  
 // 🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
 //  `
+
+let text_html = `
+<b>Welcome to the BurgerBot 🍔🍔🍔 </b>
+🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+ `
 
 // let text_html = `
 // <b>Hello !!!</b>

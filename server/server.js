@@ -1,3 +1,6 @@
+
+
+require('rootpath')();
 const express = require("express")
 var https = require("https")
 var fs = require("fs")
@@ -5,6 +8,7 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
+const errorHandler = require('middleware/error-handler');
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
@@ -55,6 +59,13 @@ module.exports = (bot) => {
   // app.use(cors())
 
   app.use("/", routes)
+  
+  // api routes
+app.use('/users', require('./controllers/users.controller'));
+
+
+// global error handler
+app.use(errorHandler);
   // =========================================================================
 
   let generateIdTemp = generateDateId()
@@ -128,6 +139,8 @@ ______________________________________________
       })
     }
   })
+
+  // const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 
   https.createServer(httpsOptions, app).listen(443, () => {
     console.log("https Web server started at port : ", 443)

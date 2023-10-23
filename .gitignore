@@ -4,6 +4,7 @@
 **/node_modules
 **/.history
 **/backup
+**/zzz-backup
 **/.env
 **/.eslintcache
 **/0-save
@@ -11,6 +12,7 @@
 node_modules
 .history
 backup
+zzz-backup
 .env
 .eslintcache
 

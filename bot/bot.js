@@ -65,8 +65,8 @@ bot.onText(/\/start/, async (msg) => {
     disable_web_page_preview: true, //disable because we don't want show description links
   }
 
-  // bot.sendMessage(chatId, text, optionsMessage)
-  bot.sendMessage(chatId, text_message_html, optionsMessage)
+   bot.sendMessage(chatId, text_message_html, startMainMenu_Production)
+  //  bot.sendMessage(chatId, text_message_html, optionsMessage)
 
   //====================================================
 
@@ -74,29 +74,33 @@ bot.onText(/\/start/, async (msg) => {
   //   reply_markup: JSON.stringify(keyboard),
   // });
 
-  // bot
-  //   .sendMessage(
-  //     chatId,
-  //     text_message_html,
-  //     {
-  //       parse_mode: "HTML",
-  //       disable_web_page_preview: true, //disable because we don't want show description links
-  //       startMainMenu_Production
-  //     },
+  bot
+    .sendMessage(
+      chatId,
+      text_message_html,
+      {
+        parse_mode: "HTML",
+        disable_web_page_preview: true, //disable because we don't want show description links
+        startMainMenu_Production
+      },
 
-  //   )
-  //   .then(() => {
-  //     console.log("Keyboard successfully displayed")
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error displaying keyboard:", error.message)
-  //   })
+    )
+    .then(() => {
+      console.log("Keyboard successfully displayed")
+    })
+    .catch((error) => {
+      console.error("Error displaying keyboard:", error.message)
+    })
 
+    
+    //===========================================
+    
+    
   bot
     .sendMessage(
       chatId,
       `
-    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+    <b>2222 Welcome to the BurgerBot 🍔🍔🍔 </b> 
     🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
      `,
       {

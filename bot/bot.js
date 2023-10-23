@@ -59,16 +59,11 @@ bot.onText(/\/start/, async (msg) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
 
-  //sendMessage not html --- ====================================================
-
-  bot.sendMessage(chatId, text_html, startMainMenu_Production)
-
-  //sendMessage not button --- ====================================================
+  //sendMessage work+++ ====================================================
 
   var optionsMessage = {
-    // startMainMenu_Production,
-    reply_markup: JSON.stringify(only_keyboard),
-
+    startMainMenu_Production,
+    // reply_markup: JSON.stringify(only_keyboard),
     parse_mode: "HTML",
     disable_web_page_preview: true, //disable because we don't want show description links
   }
@@ -77,20 +72,8 @@ bot.onText(/\/start/, async (msg) => {
 
   //sendMessage work+++ ====================================================
 
-  // const keyboard = {
-  //   inline_keyboard: [
-  //     [
-  //       {
-  //         text: "Open Menu",
-  //         web_app: { url: webAppUrl },
-  //       },
-  //     ],
-  //   ],
-  // }
-
   bot.sendMessage(chatId, text_html, {
     reply_markup: JSON.stringify(only_keyboard),
-    // reply_markup: JSON.stringify(keyboard),
     parse_mode: "HTML",
   })
 })

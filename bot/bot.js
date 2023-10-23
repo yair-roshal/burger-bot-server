@@ -37,13 +37,15 @@ const menuENV = startMainMenu_Production
 //   ? startMainMenu_Production
 //   : startMainMenu_Production
 
-const { text_message_html } = require("../constants/texts.js")
+const { text_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
 
 //=========================
 
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id
+
+  //work++++  ====================================================
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
@@ -57,37 +59,50 @@ bot.onText(/\/start/, async (msg) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
 
+  //work++++  ====================================================
+
+  bot.sendMessage(chatId, text_html, startMainMenu_Production)
+
   //====================================================
 
   var optionsMessage = {
-    startMainMenu_Production, 
+    startMainMenu_Production,
     parse_mode: "HTML",
     disable_web_page_preview: true, //disable because we don't want show description links
   }
 
-   bot.sendMessage(chatId, text_message_html, startMainMenu_Production)
-   
-   bot.sendMessage(chatId, text_message_html, optionsMessage)
-   
-   bot.sendMessage(chatId, text_message_html, {
-    startMainMenu_Production,
-        parse_mode: 'HTML',
-  });
+  bot.sendMessage(chatId, text_html, optionsMessage)
+
+  //====================================================
+
+  const keyboard = {
+    inline_keyboard: [
+      [
+        {
+          text: "Open Menu",
+          web_app: { url: webAppUrl },
+        },
+      ],
+    ],
+  }
+
+  //====================================================
+  bot.sendMessage(chatId, text_html, {
+    reply_markup: JSON.stringify(keyboard),
+    parse_mode: "HTML",
+  })
   //====================================================
 
   // bot.sendMessage(chatId, text, {
   //   reply_markup: JSON.stringify(keyboard),
   // });
 
-  
-    //====================================================
+  //====================================================
 
-    
-    
   // bot
   //   .sendMessage(
   //     chatId,
-  //     text_message_html,
+  //     text_html,
   //     {
   //       parse_mode: "HTML",
   //       disable_web_page_preview: true, //disable because we don't want show description links
@@ -102,15 +117,13 @@ bot.onText(/\/start/, async (msg) => {
   //     console.error("Error displaying keyboard:", error.message)
   //   })
 
-    
-    //===========================================
-    
-    
+  //===========================================
+
   // bot
   //   .sendMessage(
   //     chatId,
   //     `
-  //   <b>2222 Welcome to the BurgerBot 🍔🍔🍔 </b> 
+  //   <b>2222 Welcome to the BurgerBot 🍔🍔🍔 </b>
   //   🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
   //    `,
   //     {
@@ -128,7 +141,6 @@ bot.onText(/\/start/, async (msg) => {
   //         one_time_keyboard: true,
   //       },
 
-  
   //     }
   //   )
   //   .then(() => {
@@ -168,7 +180,7 @@ bot.on("callback_query", (query) => {
     const chatId = msg.chat.id
     bot.sendMessage(
       chatId,
-      text_message_html,
+      text_html,
       {
         parse_mode: "HTML",
         //disable because we don't want show description links

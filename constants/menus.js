@@ -28,9 +28,12 @@ const startMainMenu_Production = {
       [
         {
           text: "click to open menu",
+          callback_data: 'auth',
           web_app: { url: webAppUrl },
         },
       ],
+      
+ 
 
       // [
       //   {

@@ -116,51 +116,51 @@ bot.on("contact", (msg) => {
 // })
 
 // callback_query ===========================================
-// bot.on("callback_query", (query) => {
-//   const chatId = query.message.chat.id
-//   const data = query.data
+bot.on("callback_query", (query) => {
+  const chatId = query.message.chat.id
+  const data = query.data
 
-//   if (data === "about") {
-//     const chatId = msg.chat.id
-//     bot.sendMessage(
-//       chatId,
-//       text_message_html,
-//       {
-//         parse_mode: "HTML",
-//         //disable because we don't want show description links
-//         disable_web_page_preview: true,
-//       },
-//       menuENV
-//     )
-//   }
+  if (data === "auth") {
+    const chatId = msg.chat.id
+    bot.sendMessage(
+      chatId,
+      text_message_html,
+      {
+        parse_mode: "HTML",
+        //disable because we don't want show description links
+        disable_web_page_preview: true,
+      },
+      menuENV
+    )
+  }
 
-//   if (data === "test_pay") {
-//     const chatId = msg.chat.id
-//     const options = {
-//       reply_markup: {
-//         inline_keyboard: [
-//           [
-//             {
-//               text: "Buy",
-//               pay: true,
-//             },
-//           ],
-//         ],
-//       },
-//     }
+  // if (data === "test_pay") {
+  //   const chatId = msg.chat.id
+  //   const options = {
+  //     reply_markup: {
+  //       inline_keyboard: [
+  //         [
+  //           {
+  //             text: "Buy",
+  //             pay: true,
+  //           },
+  //         ],
+  //       ],
+  //     },
+  //   }
 
-//     bot.sendInvoice(
-//       chatId,
-//       "Title111",
-//       "Title222",
-//       "PAYMENTS_TOKEN",
-//       "some_invoice",
-//       "RUB",
-//       [{ label: "example", amount: 100 }],
-//       options
-//     )
-//   }
-// })
+  //   bot.sendInvoice(
+  //     chatId,
+  //     "Title111",
+  //     "Title222",
+  //     "PAYMENTS_TOKEN",
+  //     "some_invoice",
+  //     "RUB",
+  //     [{ label: "example", amount: 100 }],
+  //     options
+  //   )
+  // }
+})
 
 //==========================================================
 

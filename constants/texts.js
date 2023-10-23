@@ -2,9 +2,14 @@
 // let link_to_public = 'https://t.me/+yBx2E6PWO4wyN2U0'
 
 let text_message_html = `
-<b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+ Welcome to the BurgerBot 🍔🍔🍔  
 🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
  `
+
+// let text_message_html = `
+// <b>Welcome to the BurgerBot 🍔🍔🍔 </b>
+// 🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+//  `
 
 // let text_message_html = `
 // <b>Hello !!!</b>

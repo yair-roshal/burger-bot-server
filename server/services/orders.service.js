@@ -1,5 +1,5 @@
 const mysql = require("mysql2/promise")
-const { sqlConfig } = require("../../constants/constants")
+const { sqlConfig } = require("../../constants/config")
 const axios = require("axios")
 const https = require("https")
 const { generateDateTime } = require("../helpers/utils")

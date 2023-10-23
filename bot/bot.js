@@ -55,16 +55,65 @@ bot.onText(/\/start/, async (msg) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
 
+  // bot
+  //   .sendMessage(
+  //     chatId,
+  //     text_message_html,
+  //     {
+  //       parse_mode: "HTML",
+  //       disable_web_page_preview: true, //disable because we don't want show description links
+  //       startMainMenu_Production
+  //     },
+
+  //   )
+  //   .then(() => {
+  //     console.log("Keyboard successfully displayed")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error displaying keyboard:", error.message)
+  //   })
+
   bot
     .sendMessage(
       chatId,
-      text_message_html,
+      `
+    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+     `,
       {
-        parse_mode: "HTML",
-        disable_web_page_preview: true, //disable because we don't want show description links
-        startMainMenu_Production
-      },
-      
+        
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "click to open menu",
+                callback_data: 'auth',
+                web_app: { url: webAppUrl },
+              },
+            ],
+            
+          ],
+          resize_keyboard: true,
+          one_time_keyboard: true,
+        },
+        
+        
+        // parse_mode: "HTML",
+        // disable_web_page_preview: true, //disable because we don't want show description links
+        
+        // reply_markup: {
+        //   keyboard: [
+        //     [
+        //       {
+        //         text: "Contact the admin",
+        //         request_contact: true,
+        //       },
+        //     ],
+        //   ],
+        //   resize_keyboard: true, // Разрешить изменение размера клавиатуры
+        //   one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+        // },
+      }
     )
     .then(() => {
       console.log("Keyboard successfully displayed")
@@ -72,28 +121,6 @@ bot.onText(/\/start/, async (msg) => {
     .catch((error) => {
       console.error("Error displaying keyboard:", error.message)
     })
-
-  // bot
-  //   .sendMessage(chatId, "Welcome to the BurgerBot!🍔🍔🍔 \n\n", {
-  //     reply_markup: {
-  //       keyboard: [
-  //         [
-  //           {
-  //             text: "Contact the admin",
-  //             request_contact: true,
-  //           },
-  //         ],
-  //       ],
-  //       resize_keyboard: true, // Разрешить изменение размера клавиатуры
-  //       one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-  //     },
-  //   })
-  //   .then(() => {
-  //     console.log("Keyboard successfully displayed")
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error displaying keyboard:", error.message)
-  //   })
 })
 
 //=========================

@@ -1,21 +1,19 @@
 const { webAppUrl } = require("../constants/constants.js")
- 
 
 const startMainMenu_Production = {
   reply_markup: {
-
-  inline_keyboard: [
-    [
-      {
-        text: "Open Menu",
-        web_app: { url: webAppUrl },
-      },
+    inline_keyboard: [
+      [
+        {
+          text: "Open Menu",
+          web_app: { url: webAppUrl },
+        },
+      ],
     ],
-  ],
-}}
+  },
+}
 
 //===================================
-    
 
 const startMainMenu_Production222 = {
   reply_markup: {
@@ -23,12 +21,10 @@ const startMainMenu_Production222 = {
       [
         {
           text: "click to open menu",
-          callback_data: 'auth',
+          callback_data: "auth",
           web_app: { url: webAppUrl },
         },
       ],
-      
- 
 
       // [
       //   {
@@ -86,18 +82,15 @@ const callToAdminMenu = {
   },
 }
 
-
 const settings_message = {
   parse_mode: "HTML",
   //disable because we don't want show description links
   disable_web_page_preview: true,
 }
 
-
 module.exports = {
   webAppUrl,
   settings_message,
-  give_me_keyboard,
   startMainMenu_Production,
   //  inline_keyboard,
   callToAdminMenu,

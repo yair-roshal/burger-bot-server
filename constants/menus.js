@@ -2,6 +2,8 @@ const { webAppUrl } = require("../constants/constants.js")
  
 
 const startMainMenu_Production = {
+  reply_markup: {
+
   inline_keyboard: [
     [
       {
@@ -10,7 +12,7 @@ const startMainMenu_Production = {
       },
     ],
   ],
-}
+}}
 
 //===================================
     

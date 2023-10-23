@@ -56,7 +56,8 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  await bot
+  bot
+    // await bot
     .sendPhoto(chatId, photoPath, startMainMenu_Production)
     // .sendPhoto(chatId, photoPath)
     .then(() => {
@@ -66,13 +67,13 @@ bot.onText(/\/start/, async (msg) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
 
-  var optionsMessage = {
-    caption: `
-    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
-    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
-     `,
-    reply_markup: JSON.stringify(give_me_keyboard),
-  }
+  // var optionsMessage = {
+  //   caption: `
+  //   <b>Welcome to the BurgerBot 🍔🍔🍔 </b>
+  //   🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+  //    `,
+  //   reply_markup: JSON.stringify(give_me_keyboard),
+  // }
 
   // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
@@ -91,10 +92,10 @@ bot.onText(/\/start/, async (msg) => {
     ],
   }
 
-  // web_app: { url: webAppUrl },
-
   bot.sendMessage(chatId, text, {
     reply_markup: JSON.stringify(keyboard),
+    parse_mode: "HTML",
+    disable_web_page_preview: true, //disable because we don't want show description links
   })
 
   // bot

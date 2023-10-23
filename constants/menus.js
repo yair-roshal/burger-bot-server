@@ -1,4 +1,18 @@
 const { webAppUrl } = require("../constants/constants.js")
+ 
+
+const only_keyboard = {
+     keyboard: [
+      [
+        {
+          text: "Open Menu",
+          web_app: { url: webAppUrl },
+        },
+      ],
+    ],
+  
+}
+
 
 const startMainMenu_Production = {
   reply_markup: {
@@ -90,6 +104,7 @@ const settings_message = {
 
 module.exports = {
   webAppUrl,
+  only_keyboard,
   settings_message,
   startMainMenu_Production,
   //  inline_keyboard,

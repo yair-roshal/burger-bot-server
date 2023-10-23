@@ -61,21 +61,16 @@ bot.onText(/\/start/, async (msg) => {
 
   //sendMessage work+++ ====================================================
 
-  var optionsMessage = {
-    reply_markup: JSON.stringify(only_keyboard),
-    // startMainMenu_Production,
-    parse_mode: "HTML",
-    disable_web_page_preview: true, //disable because we don't want show description links
-  }
+  // var optionsMessage = {
+  //   reply_markup: JSON.stringify(only_keyboard),
+  //   // startMainMenu_Production,
+  //   parse_mode: "HTML",
+  //   disable_web_page_preview: true, //disable because we don't want show description links
+  // }
 
-  bot.sendMessage(chatId, text_html, optionsMessage)
+  // bot.sendMessage(chatId, text_html, optionsMessage)
 
-  //sendMessage work+++ ====================================================
-
-  bot.sendMessage(chatId, text_html, {
-    reply_markup: JSON.stringify(only_keyboard),
-    parse_mode: "HTML",
-  })
+  
 })
 
 //=========================

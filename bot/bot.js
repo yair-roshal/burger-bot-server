@@ -62,8 +62,8 @@ bot.onText(/\/start/, async (msg) => {
   //sendMessage work+++ ====================================================
 
   var optionsMessage = {
-    startMainMenu_Production,
-    // reply_markup: JSON.stringify(only_keyboard),
+    reply_markup: JSON.stringify(only_keyboard),
+    // startMainMenu_Production,
     parse_mode: "HTML",
     disable_web_page_preview: true, //disable because we don't want show description links
   }

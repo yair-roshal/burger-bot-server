@@ -67,7 +67,11 @@ bot.onText(/\/start/, async (msg) => {
 
    bot.sendMessage(chatId, text_message_html, startMainMenu_Production)
    bot.sendMessage(chatId, text_message_html, optionsMessage)
-
+   
+   bot.sendMessage(chatId, text, {
+    startMainMenu_Production,
+        parse_mode: 'HTML',
+  });
   //====================================================
 
   // bot.sendMessage(chatId, text, {

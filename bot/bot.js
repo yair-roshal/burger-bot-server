@@ -56,16 +56,16 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  bot
-    // await bot
-    .sendPhoto(chatId, photoPath, startMainMenu_Production)
-    // .sendPhoto(chatId, photoPath)
-    .then(() => {
-      console.log("Фотография успешно отправлена")
-    })
-    .catch((error) => {
-      console.error("Ошибка при отправке фотографии:", error.message)
-    })
+  // bot
+  //   // await bot
+  //   .sendPhoto(chatId, photoPath, startMainMenu_Production)
+  //   // .sendPhoto(chatId, photoPath)
+  //   .then(() => {
+  //     console.log("Фотография успешно отправлена")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Ошибка при отправке фотографии:", error.message)
+  //   })
 
   // var optionsMessage = {
   //   caption: `
@@ -77,15 +77,12 @@ bot.onText(/\/start/, async (msg) => {
 
   // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
-  const text = `
-  <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
-  🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
-   `
+  const text = "Click the button to open the web app:"
   const keyboard = {
     inline_keyboard: [
       [
         {
-          text: "Open Web App",
+          text: "Open Menu",
           web_app: { url: webAppUrl },
         },
       ],
@@ -94,9 +91,29 @@ bot.onText(/\/start/, async (msg) => {
 
   bot.sendMessage(chatId, text, {
     reply_markup: JSON.stringify(keyboard),
-    parse_mode: "HTML",
-    disable_web_page_preview: true, //disable because we don't want show description links
   })
+
+  // const text = `
+  // <b>Welcome to the BurgerBot 🍔🍔🍔 </b>
+  // 🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+  //  `
+
+  // const keyboard = {
+  //   inline_keyboard: [
+  //     [
+  //       {
+  //         text: "Open Web App",
+  //         web_app: { url: webAppUrl },
+  //       },
+  //     ],
+  //   ],
+  // }
+
+  // bot.sendMessage(chatId, text, {
+  //   reply_markup: JSON.stringify(keyboard),
+  //   parse_mode: "HTML",
+  //   disable_web_page_preview: true, //disable because we don't want show description links
+  // })
 
   // bot
   //   .sendMessage(
@@ -124,6 +141,9 @@ bot.onText(/\/start/, async (msg) => {
     🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
      `,
       {
+        parse_mode: "HTML",
+        disable_web_page_preview: true, //disable because we don't want show description links
+
         reply_markup: {
           inline_keyboard: [
             [

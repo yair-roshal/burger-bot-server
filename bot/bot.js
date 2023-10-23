@@ -77,6 +77,10 @@ bot.onText(/\/start/, async (msg) => {
 
   // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
+  
+    //============================================
+
+    
   const text = "Click the button to open the web app:"
   const keyboard = {
     inline_keyboard: [
@@ -92,6 +96,9 @@ bot.onText(/\/start/, async (msg) => {
   bot.sendMessage(chatId, text, {
     reply_markup: JSON.stringify(keyboard),
   })
+  
+    //============================================
+
 
   // const text = `
   // <b>Welcome to the BurgerBot 🍔🍔🍔 </b>
@@ -115,6 +122,12 @@ bot.onText(/\/start/, async (msg) => {
   //   disable_web_page_preview: true, //disable because we don't want show description links
   // })
 
+  
+  
+    //============================================
+
+    
+    
   // bot
   //   .sendMessage(
   //     chatId,
@@ -133,54 +146,59 @@ bot.onText(/\/start/, async (msg) => {
   //     console.error("Error displaying keyboard:", error.message)
   //   })
 
-  bot
-    .sendMessage(
-      chatId,
-      `
-    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
-    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
-     `,
-      {
-        parse_mode: "HTML",
-        disable_web_page_preview: true, //disable because we don't want show description links
+  //============================================
+  
+  
+  // bot
+  //   .sendMessage(
+  //     chatId,
+  //     `
+  //   <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+  //   🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+  //    `,
+  //     {
+  //       parse_mode: "HTML",
+  //       disable_web_page_preview: true, //disable because we don't want show description links
 
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: "click to open menu",
-                callback_data: "auth",
-                web_app: { url: webAppUrl },
-              },
-            ],
-          ],
-          resize_keyboard: true,
-          one_time_keyboard: true,
-        },
+  //       reply_markup: {
+  //         inline_keyboard: [
+  //           [
+  //             {
+  //               text: "click to open menu",
+  //               callback_data: "auth",
+  //               web_app: { url: webAppUrl },
+  //             },
+  //           ],
+  //         ],
+  //         resize_keyboard: true,
+  //         one_time_keyboard: true,
+  //       },
 
-        // parse_mode: "HTML",
-        // disable_web_page_preview: true, //disable because we don't want show description links
+  //       // parse_mode: "HTML",
+  //       // disable_web_page_preview: true, //disable because we don't want show description links
 
-        // reply_markup: {
-        //   keyboard: [
-        //     [
-        //       {
-        //         text: "Contact the admin",
-        //         request_contact: true,
-        //       },
-        //     ],
-        //   ],
-        //   resize_keyboard: true, // Разрешить изменение размера клавиатуры
-        //   one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-        // },
-      }
-    )
-    .then(() => {
-      console.log("Keyboard successfully displayed")
-    })
-    .catch((error) => {
-      console.error("Error displaying keyboard:", error.message)
-    })
+  //       // reply_markup: {
+  //       //   keyboard: [
+  //       //     [
+  //       //       {
+  //       //         text: "Contact the admin",
+  //       //         request_contact: true,
+  //       //       },
+  //       //     ],
+  //       //   ],
+  //       //   resize_keyboard: true, // Разрешить изменение размера клавиатуры
+  //       //   one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+  //       // },
+  //     }
+  //   )
+  //   .then(() => {
+  //     console.log("Keyboard successfully displayed")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error displaying keyboard:", error.message)
+  //   })
+    
+    
 })
 
 //=========================

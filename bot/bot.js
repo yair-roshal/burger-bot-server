@@ -66,7 +66,7 @@ bot.onText(/\/start/, async (msg) => {
   }
 
    bot.sendMessage(chatId, text_message_html, startMainMenu_Production)
-  //  bot.sendMessage(chatId, text_message_html, optionsMessage)
+   bot.sendMessage(chatId, text_message_html, optionsMessage)
 
   //====================================================
 
@@ -74,73 +74,64 @@ bot.onText(/\/start/, async (msg) => {
   //   reply_markup: JSON.stringify(keyboard),
   // });
 
-  bot
-    .sendMessage(
-      chatId,
-      text_message_html,
-      {
-        parse_mode: "HTML",
-        disable_web_page_preview: true, //disable because we don't want show description links
-        startMainMenu_Production
-      },
+  
+    //====================================================
 
-    )
-    .then(() => {
-      console.log("Keyboard successfully displayed")
-    })
-    .catch((error) => {
-      console.error("Error displaying keyboard:", error.message)
-    })
+    
+    
+  // bot
+  //   .sendMessage(
+  //     chatId,
+  //     text_message_html,
+  //     {
+  //       parse_mode: "HTML",
+  //       disable_web_page_preview: true, //disable because we don't want show description links
+  //       startMainMenu_Production
+  //     },
+
+  //   )
+  //   .then(() => {
+  //     console.log("Keyboard successfully displayed")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error displaying keyboard:", error.message)
+  //   })
 
     
     //===========================================
     
     
-  bot
-    .sendMessage(
-      chatId,
-      `
-    <b>2222 Welcome to the BurgerBot 🍔🍔🍔 </b> 
-    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
-     `,
-      {
-        reply_markup: {
-          inline_keyboard: [
-            [
-              {
-                text: "click to open menu",
-                callback_data: "auth",
-                web_app: { url: webAppUrl },
-              },
-            ],
-          ],
-          resize_keyboard: true,
-          one_time_keyboard: true,
-        },
+  // bot
+  //   .sendMessage(
+  //     chatId,
+  //     `
+  //   <b>2222 Welcome to the BurgerBot 🍔🍔🍔 </b> 
+  //   🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+  //    `,
+  //     {
+  //       reply_markup: {
+  //         inline_keyboard: [
+  //           [
+  //             {
+  //               text: "click to open menu",
+  //               callback_data: "auth",
+  //               web_app: { url: webAppUrl },
+  //             },
+  //           ],
+  //         ],
+  //         resize_keyboard: true,
+  //         one_time_keyboard: true,
+  //       },
 
-        // parse_mode: "HTML",
-        // disable_web_page_preview: true, //disable because we don't want show description links
-
-        // reply_markup: {
-        //   keyboard: [
-        //     [
-        //       {
-        //         text: "Contact the admin",
-        //         request_contact: true,
-        //       },
-        //     ],
-        //   ],
-        //   resize_keyboard: true, // Разрешить изменение размера клавиатуры
-        //   one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-        // },
-      }
-    )
-    .then(() => {
-      console.log("Keyboard successfully displayed")
-    })
-    .catch((error) => {
-      console.error("Error displaying keyboard:", error.message)
-    })
+  
+  //     }
+  //   )
+  //   .then(() => {
+  //     console.log("Keyboard successfully displayed")
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error displaying keyboard:", error.message)
+  //   })
 })
 
 //=========================

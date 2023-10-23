@@ -103,7 +103,7 @@ bot.onText(/\/start/, async (msg) => {
   // web_app: { url: webAppUrl },
 
   
-  bot.sendMessage(chatId, text, startMainMenu_Production);
+  bot.sendMessage(chatId, text, optionsMessage);
   
   
   // bot.sendMessage(chatId, text, {

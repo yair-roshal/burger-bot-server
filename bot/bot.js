@@ -71,24 +71,31 @@ bot.onText(/\/start/, async (msg) => {
     <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
     🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
      `,
-    reply_markup: JSON.stringify(startMainMenu_Production),
+    reply_markup: JSON.stringify(give_me_keyboard),
   }
 
   // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
-  // const text = "Click the button to open the web app:"
-  // const keyboard = {
-  //   inline_keyboard: [
-  //     [
-  //       {
-  //         text: "Open Menu",
-  //         web_app: { url: webAppUrl },
-  //       },
-  //     ],
-  //   ],
-  // }
+  const text = `
+  <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
+  🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
+   `
+  const keyboard = {
+    inline_keyboard: [
+      [
+        {
+          text: "Open Web App",
+          web_app: { url: webAppUrl },
+        },
+      ],
+    ],
+  }
 
-  bot.sendMessage(chatId, text, optionsMessage)
+  // web_app: { url: webAppUrl },
+
+  bot.sendMessage(chatId, text, {
+    reply_markup: JSON.stringify(keyboard),
+  })
 
   // bot
   //   .sendMessage(

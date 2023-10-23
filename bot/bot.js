@@ -62,8 +62,9 @@ bot.onText(/\/start/, async (msg) => {
       {
         parse_mode: "HTML",
         disable_web_page_preview: true, //disable because we don't want show description links
+        startMainMenu_Production
       },
-      startMainMenu_Production
+      
     )
     .then(() => {
       console.log("Keyboard successfully displayed")

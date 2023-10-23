@@ -25,6 +25,7 @@ const {
   startMainMenu_Production,
   callToAdminMenu,
   give_me_keyboard,
+  only_keyboard
 } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
@@ -63,8 +64,8 @@ bot.onText(/\/start/, async (msg) => {
     <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
     🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
      `,
-    // reply_markup: JSON.stringify(only_keyboard),
-    startMainMenu_Production,
+    reply_markup: JSON.stringify(only_keyboard),
+    // startMainMenu_Production,
     
     resize_keyboard: true, // Разрешить изменение размера клавиатуры
     one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
@@ -74,8 +75,8 @@ bot.onText(/\/start/, async (msg) => {
 
   const text = "Click the button to open the web app:"
 
-  bot.sendMessage(chatId, text, optionsMessage)
-  // bot.sendMessage(chatId, text_message_html, optionsMessage)
+  // bot.sendMessage(chatId, text, optionsMessage)
+  bot.sendMessage(chatId, text_message_html, optionsMessage)
 
   //====================================================
 

@@ -38,17 +38,7 @@ const menuENV = startMainMenu_Production
 
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
-
-// callback_query ===============================================
-bot.on("callback_query", (query) => {
-  const chatId = query.from.id
-  // console.log('query ---------------:>> ', query)
-
-  if (query.data === "give_me") {
-    // sendingWordMessage(dictionary, bot, chatId)
-  }
-})
-
+ 
 //=========================
 
 bot.onText(/\/start/, async (msg) => {
@@ -84,7 +74,8 @@ bot.onText(/\/start/, async (msg) => {
 
   const text = "Click the button to open the web app:"
 
-  bot.sendMessage(chatId, text, optionsMessage)
+  // bot.sendMessage(chatId, text, optionsMessage)
+  bot.sendMessage(chatId, text_message_html, optionsMessage)
 
   //====================================================
 

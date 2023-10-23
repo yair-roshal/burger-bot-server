@@ -1,33 +1,21 @@
 const { webAppUrl } = require("../constants/constants.js")
+ 
 
-const give_me_keyboard = {
+const startMainMenu_Production = {
   inline_keyboard: [
-      [
-          {
-              text: 'give me new word',
-              callback_data: 'give_me',
-          },
-      ],
+    [
+      {
+        text: "Open Menu",
+        web_app: { url: webAppUrl },
+      },
+    ],
   ],
 }
 
 //===================================
+    
 
-// const startMainMenu_Testing = {
-//   reply_markup: {
-//     keyboard: [
-//       [
-//         {
-//           text: "Open menu",
-//           // text: 'Open menu - heroku app',
-//           web_app: { url: webAppUrl },
-//         },
-//       ],
-//     ],
-//   },
-// }
-
-const startMainMenu_Production = {
+const startMainMenu_Production222 = {
   reply_markup: {
     inline_keyboard: [
       [

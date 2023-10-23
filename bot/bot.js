@@ -56,43 +56,39 @@ bot.onText(/\/start/, async (msg) => {
 
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  // await bot
-  //   .sendPhoto(chatId, photoPath, startMainMenu_Production)
-  //   // .sendPhoto(chatId, photoPath)
-  //   .then(() => {
-  //     console.log("Фотография успешно отправлена")
-  //   })
-  //   .catch((error) => {
-  //     console.error("Ошибка при отправке фотографии:", error.message)
-  //   })
+  await bot
+    // .sendPhoto(chatId, photoPath, startMainMenu_Production)
+    .sendPhoto(chatId, photoPath)
+    .then(() => {
+      console.log("Фотография успешно отправлена")
+    })
+    .catch((error) => {
+      console.error("Ошибка при отправке фотографии:", error.message)
+    })
 
   var optionsMessage = {
     caption: `
     <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
     🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
      `,
-    reply_markup: JSON.stringify(give_me_keyboard),
+    reply_markup: JSON.stringify(startMainMenu_Production),
   }
 
   // await bot.sendPhoto(chatId, photoPath, optionsMessage)
 
-  const text = "Click the button to open the web app:"
-  const keyboard = {
-    inline_keyboard: [
-      [
-        {
-          text: "Open Web App",
-          web_app: { url: webAppUrl },
-        },
-      ],
-    ],
-  }
+  // const text = "Click the button to open the web app:"
+  // const keyboard = {
+  //   inline_keyboard: [
+  //     [
+  //       {
+  //         text: "Open Menu",
+  //         web_app: { url: webAppUrl },
+  //       },
+  //     ],
+  //   ],
+  // }
 
-  // web_app: { url: webAppUrl },
-
-  bot.sendMessage(chatId, text, {
-    reply_markup: JSON.stringify(keyboard),
-  })
+  bot.sendMessage(chatId, text, optionsMessage)
 
   // bot
   //   .sendMessage(

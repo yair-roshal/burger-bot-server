@@ -25,7 +25,7 @@ const {
   startMainMenu_Production,
   callToAdminMenu,
   give_me_keyboard,
-  only_keyboard
+  only_keyboard,
 } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
@@ -39,7 +39,7 @@ const menuENV = startMainMenu_Production
 
 const { text_message_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
- 
+
 //=========================
 
 bot.onText(/\/start/, async (msg) => {
@@ -60,20 +60,10 @@ bot.onText(/\/start/, async (msg) => {
   //====================================================
 
   var optionsMessage = {
-    caption: `
-    <b>Welcome to the BurgerBot 🍔🍔🍔 </b> 
-    🔥 To order and open the menu, click on the blue button at the bottom left 👇🏻👇🏻👇🏻
-     `,
-    reply_markup: JSON.stringify(only_keyboard),
-    // startMainMenu_Production,
-    
-    resize_keyboard: true, // Разрешить изменение размера клавиатуры
-    one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
+    startMainMenu_Production, 
     parse_mode: "HTML",
     disable_web_page_preview: true, //disable because we don't want show description links
   }
-
-  const text = "Click the button to open the web app:"
 
   // bot.sendMessage(chatId, text, optionsMessage)
   bot.sendMessage(chatId, text_message_html, optionsMessage)

@@ -1,6 +1,4 @@
-
-
-require('rootpath')();
+require("rootpath")()
 const express = require("express")
 var https = require("https")
 var fs = require("fs")
@@ -8,7 +6,7 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
-const errorHandler = require('middleware/error-handler');
+const errorHandler = require("middleware/error-handler")
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
@@ -59,13 +57,12 @@ module.exports = (bot) => {
   // app.use(cors())
 
   app.use("/", routes)
-  
+
   // api routes
-app.use('/users', require('./controllers/users.controller'));
+  app.use("/users", require("./controllers/users.controller"))
 
-
-// global error handler
-app.use(errorHandler);
+  // global error handler
+  app.use(errorHandler)
   // =========================================================================
 
   let generateIdTemp = generateDateId()
@@ -91,8 +88,8 @@ app.use(errorHandler);
         productsQuantityPrice +
         `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
         `\n`
-
-      if (item.toppings && item.toppings.length > 0) {
+      console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
+      if (item.toppings?.length > 0) {
         for (const topping of item.toppings) {
           if (topping.count > 0) {
             const toppingPrice =
@@ -103,6 +100,7 @@ app.use(errorHandler);
           }
         }
       }
+      console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
     }
 
     try {

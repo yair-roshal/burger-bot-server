@@ -31,10 +31,7 @@ module.exports = (bot) => {
   //=========================================================================
 
   // const allowedOrigins = [
-  //   "https://heroic-puffpuff-e7da0d.netlify.app",
-  //   "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
-  //   "https://serene-moonbeam-93eead.netlify.app/static/js",
-  //   "https://master--serene-moonbeam-93eead.netlify.app",
+  // webAppUrl,
   //   "http://localhost:8889",
   //   "https://api.telegram.org",
   // ]

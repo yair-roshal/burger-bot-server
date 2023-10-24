@@ -66,7 +66,6 @@ module.exports = (bot) => {
   // =========================================================================
 
   let generateIdTemp = generateDateId()
-  let productsQuantityPrice = ``
 
   app.post("/send_sms_tele", async (req, res) => {
     console.log("/send_sms_tele--req.body :>> ", req.body)
@@ -95,6 +94,11 @@ module.exports = (bot) => {
     // console.log('productsQuantityPrice', productsQuantityPrice)
 
     // with toppings ========================================
+    
+    console.log('cartItems', cartItems)
+    console.log('productsQuantityPrice', productsQuantityPrice)
+    
+    let productsQuantityPrice = ``
 
     for (const item of cartItems) {
       console.log("item_send_sms_tele", item)

@@ -94,11 +94,11 @@ module.exports = (bot) => {
     // console.log('productsQuantityPrice', productsQuantityPrice)
 
     // with toppings ========================================
-    
-    console.log('cartItems', cartItems)
-    console.log('productsQuantityPrice', productsQuantityPrice)
-    
+
     let productsQuantityPrice = ``
+    console.log("productsQuantityPrice", productsQuantityPrice)
+
+    console.log("cartItems", cartItems)
 
     for (const item of cartItems) {
       console.log("item_send_sms_tele", item)

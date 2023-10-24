@@ -80,7 +80,10 @@ module.exports = (bot) => {
       paymentMethod,
     } = req.body
 
-    for (const item of cartItems) {
+    for (let index = 0; index < cartItems.length; index++) {
+      const item = cartItems[index]
+      // for (const item of cartItems) {
+
       if (item.quantity > 0) {
         // Проверяем, есть ли товар в заказе
 

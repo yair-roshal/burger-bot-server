@@ -81,26 +81,30 @@ module.exports = (bot) => {
     } = req.body
 
     for (const item of cartItems) {
-      console.log("item_send_sms_tele", item)
-      const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+      if (item.quantity > 0) {
+        // Проверяем, есть ли товар в заказе
 
-      productsQuantityPrice =
-        productsQuantityPrice +
-        `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
-        `\n`
-      console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
-      if (item.toppings?.length > 0) {
-        for (const topping of item.toppings) {
-          if (topping.count > 0) {
-            const toppingPrice =
-              (topping.price * item.quantity).toFixed(2) || ""
-            productsQuantityPrice +=
-              ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
-              "\n"
+        console.log("item_send_sms_tele", item)
+        const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+
+        productsQuantityPrice +=
+          `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
+          `\n`
+        console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
+
+        if (item.toppings?.length > 0) {
+          for (const topping of item.toppings) {
+            if (topping.count > 0) {
+              const toppingPrice =
+                (topping.price * item.quantity).toFixed(2) || ""
+              productsQuantityPrice +=
+                ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
+                "\n"
+            }
           }
         }
+        console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
       }
-      console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
     }
 
     try {

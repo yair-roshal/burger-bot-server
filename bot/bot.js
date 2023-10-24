@@ -25,7 +25,8 @@ const {
   startMainMenu_Production,
   callToAdminMenu,
   give_me_keyboard,
-  only_keyboard,
+  only_inline_keyboard,
+  only_keyboard_callToAdminMenu,
 } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
@@ -38,7 +39,7 @@ const menuENV = startMainMenu_Production
 //   : startMainMenu_Production
 
 const { text_html } = require("../constants/texts.js")
-const { webAppUrl } = require("../constants/constants.js")
+// const { webAppUrl } = require("../constants/constants.js")
 
 //=========================
 
@@ -62,7 +63,7 @@ bot.onText(/\/start/, async (msg) => {
   //sendMessage work+++ ====================================================
 
   // var optionsMessage = {
-  //   reply_markup: JSON.stringify(only_keyboard),
+  //   reply_markup: JSON.stringify(only_inline_keyboard),
   //   // startMainMenu_Production,
   //   parse_mode: "HTML",
   //   disable_web_page_preview: true, //disable because we don't want show description links
@@ -70,7 +71,16 @@ bot.onText(/\/start/, async (msg) => {
 
   // bot.sendMessage(chatId, text_html, optionsMessage)
 
-  
+  //testing ===============
+
+  var optionsMessage = {
+    reply_markup: JSON.stringify(only_keyboard_callToAdminMenu),
+    // startMainMenu_Production,
+    parse_mode: "HTML",
+    disable_web_page_preview: true, //disable because we don't want show description links
+  }
+
+  bot.sendMessage(chatId, text_html, optionsMessage)
 })
 
 //=========================

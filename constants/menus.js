@@ -1,6 +1,6 @@
 const { webAppUrl } = require("../constants/constants.js")
 
-const only_keyboard = {
+const only_inline_keyboard = {
   inline_keyboard: [
     [
       {
@@ -72,6 +72,17 @@ const callToAdminMenu = {
   },
 }
 
+const only_keyboard_callToAdminMenu = {
+  keyboard: [
+    [
+      {
+        text: "Contact the admin",
+        request_contact: true,
+      },
+    ],
+  ],
+}
+
 const settings_message = {
   parse_mode: "HTML",
   //disable because we don't want show description links
@@ -79,9 +90,9 @@ const settings_message = {
 }
 
 module.exports = {
-  webAppUrl,
-  only_keyboard,
+  only_inline_keyboard,
   settings_message,
   startMainMenu_Production,
   callToAdminMenu,
+  only_keyboard_callToAdminMenu
 }

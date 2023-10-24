@@ -1,0 +1,10 @@
+﻿{
+  "database": {
+      "host": "194.31.175.248",
+      "port": "3306",
+      "user": "gen_user",
+      "password": "w07613vrm1",
+      "database": "burger_db"
+  },
+  "secret": "YAIR SECRET STRING"
+}

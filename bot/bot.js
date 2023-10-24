@@ -24,6 +24,8 @@ const formatDate = require("./utils/formatDate.js")
 const {
   startMainMenu_Production,
   callToAdminMenu,
+  give_me_keyboard,
+  only_keyboard,
 } = require("../constants/menus.js")
 
 const menuENV = startMainMenu_Production
@@ -35,7 +37,7 @@ const menuENV = startMainMenu_Production
 //   ? startMainMenu_Production
 //   : startMainMenu_Production
 
-const { text_message_html } = require("../constants/texts.js")
+const { text_html } = require("../constants/texts.js")
 const { webAppUrl } = require("../constants/constants.js")
 
 //=========================
@@ -43,10 +45,12 @@ const { webAppUrl } = require("../constants/constants.js")
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id
 
+  //sendPhoto work++++  ====================================================
+
   var photoPath = __dirname + "/images/PosterBurger.jpg"
 
-  bot
-    .sendPhoto(chatId, photoPath, menuENV)
+  await bot
+    .sendPhoto(chatId, photoPath, startMainMenu_Production)
     // .sendPhoto(chatId, photoPath)
     .then(() => {
       console.log("Фотография успешно отправлена")
@@ -55,27 +59,18 @@ bot.onText(/\/start/, async (msg) => {
       console.error("Ошибка при отправке фотографии:", error.message)
     })
 
-  bot
-    .sendMessage(chatId, "Welcome to the BurgerBot! \n\n", {
-      reply_markup: {
-        keyboard: [
-          [
-            {
-              text: "Contact the admin",
-              request_contact: true,
-            },
-          ],
-        ],
-        resize_keyboard: true, // Разрешить изменение размера клавиатуры
-        one_time_keyboard: false, // Не скрывать клавиатуру после нажатия на кнопку
-      },
-    })
-    .then(() => {
-      console.log("Keyboard successfully displayed")
-    })
-    .catch((error) => {
-      console.error("Error displaying keyboard:", error.message)
-    })
+  //sendMessage work+++ ====================================================
+
+  // var optionsMessage = {
+  //   reply_markup: JSON.stringify(only_keyboard),
+  //   // startMainMenu_Production,
+  //   parse_mode: "HTML",
+  //   disable_web_page_preview: true, //disable because we don't want show description links
+  // }
+
+  // bot.sendMessage(chatId, text_html, optionsMessage)
+
+  
 })
 
 //=========================
@@ -99,51 +94,51 @@ bot.on("contact", (msg) => {
 // })
 
 // callback_query ===========================================
-// bot.on("callback_query", (query) => {
-//   const chatId = query.message.chat.id
-//   const data = query.data
+bot.on("callback_query", (query) => {
+  const chatId = query.message.chat.id
+  const data = query.data
 
-//   if (data === "about") {
-//     const chatId = msg.chat.id
-//     bot.sendMessage(
-//       chatId,
-//       text_message_html,
-//       {
-//         parse_mode: "HTML",
-//         //disable because we don't want show description links
-//         disable_web_page_preview: true,
-//       },
-//       menuENV
-//     )
-//   }
+  if (data === "auth") {
+    const chatId = msg.chat.id
+    bot.sendMessage(
+      chatId,
+      text_html,
+      {
+        parse_mode: "HTML",
+        //disable because we don't want show description links
+        disable_web_page_preview: true,
+      },
+      menuENV
+    )
+  }
 
-//   if (data === "test_pay") {
-//     const chatId = msg.chat.id
-//     const options = {
-//       reply_markup: {
-//         inline_keyboard: [
-//           [
-//             {
-//               text: "Buy",
-//               pay: true,
-//             },
-//           ],
-//         ],
-//       },
-//     }
+  // if (data === "test_pay") {
+  //   const chatId = msg.chat.id
+  //   const options = {
+  //     reply_markup: {
+  //       inline_keyboard: [
+  //         [
+  //           {
+  //             text: "Buy",
+  //             pay: true,
+  //           },
+  //         ],
+  //       ],
+  //     },
+  //   }
 
-//     bot.sendInvoice(
-//       chatId,
-//       "Title111",
-//       "Title222",
-//       "PAYMENTS_TOKEN",
-//       "some_invoice",
-//       "RUB",
-//       [{ label: "example", amount: 100 }],
-//       options
-//     )
-//   }
-// })
+  //   bot.sendInvoice(
+  //     chatId,
+  //     "Title111",
+  //     "Title222",
+  //     "PAYMENTS_TOKEN",
+  //     "some_invoice",
+  //     "RUB",
+  //     [{ label: "example", amount: 100 }],
+  //     options
+  //   )
+  // }
+})
 
 //==========================================================
 

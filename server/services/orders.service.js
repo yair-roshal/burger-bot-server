@@ -1,5 +1,5 @@
 const mysql = require("mysql2/promise")
-const { sqlConfig } = require("../../constants/constants")
+const { sqlConfig } = require("../../constants/config")
 const axios = require("axios")
 const https = require("https")
 const { generateDateTime } = require("../helpers/utils")
@@ -133,14 +133,17 @@ class OrdersService {
       // Выполняем SQL-запрос
       await this.executeQuery(sqlQuery, values)
 
-      // Возвращаем успешный ответ
-      res.status(200).json({ message: "create_order_db_ Заказ успешно создан" })
+      console.log('"create_order_db_ Заказ успешно создан" ')
+      // a статус Возвращаем  в контролере !!!
+
+      // res.status(200).json({ message: "create_order_db_ Заказ успешно создан" })
     } catch (error) {
-      // Обрабатываем ошибку
       console.error("create_order_db Ошибка при создании заказа:", error)
-      res
-        .status(500)
-        .json({ error: "create_order_db Произошла ошибка при создании заказа" })
+      // a статус Возвращаем  в контролере !!!
+
+      // res
+      //   .status(500)
+      //   .json({ error: "create_order_db Произошла ошибка при создании заказа" })
     }
   }
 }

@@ -1,3 +1,4 @@
+require("rootpath")()
 const express = require("express")
 var https = require("https")
 var fs = require("fs")
@@ -5,6 +6,7 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
+const errorHandler = require("middleware/error-handler")
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
@@ -55,10 +57,15 @@ module.exports = (bot) => {
   // app.use(cors())
 
   app.use("/", routes)
+
+  // api routes
+  app.use("/users", require("./controllers/users.controller"))
+
+  // global error handler
+  app.use(errorHandler)
   // =========================================================================
 
   let generateIdTemp = generateDateId()
-  let productsQuantityPrice = ``
 
   app.post("/send_sms_tele", async (req, res) => {
     console.log("/send_sms_tele--req.body :>> ", req.body)
@@ -72,16 +79,37 @@ module.exports = (bot) => {
       paymentMethod,
     } = req.body
 
+    console.log("for_proshli_num_paamim--------------->>>")
+
+    // fix without toppings ========================================
+    // for (const item of cartItems) {
+    //   console.log('item_send_sms_tele', item)
+    //   const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+
+    //   productsQuantityPrice =
+    //     productsQuantityPrice +
+    //     `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
+    //     `\n`
+    // }
+    // console.log('productsQuantityPrice', productsQuantityPrice)
+
+    // with toppings ========================================
+
+    let productsQuantityPrice = ``
+    console.log("productsQuantityPrice", productsQuantityPrice)
+
+    console.log("cartItems", cartItems)
+
     for (const item of cartItems) {
       console.log("item_send_sms_tele", item)
       const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-      productsQuantityPrice =
-        productsQuantityPrice +
+      productsQuantityPrice +=
         `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
         `\n`
+      console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
 
-      if (item.toppings && item.toppings.length > 0) {
+      if (item.toppings?.length > 0) {
         for (const topping of item.toppings) {
           if (topping.count > 0) {
             const toppingPrice =
@@ -92,6 +120,7 @@ module.exports = (bot) => {
           }
         }
       }
+      console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
     }
 
     try {
@@ -128,6 +157,8 @@ ______________________________________________
       })
     }
   })
+
+  // const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 
   https.createServer(httpsOptions, app).listen(443, () => {
     console.log("https Web server started at port : ", 443)

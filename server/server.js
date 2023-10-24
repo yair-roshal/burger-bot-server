@@ -80,42 +80,44 @@ module.exports = (bot) => {
       paymentMethod,
     } = req.body
 
-    console.log('for_proshli_num_paamim')
-    
-    for (const item of cartItems) {
-      console.log('item_send_sms_tele', item)
-      const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+    console.log("for_proshli_num_paamim--------------->>>")
 
-      productsQuantityPrice =
-        productsQuantityPrice +
-        `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
-        `\n`
-    }
-    
-    console.log('productsQuantityPrice', productsQuantityPrice)
-    
+    // fix without toppings ========================================
     // for (const item of cartItems) {
-    //   console.log("item_send_sms_tele", item)
+    //   console.log('item_send_sms_tele', item)
     //   const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-    //   productsQuantityPrice +=
-    //     `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
+    //   productsQuantityPrice =
+    //     productsQuantityPrice +
+    //     `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
     //     `\n`
-    //   console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
-
-    //   if (item.toppings?.length > 0) {
-    //     for (const topping of item.toppings) {
-    //       if (topping.count > 0) {
-    //         const toppingPrice =
-    //           (topping.price * item.quantity).toFixed(2) || ""
-    //         productsQuantityPrice +=
-    //           ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
-    //           "\n"
-    //       }
-    //     }
-    //   }
-    //   console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
     // }
+    // console.log('productsQuantityPrice', productsQuantityPrice)
+
+    // with toppings ========================================
+
+    for (const item of cartItems) {
+      console.log("item_send_sms_tele", item)
+      const itemPrice = (item.price * item.quantity).toFixed(2) || ""
+
+      productsQuantityPrice +=
+        `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
+        `\n`
+      console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
+
+      if (item.toppings?.length > 0) {
+        for (const topping of item.toppings) {
+          if (topping.count > 0) {
+            const toppingPrice =
+              (topping.price * item.quantity).toFixed(2) || ""
+            productsQuantityPrice +=
+              ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
+              "\n"
+          }
+        }
+      }
+      console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
+    }
 
     try {
       await bot.answerWebAppQuery(queryId, {

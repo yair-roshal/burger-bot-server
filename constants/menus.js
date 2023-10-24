@@ -76,7 +76,7 @@ const only_keyboard_callToAdminMenu = {
   keyboard: [
     [
       {
-        text: "Contact the admin",
+        text: "write to support",
         request_contact: true,
       },
     ],
@@ -94,5 +94,5 @@ module.exports = {
   settings_message,
   startMainMenu_Production,
   callToAdminMenu,
-  only_keyboard_callToAdminMenu
+  only_keyboard_callToAdminMenu,
 }

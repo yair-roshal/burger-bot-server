@@ -4,7 +4,7 @@ const only_inline_keyboard = {
   inline_keyboard: [
     [
       {
-        text: "Open Menu !",
+        text: "Open Menu",
         web_app: { url: webAppUrl },
       },
     ],
@@ -16,7 +16,7 @@ const startMainMenu_Production = {
     inline_keyboard: [
       [
         {
-          text: "Open Menu !!",
+          text: "Open Menu !",
           web_app: { url: webAppUrl },
         },
       ],
@@ -76,7 +76,7 @@ const only_keyboard_callToAdminMenu = {
   keyboard: [
     [
       {
-        text: "write to support",
+        text: "Write To Support",
         request_contact: true,
       },
     ],

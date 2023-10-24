@@ -4,7 +4,7 @@ const only_keyboard = {
   inline_keyboard: [
     [
       {
-        text: "Open Menu",
+        text: "Open Menu !",
         web_app: { url: webAppUrl },
       },
     ],
@@ -16,7 +16,7 @@ const startMainMenu_Production = {
     inline_keyboard: [
       [
         {
-          text: "Open Menu",
+          text: "Open Menu !!",
           web_app: { url: webAppUrl },
         },
       ],
@@ -46,13 +46,6 @@ const startMainMenu_Production222 = {
 
       // [
       //   {
-      //     text: "About",
-      //     callback_data: "about",
-      //   },
-      // ],
-
-      // [
-      //   {
       //     text: "Test Pay",
       //     callback_data: "test_pay",
       //   },
@@ -62,20 +55,6 @@ const startMainMenu_Production222 = {
     one_time_keyboard: true,
   },
 }
-
-//==================================================================
-// const inline_keyboard = {
-//     reply_markup: {
-//         inline_keyboard: [
-//             [
-//                 {
-//                     text: 'Open menu',
-//                     callback_data: 'open_menu',
-//                 },
-//             ],
-//         ],
-//     },
-// }
 
 //==================================
 const callToAdminMenu = {
@@ -104,6 +83,5 @@ module.exports = {
   only_keyboard,
   settings_message,
   startMainMenu_Production,
-  //  inline_keyboard,
   callToAdminMenu,
 }

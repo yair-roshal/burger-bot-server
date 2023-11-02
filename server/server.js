@@ -156,8 +156,16 @@ ______________________________________________
   })
 
   // const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
-let port = 8081
-// let port = 443
+  // let port = 8081
+
+  let port1 = 5005
+  
+  app.listen(port1, () => {
+    console.log(`Server is running on port ${port1}`)
+  })
+  
+  let port = 443
+
   https.createServer(httpsOptions, app).listen(port, () => {
     console.log("https Web server started at port : ", port)
   })

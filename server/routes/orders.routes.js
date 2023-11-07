@@ -15,12 +15,7 @@ router
   .get(OrderController.getOrders)
   .post(OrderController.createOrder)
 
-router
-  .route("/menu")
-  .get(OrderController.getMenu)
-
-// .put(OrderController.updateOrder)
-// .delete(OrderController.deleteOrder)
+ 
 
 router.route("/pay_credit_card").post(OrderController.pay_credit_card)
 router.route("/create_order_db").post(OrderController.create_order_db)

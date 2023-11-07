@@ -27,7 +27,8 @@ class MenuService {
   // getMenu ================================================
   async getMenu() {
     const sqlQuery =
-      "SELECT * FROM Menu LEFT JOIN Toppings ON Menu.ID = Toppings.DishID"
+      "SELECT * FROM Menu"
+      // "SELECT * FROM Menu LEFT JOIN Toppings ON Menu.ID = Toppings.DishID"
     return this.executeQuery(sqlQuery, [])
   }
 }

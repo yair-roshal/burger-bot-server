@@ -27,9 +27,29 @@ class MenuService {
   // getMenu ================================================
   async getMenu() {
     const sqlQuery =
-      "SELECT * FROM Menu"
-      // "SELECT * FROM Menu LEFT JOIN Toppings ON Menu.ID = Toppings.DishID"
-    return this.executeQuery(sqlQuery, [])
+      // "SELECT * FROM Menu"
+      `SELECT
+      M.ID AS ID, 
+      M.Title,
+      M.Price,
+      M.Image,
+      M.Description,
+      (
+        SELECT 
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'Title', T.Title,  
+              'Price', T.Price,
+              'Image', T.Image
+            )
+          )
+        FROM Toppings T 
+        WHERE T.DishID = M.ID
+      ) AS toppings  
+    FROM Menu M`
+  
+  
+     return this.executeQuery(sqlQuery, [])
   }
 }
 

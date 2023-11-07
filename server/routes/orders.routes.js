@@ -15,6 +15,10 @@ router
   .get(OrderController.getOrders)
   .post(OrderController.createOrder)
 
+router
+  .route("/menu")
+  .get(OrderController.getMenu)
+
 // .put(OrderController.updateOrder)
 // .delete(OrderController.deleteOrder)
 

@@ -1,14 +1,26 @@
 const OrdersService = require("../services/orders.service.js")
 
 class OrdersController {
-  //=============================================================
-  async getOrders(req, res) {
+  
+   async getOrders(req, res) {
     const result = await OrdersService.getOrders(req, res)
 
     if (result) return res.status(200).send(result)
     else return res.status(500).send({ message: "error_getOrders" })
   }
+  
   //=============================================================
+  
+  
+   async getMenu(req, res) {
+    const result = await OrdersService.getMenu(req, res)
+
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error_getMenu" })
+  }
+  
+  //=============================================================
+  
   async createOrder(req, res) {
     const result = await OrdersService.createOrder(req, res)
 

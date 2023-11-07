@@ -6,7 +6,7 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
-const errorHandler = require("middleware/error-handler")
+// const errorHandler = require("middleware/error-handler")
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
@@ -56,10 +56,10 @@ module.exports = (bot) => {
   app.use("/", routes)
 
   // api routes
-  app.use("/users", require("./controllers/users.controller"))
+  // app.use("/users", require("./controllers/users.controller"))
 
   // global error handler
-  app.use(errorHandler)
+  // app.use(errorHandler)
   // =========================================================================
 
   let generateIdTemp = generateDateId()

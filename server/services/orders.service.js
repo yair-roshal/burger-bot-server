@@ -29,6 +29,16 @@ class OrdersService {
     const sqlQuery = "SELECT * FROM orders"
     return this.executeQuery(sqlQuery, [])
   }
+  
+  
+
+  // getMenu ================================================
+  async getMenu() {
+    const sqlQuery = 'SELECT * FROM Menu LEFT JOIN Toppings ON Menu.ID = Toppings.DishID'
+    return this.executeQuery(sqlQuery, [])
+  }
+  
+  
 
   // createOrder ================================================
 

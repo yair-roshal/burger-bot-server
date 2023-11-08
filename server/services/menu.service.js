@@ -4,7 +4,7 @@ const axios = require("axios")
 const https = require("https")
 const { generateDateTime } = require("../helpers/utils")
 
-class MenuService {
+class menuService {
   constructor() {
     this.pool = mysql.createPool(sqlConfig) // Создаем пул соединений
   }
@@ -27,30 +27,30 @@ class MenuService {
   // getMenu ================================================
   async getMenu() {
     const sqlQuery =
-      // "SELECT * FROM Menu"
+      // "SELECT * FROM menu"
       `SELECT
-      M.ID AS ID, 
-      M.Title,
-      M.Price,
-      M.Image,
-      M.Description,
+      m.id AS id, 
+      m.title,
+      m.price,
+      m.image,
+      m.description,
       (
         SELECT 
           JSON_ARRAYAGG(
             JSON_OBJECT(
-              'Title', T.Title,  
-              'Price', T.Price,
-              'Image', T.Image
+              'title', t.title,  
+              'price', t.price,
+              'image', t.image
             )
           )
-        FROM Toppings T 
-        WHERE T.DishID = M.ID
+        FROM toppings t 
+        WHERE t.dish_id = m.id
       ) AS toppings  
-    FROM Menu M`
+    FROM menu m`
   
   
      return this.executeQuery(sqlQuery, [])
   }
 }
 
-module.exports = new MenuService()
+module.exports = new menuService()

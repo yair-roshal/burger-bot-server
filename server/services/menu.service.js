@@ -47,9 +47,19 @@ class menuService {
         WHERE t.dish_id = m.id
       ) AS toppings  
     FROM menu m`
-  
-  
-     return this.executeQuery(sqlQuery, [])
+
+    return this.executeQuery(sqlQuery, [])
+  }
+
+  // getToppings ================================================
+  async getToppings() {
+    const sqlQuery = "SELECT * FROM toppings"
+    return this.executeQuery(sqlQuery, [])
+  }
+  // getCategories ================================================
+  async getCategories() {
+    const sqlQuery = "SELECT * FROM categories"
+    return this.executeQuery(sqlQuery, [])
   }
 }
 

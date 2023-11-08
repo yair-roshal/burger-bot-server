@@ -12,12 +12,12 @@ class OrdersController {
   //=============================================================
   
   
-   async getMenu(req, res) {
-    const result = await OrdersService.getMenu(req, res)
+  //  async getMenu(req, res) {
+  //   const result = await OrdersService.getMenu(req, res)
 
-    if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_getMenu" })
-  }
+  //   if (result) return res.status(200).send(result)
+  //   else return res.status(500).send({ message: "error_getMenu" })
+  // }
   
   //=============================================================
   

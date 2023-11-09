@@ -19,7 +19,7 @@ const startMainMenu_Production = {
       [
         {
           text: "Open Menu !",
-          web_app: { url: webAppUrl },
+          web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
         },
       ],
     ],

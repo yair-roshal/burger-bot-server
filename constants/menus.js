@@ -1,11 +1,13 @@
 const { webAppUrl } = require("../constants/constants.js")
+const restaurant_name = "cafacafe"
 
 const only_inline_keyboard = {
   inline_keyboard: [
     [
       {
         text: "Open Menu",
-        web_app: { url: webAppUrl },
+        // web_app: { url: webAppUrl },
+        web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
       },
     ],
   ],

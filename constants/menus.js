@@ -1,18 +1,6 @@
 const { webAppUrl } = require("../constants/constants.js")
 const restaurant_name = "cafacafe"
 
-const only_inline_keyboard = {
-  inline_keyboard: [
-    [
-      {
-        text: "Open Menu",
-        // web_app: { url: webAppUrl },
-        web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
-      },
-    ],
-  ],
-}
-
 const startMainMenu_Production = {
   reply_markup: {
     inline_keyboard: [
@@ -25,6 +13,18 @@ const startMainMenu_Production = {
     ],
   },
 }
+
+// const only_inline_keyboard = {
+//   inline_keyboard: [
+//     [
+//       {
+//         text: "Open Menu",
+//         // web_app: { url: webAppUrl },
+//         web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
+//       },
+//     ],
+//   ],
+// }
 
 //===================================
 
@@ -92,7 +92,7 @@ const settings_message = {
 }
 
 module.exports = {
-  only_inline_keyboard,
+  // only_inline_keyboard,
   settings_message,
   startMainMenu_Production,
   callToAdminMenu,

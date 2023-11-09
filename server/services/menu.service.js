@@ -25,10 +25,10 @@ class menuService {
   }
 
   // getMenu ================================================
-  async getMenu() {
-    const sqlQuery =
-      // "SELECT * FROM menu"
-      `SELECT
+  async getMenu(restaurant_name) {
+    console.log("restaurant_name", restaurant_name)
+    const sqlQuery = `
+    SELECT
       m.id AS id, 
       m.title,
       m.price,
@@ -46,9 +46,11 @@ class menuService {
         FROM toppings t 
         WHERE t.dish_id = m.id
       ) AS toppings  
-    FROM menu m`
+    FROM menu m
+    WHERE m.restaurant_name = ?
+  `
 
-    return this.executeQuery(sqlQuery, [])
+    return this.executeQuery(sqlQuery, [restaurant_name])
   }
 
   // getToppings ================================================

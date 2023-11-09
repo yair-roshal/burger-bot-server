@@ -25,7 +25,32 @@ class menuService {
   }
 
   // getMenu ================================================
-  async getMenu(restaurant_name) {
+  async getMenu() {
+    const sqlQuery = `SELECT
+     m.id AS id, 
+     m.title,
+     m.price,
+     m.image,
+     m.description,
+     (
+       SELECT 
+         JSON_ARRAYAGG(
+           JSON_OBJECT(
+             'title', t.title,  
+             'price', t.price,
+             'image', t.image
+           )
+         )
+       FROM toppings t 
+       WHERE t.dish_id = m.id
+     ) AS toppings  
+   FROM menu m`
+
+    return this.executeQuery(sqlQuery, [])
+  }
+
+  // getMenuByRestaurantName ================================================
+  async getMenuByRestaurantName(restaurant_name) {
     console.log("restaurant_name", restaurant_name)
     const sqlQuery = `
     SELECT

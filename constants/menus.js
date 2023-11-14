@@ -1,5 +1,5 @@
 const { webAppUrl } = require("../constants/constants.js")
-const restaurant_name = "cafacafe"
+const restaurant_name = "cafecafe"
 
 const startMainMenu_Production = {
   reply_markup: {

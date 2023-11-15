@@ -32,9 +32,9 @@ class OrdersService {
   
   
 
-  // getMenu ================================================
-  // async getMenu() {
-  //   const sqlQuery = 'SELECT * FROM Menu LEFT JOIN Toppings ON Menu.ID = Toppings.DishID'
+  // getDishes ================================================
+  // async getDishes() {
+  //   const sqlQuery = 'SELECT * FROM Dishes LEFT JOIN Toppings ON Dishes.ID = Toppings.DishID'
   //   return this.executeQuery(sqlQuery, [])
   // }
   

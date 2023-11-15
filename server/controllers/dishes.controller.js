@@ -1,28 +1,28 @@
-//menu.controller.js
-const MenuService = require("../services/menu.service.js")
+//dishes.controller.js
+const DishesService = require("../services/dishes.service.js")
 
-class MenuController {
+class DishesController {
 
-  async getMenu(req, res) {
-    const result = await MenuService.getMenu(req, res)
+  async getDishes(req, res) {
+    const result = await DishesService.getDishes(req, res)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_getMenu" })
+    else return res.status(500).send({ message: "error_getDishes" })
   }
     //============================================
 
-  async getMenuByRestaurantName(req, res) {
+  async getDishesByRestaurantName(req, res) {
     const restaurantId = req.params.restaurant_name
-    const result = await MenuService.getMenuByRestaurantName(restaurantId)
+    const result = await DishesService.getDishesByRestaurantName(restaurantId)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_getMenu" })
+    else return res.status(500).send({ message: "error_getDishes" })
   }
   
   //============================================
   
   async getToppings(req, res) {
-    const result = await MenuService.getToppings(req, res)
+    const result = await DishesService.getToppings(req, res)
 
     if (result) return res.status(200).send(result)
     else return res.status(500).send({ message: "error_getToppings" })
@@ -31,11 +31,11 @@ class MenuController {
     //============================================
 
   async getCategories(req, res) {
-    const result = await MenuService.getCategories(req, res)
+    const result = await DishesService.getCategories(req, res)
 
     if (result) return res.status(200).send(result)
     else return res.status(500).send({ message: "error_getCategories" })
   }
 }
 
-module.exports = new MenuController()
+module.exports = new DishesController()

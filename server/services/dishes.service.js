@@ -137,6 +137,23 @@ class dishesService {
     const sqlQuery = 'SELECT * FROM toppings'
     return this.executeQuery(sqlQuery, [])
   }
+
+  // getToppingsByDishId ================================================
+  async getToppingsByDishId(dish_id) {
+    console.log('dish_id', dish_id)
+    const sqlQuery = `
+      SELECT
+        t.id  , 
+        t.title,
+        t.price,
+        t.image,
+        t.dish_id
+      FROM toppings t
+      WHERE t.dish_id = ?
+    `
+    return this.executeQuery(sqlQuery, [dish_id])
+  }
+
   // getCategories ================================================
   async getCategories() {
     const sqlQuery = 'SELECT * FROM categories'

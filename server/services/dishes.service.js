@@ -138,20 +138,21 @@ class dishesService {
     return this.executeQuery(sqlQuery, [])
   }
 
-  // getToppingsByDishId ================================================
-  async getToppingsByDishId(dish_id) {
-    console.log('dish_id', dish_id)
+  // getToppingsByRestaurantName ================================================
+  async getToppingsByRestaurantName(restaurant_name) {
+    console.log('restaurant_name', restaurant_name)
     const sqlQuery = `
       SELECT
         t.id  , 
         t.title,
         t.price,
         t.image,
-        t.dish_id
+        t.dish_id,
+        t.restaurant_name
       FROM toppings t
-      WHERE t.dish_id = ?
+      WHERE t.restaurant_name = ?
     `
-    return this.executeQuery(sqlQuery, [dish_id])
+    return this.executeQuery(sqlQuery, [restaurant_name])
   }
 
   // getCategories ================================================

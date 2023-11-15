@@ -37,12 +37,12 @@ class DishesController {
   }
   //============================================
   
-  async getToppingsByDishId(req, res) {
-    const dish_id = req.params.dish_id
-    const result = await DishesService.getToppingsByDishId(dish_id)
+  async getToppingsByRestaurantName(req, res) {
+    const restaurant_name = req.params.restaurant_name
+    const result = await DishesService.getToppingsByRestaurantName(restaurant_name)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error-getToppingsByDishId" })
+    else return res.status(500).send({ message: "error-getToppingsByRestaurantName" })
   }
   
     //============================================

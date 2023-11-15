@@ -1,7 +1,7 @@
 // const { Product } = require("../models/Product");
 // const { auth, isUser, isAdmin } = require("../middleware/auth");
-const cloudinary = require("../helpers/cloudinary");
-const router = require("express").Router();
+// const cloudinary = require("../helpers/cloudinary");
+// const router = require("express").Router();
 
 
 //GET ALL PRODUCTS
@@ -82,19 +82,19 @@ const router = require("express").Router();
 
 //UPDATE
 
-router.put("/:id", async (req, res) => {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).send(updatedProduct);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const updatedProduct = await Product.findByIdAndUpdate(
+//       req.params.id,
+//       {
+//         $set: req.body,
+//       },
+//       { new: true }
+//     );
+//     res.status(200).send(updatedProduct);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
-module.exports = router;
+// module.exports = router;

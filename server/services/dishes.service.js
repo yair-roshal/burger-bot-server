@@ -25,6 +25,7 @@ class dishesService {
   }
 
   // createDish ================================================
+
   async createDish({ title, price, image, description, toppings, restaurant_name }) {
     const sqlQuery = `
         INSERT INTO dishes (title, price, image, description, restaurant_name)
@@ -32,8 +33,8 @@ class dishesService {
       `
 
     try {
-      // Check for undefined values and replace them with null
-      const values = [title, price, image || null, description || null, restaurant_name]
+      // Replace undefined values with null
+      const values = [title || null, price || null, image || null, description || null, restaurant_name || null]
 
       // Insert the dish into the 'dishes' table
       const result = await this.executeQuery(sqlQuery, values)

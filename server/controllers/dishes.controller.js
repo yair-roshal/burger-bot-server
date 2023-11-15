@@ -11,6 +11,14 @@ class DishesController {
   }
     //============================================
 
+  async createDish(req, res) {
+    const result = await DishesService.createDish(req, res)
+
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error_getDishes" })
+  }
+    //============================================
+
   async getDishesByRestaurantName(req, res) {
     const restaurantId = req.params.restaurant_name
     const result = await DishesService.getDishesByRestaurantName(restaurantId)

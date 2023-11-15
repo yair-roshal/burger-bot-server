@@ -26,7 +26,10 @@ class dishesService {
 
   // createDish ================================================
 
-  async createDish({ title, price, image, description, toppings, restaurant_name }) {
+  async createDish(data) {
+    console.log('data :>> ', data);
+    const  { title, price, image, description, toppings, restaurant_name }      = data
+      // async createDish({ title, price, image, description, toppings, restaurant_name }) {
     const sqlQuery = `
         INSERT INTO dishes (title, price, image, description, restaurant_name)
         VALUES (?, ?, ?, ?, ?)

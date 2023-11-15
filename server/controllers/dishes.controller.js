@@ -15,7 +15,7 @@ class DishesController {
     const result = await DishesService.createDish(req, res)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_getDishes" })
+    else return res.status(500).send({ message: "error_createDish" })
   }
     //============================================
 

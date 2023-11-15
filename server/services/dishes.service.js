@@ -26,10 +26,11 @@ class dishesService {
 
   // createDish ================================================
 
-  async createDish(data) {
-    console.log('data :>> ', data);
-    const  { title, price, image, description, toppings, restaurant_name }      = data
-      // async createDish({ title, price, image, description, toppings, restaurant_name }) {
+  // async createDish(data) {
+  async createDish(req, res) {
+    console.log('req.body :>> ', req.body)
+    const { title, price, image, description, toppings, restaurant_name } = req.body
+    // async createDish({ title, price, image, description, toppings, restaurant_name }) {
     const sqlQuery = `
         INSERT INTO dishes (title, price, image, description, restaurant_name)
         VALUES (?, ?, ?, ?, ?)
@@ -57,19 +58,24 @@ class dishesService {
 
   // Helper method to insert toppings for a dish
   async insertToppings(dishId, toppings) {
-    const values = toppings.map((topping) => [dishId, topping.title, topping.price, topping.image])
-    const sqlQuery = `
-        INSERT INTO toppings (dish_id, title, price, image)
-        VALUES ?
-      `
+    console.log('dishId,   :>> ', dishId)
+    console.log(' , toppings :>> ', toppings)
 
-    try {
-      // Insert toppings into the 'toppings' table
-      await this.executeQuery(sqlQuery, [values])
-    } catch (error) {
-      console.error('Error inserting toppings:', error)
-      throw error
-    }
+    const sqlQuery = `
+    INSERT INTO toppings (dish_id, title, price, image)
+    VALUES (?, ?, ?, ?)
+  `
+
+    toppings.map(async (topping) => {
+      const values = [dishId, topping.title, topping.price, topping.image]
+      try {
+        // Insert toppings into the 'toppings' table
+        await this.executeQuery(sqlQuery, values)
+      } catch (error) {
+        console.error('Error inserting toppings:', error)
+        throw error
+      }
+    })
   }
 
   // getDishes ================================================

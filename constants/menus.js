@@ -1,13 +1,13 @@
-const { webAppUrl } = require("../constants/constants.js")
-const restaurant_name = "cafecafe"
+const { webAppUrl } = require('../constants/constants.js')
+const restaurant_id = 2
 
 const startMainMenu_Production = {
   reply_markup: {
     inline_keyboard: [
       [
         {
-          text: "Open Menu !",
-          web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
+          text: 'Open Menu !',
+          web_app: { url: `${webAppUrl}? restaurant_id=${restaurant_id}` },
         },
       ],
     ],
@@ -20,7 +20,7 @@ const startMainMenu_Production = {
 //       {
 //         text: "Open Menu",
 //         // web_app: { url: webAppUrl },
-//         web_app: { url: `${webAppUrl}?restaurant_name=${restaurant_name}` },
+//         web_app: { url: `${webAppUrl}? restaurant_id=${ restaurant_id}` },
 //       },
 //     ],
 //   ],
@@ -33,8 +33,8 @@ const startMainMenu_Production222 = {
     inline_keyboard: [
       [
         {
-          text: "click to open menu",
-          callback_data: "auth",
+          text: 'click to open menu',
+          callback_data: 'auth',
           web_app: { url: webAppUrl },
         },
       ],
@@ -64,7 +64,7 @@ const callToAdminMenu = {
     keyboard: [
       [
         {
-          text: "Contact the admin",
+          text: 'Contact the admin',
           request_contact: true,
         },
       ],
@@ -78,7 +78,7 @@ const only_keyboard_callToAdminMenu = {
   keyboard: [
     [
       {
-        text: "Write To Support",
+        text: 'Write To Support',
         request_contact: true,
       },
     ],
@@ -86,7 +86,7 @@ const only_keyboard_callToAdminMenu = {
 }
 
 const settings_message = {
-  parse_mode: "HTML",
+  parse_mode: 'HTML',
   //disable because we don't want show description links
   disable_web_page_preview: true,
 }

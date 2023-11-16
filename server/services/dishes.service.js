@@ -5,12 +5,12 @@ const https = require('https')
 const { generateDateTime } = require('../helpers/utils')
 // const cloudinary = require("../helpers/cloudinary");
 
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2
 
 cloudinary.config({
-  cloud_name: "dvb3cxb9h",
-  api_key: "983895153435419",
-  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc"
+  cloud_name: 'dvb3cxb9h',
+  api_key: '983895153435419',
+  api_secret: 'Poz4uTvsD0TKuZiXfAIT3Sk_9gc',
 })
 
 class dishesService {
@@ -73,12 +73,11 @@ class dishesService {
         unique_filename: false,
         overwrite: true,
         // upload_preset: 'cafecafe',
+      }
 
-      };
-      
       if (image) {
         const uploadedResponse = await cloudinary.uploader.upload(image, options)
-        console.log("uploadedResponse",uploadedResponse);
+        console.log('uploadedResponse', uploadedResponse)
 
         if (uploadedResponse) {
           values = [title, price, uploadedResponse.secure_url, description, restaurant_id]
@@ -106,20 +105,19 @@ class dishesService {
     const sqlQuery = `
       INSERT INTO dishes_toppings (dish_id, topping_id)
       VALUES (?, ?)
-    `;
-  
+    `
+
     toppings.forEach(async (topping) => {
-      const values = [dishId, topping.id];
+      const values = [dishId, topping.id]
       try {
         // Insert relationship between dish and topping into the 'dishes_toppings' table
-        await this.executeQuery(sqlQuery, values);
+        await this.executeQuery(sqlQuery, values)
       } catch (error) {
-        console.error('Error inserting toppings:', error);
-        throw error;
+        console.error('Error inserting toppings:', error)
+        throw error
       }
-    });
+    })
   }
-  
 
   // getDishes ================================================
   async getDishes() {
@@ -227,6 +225,82 @@ class dishesService {
   async getCategories() {
     const sqlQuery = 'SELECT * FROM categories'
     return this.executeQuery(sqlQuery, [])
+  }
+
+  
+  
+  
+  // updateDish ================================================
+
+  async updateDish(req, res) {
+    console.log('req.body :>> ', req.body)
+    const { id, title, price, image, description, toppings, restaurant_id } = req.body
+    const sqlQuery = `
+    UPDATE dishes 
+    SET title = ?, price = ?, image = ?, description = ? 
+    WHERE id = ? AND restaurant_id = ?
+  `
+
+    try {
+      let values = [title, price, image, description, id, restaurant_id]
+
+      const options = {
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+      }
+
+      if (image) {
+        const uploadedResponse = await cloudinary.uploader.upload(image, options)
+        console.log('uploadedResponse', uploadedResponse)
+
+        if (uploadedResponse) {
+          values = [title, price, uploadedResponse.secure_url, description, id, restaurant_id]
+        }
+      }
+
+      // Update the dish in the 'dishes' table
+      const result = await this.executeQuery(sqlQuery, values)
+
+      // If toppings are provided, update them in the 'dishes_toppings' table
+      if (toppings && toppings.length > 0) {
+        await this.updateToppings(id, toppings)
+      }
+
+      return result
+    } catch (error) {
+      console.error('Error updating dish:', error)
+      throw error
+    }
+  }
+
+  // Helper method to update toppings for a dish
+  async updateToppings(dishId, toppings) {
+    const deleteQuery = `DELETE FROM dishes_toppings WHERE dish_id = ?`
+    const insertQuery = `INSERT INTO dishes_toppings (dish_id, topping_id) VALUES (?, ?)`
+
+    const connection = await this.pool.getConnection()
+
+    try {
+      await connection.beginTransaction()
+
+      // Delete existing toppings for the dish
+      await connection.execute(deleteQuery, [dishId])
+
+      // Insert updated toppings for the dish
+      for (const topping of toppings) {
+        const values = [dishId, topping.id]
+        await connection.execute(insertQuery, values)
+      }
+
+      await connection.commit()
+    } catch (error) {
+      await connection.rollback()
+      console.error('Error updating toppings:', error)
+      throw error
+    } finally {
+      connection.release()
+    }
   }
 }
 

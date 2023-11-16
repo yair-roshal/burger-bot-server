@@ -61,6 +61,14 @@ class DishesController {
     if (result) return res.status(200).send(result)
     else return res.status(500).send({ message: "error_getCategories" })
   }
+      //============================================
+
+  async updateDish(req, res) {
+    const result = await DishesService.updateDish(req, res)
+  
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error_updateDish" })
+  }
 }
 
 module.exports = new DishesController()

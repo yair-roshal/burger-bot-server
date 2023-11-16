@@ -10,6 +10,8 @@ router.route("/dishes").post(DishesController.createDish); // Add this line for 
 
 router.route("/toppings").get(DishesController.getToppings)
 router.route("/toppings/:restaurant_id").get(DishesController.getToppingsByRestaurantId);
+router.route("/toppings/:restaurant_id").post(DishesController.createTopping);  
+
 
 router.route("/categories").get(DishesController.getCategories)
 

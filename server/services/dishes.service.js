@@ -24,6 +24,28 @@ class dishesService {
     }
   }
 
+  // createTopping ================================================
+
+  async createTopping(req, res) {
+    console.log('req.body :>> ', req.body)
+    const { title, price, image, restaurant_id } = req.body
+    const sqlQuery = `
+          INSERT INTO toppings (title, price, image,   restaurant_id)
+          VALUES (?, ?, ?, ?)
+        `
+
+    try {
+      const values = [title, price, image, restaurant_id]
+
+      const result = await this.executeQuery(sqlQuery, values)
+
+      return result
+    } catch (error) {
+      console.error('Error creating topping:', error)
+      throw error
+    }
+  }
+
   // createDish ================================================
 
   // async createDish(data) {
@@ -38,7 +60,7 @@ class dishesService {
 
     try {
       // Replace undefined values with null
-      const values = [title || null, price || null, image || null, description || null, restaurant_name || null]
+      const values = [title, price, image, description, restaurant_name]
 
       // Insert the dish into the 'dishes' table
       const result = await this.executeQuery(sqlQuery, values)
@@ -126,8 +148,7 @@ class dishesService {
     LEFT JOIN toppings t ON dt.topping_id = t.id
     WHERE d.restaurant_id = ?
     GROUP BY d.id, d.title, d.price, d.description, d.image, d.restaurant_id;
-  `;
-  
+  `
 
     return this.executeQuery(sqlQuery, [restaurant_id])
   }
@@ -135,23 +156,23 @@ class dishesService {
   //   console.log('restaurant_id', restaurant_id)
   //   const sqlQuery = `
   //   SELECT
-  //     m.id AS id, 
+  //     m.id AS id,
   //     m.title,
   //     m.price,
   //     m.image,
   //     m.description,
   //     (
-  //       SELECT 
+  //       SELECT
   //         JSON_ARRAYAGG(
   //           JSON_OBJECT(
-  //             'title', t.title,  
+  //             'title', t.title,
   //             'price', t.price,
   //             'image', t.image
   //           )
   //         )
-  //       FROM toppings t 
+  //       FROM toppings t
   //       WHERE t.dish_id = m.id
-  //     ) AS toppings  
+  //     ) AS toppings
   //   FROM dishes m
   //   WHERE m.restaurant_id = ?
   // `

@@ -19,6 +19,14 @@ class DishesController {
   }
     //============================================
 
+  async createTopping(req, res) {
+    const result = await DishesService.createTopping(req, res)
+
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error-createTopping" })
+  }
+    //============================================
+
   async getDishesByRestaurantId(req, res) {
     const restaurant_id = req.params.restaurant_id
     const result = await DishesService.getDishesByRestaurantId(restaurant_id)

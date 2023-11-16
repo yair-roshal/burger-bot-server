@@ -103,25 +103,23 @@ class dishesService {
 
   // Helper method to insert toppings for a dish
   async insertToppings(dishId, toppings) {
-    console.log('dishId,   :>> ', dishId)
-    console.log(' , toppings :>> ', toppings)
-
     const sqlQuery = `
-    INSERT INTO toppings (dish_id, title, price, image)
-    VALUES (?, ?, ?, ?)
-  `
-
-    toppings.map(async (topping) => {
-      const values = [dishId, topping.title, topping.price, topping.image]
+      INSERT INTO dishes_toppings (dish_id, topping_id)
+      VALUES (?, ?)
+    `;
+  
+    toppings.forEach(async (topping) => {
+      const values = [dishId, topping.id];
       try {
-        // Insert toppings into the 'toppings' table
-        await this.executeQuery(sqlQuery, values)
+        // Insert relationship between dish and topping into the 'dishes_toppings' table
+        await this.executeQuery(sqlQuery, values);
       } catch (error) {
-        console.error('Error inserting toppings:', error)
-        throw error
+        console.error('Error inserting toppings:', error);
+        throw error;
       }
-    })
+    });
   }
+  
 
   // getDishes ================================================
   async getDishes() {

@@ -52,16 +52,27 @@ class dishesService {
   async createDish(req, res) {
     console.log('req.body :>> ', req.body)
     const { title, price, image, description, toppings, restaurant_name } = req.body
-    // async createDish({ title, price, image, description, toppings, restaurant_name }) {
     const sqlQuery = `
         INSERT INTO dishes (title, price, image, description, restaurant_name)
         VALUES (?, ?, ?, ?, ?)
       `
 
     try {
-      // Replace undefined values with null
+      
       const values = [title, price, image, description, restaurant_name]
 
+      
+      if (image) {
+        const uploadedResponse = await cloudinary.uploader.upload(image, {
+          upload_preset: 'cafecafe',
+        })
+
+        if (uploadedResponse) {
+            values = [title, price, uploadedResponse, description, restaurant_name]
+        } 
+      }
+
+ 
       // Insert the dish into the 'dishes' table
       const result = await this.executeQuery(sqlQuery, values)
 

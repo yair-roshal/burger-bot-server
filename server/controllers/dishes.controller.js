@@ -19,12 +19,12 @@ class DishesController {
   }
     //============================================
 
-  async getDishesByRestaurantName(req, res) {
-    const restaurantId = req.params.restaurant_name
-    const result = await DishesService.getDishesByRestaurantName(restaurantId)
+  async getDishesByRestaurantId(req, res) {
+    const restaurant_id = req.params.restaurant_id
+    const result = await DishesService.getDishesByRestaurantId(restaurant_id)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error-getDishesByRestaurantName" })
+    else return res.status(500).send({ message: "error-getDishesByRestaurantId" })
   }
   
   //============================================
@@ -37,12 +37,12 @@ class DishesController {
   }
   //============================================
   
-  async getToppingsByRestaurantName(req, res) {
-    const restaurant_name = req.params.restaurant_name
-    const result = await DishesService.getToppingsByRestaurantName(restaurant_name)
+  async getToppingsByRestaurantId(req, res) {
+    const restaurant_id = req.params.restaurant_id
+    const result = await DishesService.getToppingsByRestaurantId(restaurant_id)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error-getToppingsByRestaurantName" })
+    else return res.status(500).send({ message: "error-getToppingsByRestaurantId" })
   }
   
     //============================================

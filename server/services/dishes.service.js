@@ -103,9 +103,9 @@ class dishesService {
     return this.executeQuery(sqlQuery, [])
   }
 
-  // getDishesByRestaurantName ================================================
-  async getDishesByRestaurantName(restaurant_name) {
-    console.log('restaurant_name', restaurant_name)
+  // getDishesByRestaurantId ================================================
+  async getDishesByRestaurantId(restaurant_id) {
+    console.log('restaurant_id', restaurant_id)
     const sqlQuery = `
     SELECT
       m.id AS id, 
@@ -126,10 +126,10 @@ class dishesService {
         WHERE t.dish_id = m.id
       ) AS toppings  
     FROM dishes m
-    WHERE m.restaurant_name = ?
+    WHERE m.restaurant_id = ?
   `
 
-    return this.executeQuery(sqlQuery, [restaurant_name])
+    return this.executeQuery(sqlQuery, [restaurant_id])
   }
 
   // getToppings ================================================
@@ -138,21 +138,20 @@ class dishesService {
     return this.executeQuery(sqlQuery, [])
   }
 
-  // getToppingsByRestaurantName ================================================
-  async getToppingsByRestaurantName(restaurant_name) {
-    console.log('restaurant_name', restaurant_name)
+  // getToppingsByRestaurantId ================================================
+  async getToppingsByRestaurantId(restaurant_id) {
+    console.log('restaurant_id', restaurant_id)
     const sqlQuery = `
       SELECT
         t.id  , 
         t.title,
         t.price,
         t.image,
-        t.dish_id,
-        t.restaurant_name
+        t.restaurant_id
       FROM toppings t
-      WHERE t.restaurant_name = ?
+      WHERE t.restaurant_id = ?
     `
-    return this.executeQuery(sqlQuery, [restaurant_name])
+    return this.executeQuery(sqlQuery, [restaurant_id])
   }
 
   // getCategories ================================================

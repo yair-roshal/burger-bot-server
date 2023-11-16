@@ -227,9 +227,6 @@ class dishesService {
     return this.executeQuery(sqlQuery, [])
   }
 
-  
-  
-  
   // updateDish ================================================
 
   async updateDish(req, res) {

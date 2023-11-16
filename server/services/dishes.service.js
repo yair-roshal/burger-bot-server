@@ -110,9 +110,9 @@ class dishesService {
     SELECT
       d.id AS id,
       d.title,
-      d.price AS dish_price,
+      d.price  ,
       d.description,
-      d.image AS dish_image,
+      d.image  ,
       d.restaurant_id AS restaurant_id,
       JSON_ARRAYAGG(
         JSON_OBJECT(

@@ -66,7 +66,7 @@ class dishesService {
       `
 
     try {
-      const values = [title, price, image, description, restaurant_name]
+      let values = [title, price, image, description, restaurant_name]
 
       const options = {
         use_filename: true,
@@ -78,7 +78,7 @@ class dishesService {
       
       if (image) {
         const uploadedResponse = await cloudinary.uploader.upload(image, options)
-        console.log(uploadedResponse);
+        console.log("uploadedResponse",uploadedResponse);
 
         if (uploadedResponse) {
           values = [title, price, uploadedResponse, description, restaurant_name]

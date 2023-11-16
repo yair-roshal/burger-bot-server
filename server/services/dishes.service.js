@@ -72,7 +72,7 @@ class dishesService {
         use_filename: true,
         unique_filename: false,
         overwrite: true,
-        upload_preset: 'cafecafe',
+        // upload_preset: 'cafecafe',
 
       };
       

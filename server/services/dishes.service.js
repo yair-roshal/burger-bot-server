@@ -108,29 +108,56 @@ class dishesService {
     console.log('restaurant_id', restaurant_id)
     const sqlQuery = `
     SELECT
-      m.id AS id, 
-      m.title,
-      m.price,
-      m.image,
-      m.description,
-      (
-        SELECT 
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'title', t.title,  
-              'price', t.price,
-              'image', t.image
-            )
-          )
-        FROM toppings t 
-        WHERE t.dish_id = m.id
-      ) AS toppings  
-    FROM dishes m
-    WHERE m.restaurant_id = ?
-  `
+      d.id AS id,
+      d.title,
+      d.price AS dish_price,
+      d.description,
+      d.image AS dish_image,
+      d.restaurant_id AS restaurant_id,
+      JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'title', t.title,
+          'price', t.price,
+          'image', t.image
+        )
+      ) AS toppings
+    FROM dishes d
+    LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
+    LEFT JOIN toppings t ON dt.topping_id = t.id
+    WHERE d.restaurant_id = ?
+    GROUP BY d.id, d.title, d.price, d.description, d.image, d.restaurant_id;
+  `;
+  
 
     return this.executeQuery(sqlQuery, [restaurant_id])
   }
+  // async getDishesByRestaurantId(restaurant_id) {
+  //   console.log('restaurant_id', restaurant_id)
+  //   const sqlQuery = `
+  //   SELECT
+  //     m.id AS id, 
+  //     m.title,
+  //     m.price,
+  //     m.image,
+  //     m.description,
+  //     (
+  //       SELECT 
+  //         JSON_ARRAYAGG(
+  //           JSON_OBJECT(
+  //             'title', t.title,  
+  //             'price', t.price,
+  //             'image', t.image
+  //           )
+  //         )
+  //       FROM toppings t 
+  //       WHERE t.dish_id = m.id
+  //     ) AS toppings  
+  //   FROM dishes m
+  //   WHERE m.restaurant_id = ?
+  // `
+
+  //   return this.executeQuery(sqlQuery, [restaurant_id])
+  // }
 
   // getToppings ================================================
   async getToppings() {

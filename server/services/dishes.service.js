@@ -230,6 +230,8 @@ class dishesService {
   // updateDish ================================================
 
   async updateDish(req, res) {
+    const dish_id = req.params.dish_id
+    console.log('dish_id :>> ', dish_id)
     console.log('req.body :>> ', req.body)
     const { id, title, price, image, description, toppings, restaurant_id } = req.body
     const sqlQuery = `

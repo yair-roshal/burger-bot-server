@@ -157,6 +157,7 @@ class dishesService {
       d.restaurant_id AS restaurant_id,
       JSON_ARRAYAGG(
         JSON_OBJECT(
+          'id', t.id,
           'title', t.title,
           'price', t.price,
           'image', t.image

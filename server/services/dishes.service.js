@@ -3,6 +3,15 @@ const { sqlConfig } = require('../../constants/config')
 const axios = require('axios')
 const https = require('https')
 const { generateDateTime } = require('../helpers/utils')
+// const cloudinary = require("../helpers/cloudinary");
+
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: "dvb3cxb9h",
+  api_key: "983895153435419",
+  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc"
+})
 
 class dishesService {
   constructor() {
@@ -48,7 +57,6 @@ class dishesService {
 
   // createDish ================================================
 
-  // async createDish(data) {
   async createDish(req, res) {
     console.log('req.body :>> ', req.body)
     const { title, price, image, description, toppings, restaurant_name } = req.body
@@ -58,21 +66,25 @@ class dishesService {
       `
 
     try {
-      
       const values = [title, price, image, description, restaurant_name]
 
+      const options = {
+        use_filename: true,
+        unique_filename: false,
+        overwrite: true,
+        upload_preset: 'cafecafe',
+
+      };
       
       if (image) {
-        const uploadedResponse = await cloudinary.uploader.upload(image, {
-          upload_preset: 'cafecafe',
-        })
+        const uploadedResponse = await cloudinary.uploader.upload(image, options)
+        console.log(uploadedResponse);
 
         if (uploadedResponse) {
-            values = [title, price, uploadedResponse, description, restaurant_name]
-        } 
+          values = [title, price, uploadedResponse, description, restaurant_name]
+        }
       }
 
- 
       // Insert the dish into the 'dishes' table
       const result = await this.executeQuery(sqlQuery, values)
 

@@ -59,14 +59,14 @@ class dishesService {
 
   async createDish(req, res) {
     console.log('req.body :>> ', req.body)
-    const { title, price, image, description, toppings, restaurant_name } = req.body
+    const { title, price, image, description, toppings, restaurant_id } = req.body
     const sqlQuery = `
-        INSERT INTO dishes (title, price, image, description, restaurant_name)
+        INSERT INTO dishes (title, price, image, description, restaurant_id)
         VALUES (?, ?, ?, ?, ?)
       `
 
     try {
-      let values = [title, price, image, description, restaurant_name]
+      let values = [title, price, image, description, restaurant_id]
 
       const options = {
         use_filename: true,
@@ -81,7 +81,7 @@ class dishesService {
         console.log("uploadedResponse",uploadedResponse);
 
         if (uploadedResponse) {
-          values = [title, price, uploadedResponse, description, restaurant_name]
+          values = [title, price, uploadedResponse, description, restaurant_id]
         }
       }
 

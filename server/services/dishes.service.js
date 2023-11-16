@@ -81,7 +81,7 @@ class dishesService {
         console.log("uploadedResponse",uploadedResponse);
 
         if (uploadedResponse) {
-          values = [title, price, uploadedResponse, description, restaurant_id]
+          values = [title, price, uploadedResponse.secure_url, description, restaurant_id]
         }
       }
 

@@ -25,9 +25,14 @@ httpsOptions = {
 }
 
 module.exports = (bot) => {
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
+  // app.use(bodyParser.urlencoded({ extended: false }))
+  // app.use(bodyParser.json())
+  
+  // Adjust the limits for incoming requests
+app.use(bodyParser.json({ limit: '10mb' })); // Change the limit according to your needs
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); // Change the limit according to your needs
 
+ 
   //=========================================================================
 
   // const allowedOrigins = [

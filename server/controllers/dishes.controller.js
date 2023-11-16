@@ -64,6 +64,8 @@ class DishesController {
       //============================================
 
   async updateDish(req, res) {
+    const params = req.params
+    console.log('params1111 :>> ', params);
     const result = await DishesService.updateDish(req, res)
   
     if (result) return res.status(200).send(result)

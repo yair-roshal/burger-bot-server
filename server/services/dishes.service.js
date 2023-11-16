@@ -302,6 +302,21 @@ class dishesService {
       connection.release()
     }
   }
+
+  // deleteDish ================================================
+  async deleteDish(req, res) {
+    const dishId = req.params.dish_id
+
+    const deleteDishQuery = 'DELETE FROM dishes WHERE id = ?'
+
+    try {
+      const result = await this.executeQuery(deleteDishQuery, [dishId])
+      return result
+    } catch (error) {
+      console.error('Error deleting dish:', error)
+      throw error
+    }
+  }
 }
 
 module.exports = new dishesService()

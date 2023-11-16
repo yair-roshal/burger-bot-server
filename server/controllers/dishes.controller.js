@@ -59,7 +59,7 @@ class DishesController {
     const result = await DishesService.getCategories(req, res)
 
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_getCategories" })
+    else return res.status(500).send({ message: "error-getCategories" })
   }
       //============================================
 
@@ -69,7 +69,17 @@ class DishesController {
     const result = await DishesService.updateDish(req, res)
   
     if (result) return res.status(200).send(result)
-    else return res.status(500).send({ message: "error_updateDish" })
+    else return res.status(500).send({ message: "error-updateDish" })
+  }
+      //============================================
+
+  async deleteDish(req, res) {
+    // const dish_id = req.params.dish_id
+    // console.log('dish_id :>> ', dish_id);
+    const result = await DishesService.deleteDish(req, res)
+  
+    if (result) return res.status(200).send(result)
+    else return res.status(500).send({ message: "error-deleteDish" })
   }
 }
 

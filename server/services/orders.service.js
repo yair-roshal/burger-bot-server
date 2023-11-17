@@ -119,20 +119,13 @@ class OrdersService {
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 		try {
-			// Выполняем SQL-запрос
-			await this.executeQuery(sqlQuery, values)
+			const result = await this.executeQuery(sqlQuery, values)
 
 			console.log('"create_order_db_ Заказ успешно создан" ')
-			// a статус Возвращаем  в контролере !!!
-
-			// res.status(200).json({ message: "create_order_db_ Заказ успешно создан" })
+			return result
 		} catch (error) {
 			console.error("create_order_db Ошибка при создании заказа:", error)
-			// a статус Возвращаем  в контролере !!!
-
-			// res
-			//   .status(500)
-			//   .json({ error: "create_order_db Произошла ошибка при создании заказа" })
+			throw error
 		}
 	}
 }

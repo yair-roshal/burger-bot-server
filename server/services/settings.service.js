@@ -29,8 +29,8 @@ class SettingsService {
 		}
 	}
 
-	// getSettingsByRestaurantId ================================================
-	async getSettingsByRestaurantId(restaurant_id) {
+	// getSettings ================================================
+	async getSettings(restaurant_id) {
 		console.log("restaurant_id", restaurant_id)
 
 		const sqlQuery = "SELECT * FROM settings WHERE restaurant_id = ?"

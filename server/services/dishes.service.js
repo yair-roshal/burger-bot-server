@@ -170,24 +170,26 @@ class dishesService {
 
 		const dishesResult = await this.executeQuery(dishesQuery, [restaurant_id]);
 
-		// Получаем данные о топпингах для каждого блюда
 		const toppingsQuery = `
-		SELECT
-			d.id AS dish_id,
-			JSON_ARRAYAGG(
-				JSON_OBJECT(
-					'id', t.id,
-					'title', t.title,
-					'price', t.price,
-					'image', t.image
-				)
-			) AS toppings
-		FROM dishes d
-		LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
-		LEFT JOIN toppings t ON dt.topping_id = t.id
-		WHERE d.restaurant_id = ?
-		GROUP BY d.id;
-		`;
+    SELECT
+        d.id AS dish_id,
+        CASE
+            WHEN COUNT(t.id) = 0 THEN JSON_ARRAY()
+            ELSE JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id', t.id,
+                    'title', t.title,
+                    'price', t.price,
+                    'image', t.image
+                )
+            )
+        END AS toppings
+    FROM dishes d
+    LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
+    LEFT JOIN toppings t ON dt.topping_id = t.id
+    WHERE d.restaurant_id = ?
+    GROUP BY d.id;
+`;
 
 		const toppingsResult = await this.executeQuery(toppingsQuery, [restaurant_id]);
 

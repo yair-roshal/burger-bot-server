@@ -147,28 +147,33 @@ class dishesService {
 	// getDishesByRestaurantId ================================================
 	async getDishesByRestaurantId(restaurant_id) {
 		console.log("restaurant_id", restaurant_id)
-		const sqlQuery = `
+
+    const sqlQuery = `
     SELECT
-      d.id AS id,
-      d.title,
-      d.price  ,
-      d.description,
-      d.image  ,
-      d.restaurant_id AS restaurant_id,
-      JSON_ARRAYAGG(
-        JSON_OBJECT(
-          'id', t.id,
-          'title', t.title,
-          'price', t.price,
-          'image', t.image
-        )
-      ) AS toppings
+        d.id AS id,
+        d.title,
+        d.price,
+        d.description,
+        d.image,
+        d.restaurant_id AS restaurant_id,
+        CASE
+            WHEN COUNT(t.id) = 0 THEN JSON_ARRAY()
+            ELSE JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id', t.id,
+                    'title', t.title,
+                    'price', t.price,
+                    'image', t.image
+                )
+            )
+        END AS toppings
     FROM dishes d
     LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
     LEFT JOIN toppings t ON dt.topping_id = t.id
     WHERE d.restaurant_id = ?
     GROUP BY d.id, d.title, d.price, d.description, d.image, d.restaurant_id;
-  `
+  `;
+ 
 
 		return this.executeQuery(sqlQuery, [restaurant_id])
 	}

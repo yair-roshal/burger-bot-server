@@ -155,86 +155,80 @@ class dishesService {
 	async getDishesByRestaurantId(restaurant_id) {
 		console.log("restaurant_id", restaurant_id);
 
-		// Получаем данные о блюдах
 		const dishesQuery = `
-		SELECT
-			d.id AS dish_id,
-			d.title AS dish_title,
-			d.price AS dish_price,
-			d.description AS dish_description,
-			d.image AS dish_image,
-			d.restaurant_id AS dish_restaurant_id
-		FROM dishes d
-		WHERE d.restaurant_id = ?;
-		`;
+        SELECT
+            d.id AS id,
+            d.title AS title,
+            d.price AS price,
+            d.description AS description,
+            d.image AS image,
+            d.restaurant_id AS restaurant_id
+        FROM dishes d
+        WHERE d.restaurant_id = ?;
+    `;
 
 		const dishesResult = await this.executeQuery(dishesQuery, [restaurant_id]);
 
 		const toppingsQuery = `
-    SELECT
-        d.id AS dish_id,
-        CASE
-            WHEN COUNT(t.id) = 0 THEN JSON_ARRAY()
-            ELSE JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', t.id,
-                    'title', t.title,
-                    'price', t.price,
-                    'image', t.image
+        SELECT
+            d.id AS id,
+            CASE
+                WHEN COUNT(t.id) = 0 THEN JSON_ARRAY()
+                ELSE JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id', t.id,
+                        'title', t.title,
+                        'price', t.price,
+                        'image', t.image
+                    )
                 )
-            )
-        END AS toppings
-    FROM dishes d
-    LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
-    LEFT JOIN toppings t ON dt.topping_id = t.id
-    WHERE d.restaurant_id = ?
-    GROUP BY d.id;
-`;
+            END AS toppings
+        FROM dishes d
+        LEFT JOIN dishes_toppings dt ON d.id = dt.dish_id
+        LEFT JOIN toppings t ON dt.topping_id = t.id
+        WHERE d.restaurant_id = ?
+        GROUP BY d.id;
+    `;
 
 		const toppingsResult = await this.executeQuery(toppingsQuery, [restaurant_id]);
 
-		// Получаем данные о дополнительных ингредиентах для каждого блюда
 		const extrasQuery = `
-		SELECT
-			d.id AS dish_id,
-			JSON_ARRAYAGG(
-				JSON_OBJECT(
-					'id', e.id,
-					'title', e.title,
-					'image', e.image,
-					'restaurant_id', e.restaurant_id,
-					'type', e.type
-				)
-			) AS extras
-		FROM dishes d
-		LEFT JOIN dishes_extra de ON d.id = de.dish_id
-		LEFT JOIN extra e ON de.extra_id = e.id
-		WHERE d.restaurant_id = ?
-		GROUP BY d.id;
-		`;
+        SELECT
+            d.id AS id,
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id', e.id,
+                    'title', e.title,
+                    'image', e.image,
+                    'restaurant_id', e.restaurant_id,
+                    'type', e.type
+                )
+            ) AS extras
+        FROM dishes d
+        LEFT JOIN dishes_extra de ON d.id = de.dish_id
+        LEFT JOIN extra e ON de.extra_id = e.id
+        WHERE d.restaurant_id = ?
+        GROUP BY d.id;
+    `;
 
 		const extrasResult = await this.executeQuery(extrasQuery, [restaurant_id]);
 
-		// Объединяем данные о блюдах, топпингах и дополнительных ингредиентах
 		const combinedData = dishesResult.map((dish) => {
-			const toppings = toppingsResult.find((item) => item.dish_id === dish.dish_id);
-			const extras = extrasResult.find((item) => item.dish_id === dish.dish_id);
+			const toppings = toppingsResult.find((item) => item.id === dish.id);
+			const extras = extrasResult.find((item) => item.id === dish.id);
 
 			return {
-				dish_id: dish.dish_id,
-				dish_title: dish.dish_title,
-				dish_price: dish.dish_price,
-				dish_description: dish.dish_description,
-				dish_image: dish.dish_image,
-				dish_restaurant_id: dish.dish_restaurant_id,
+				id: dish.id,
+				title: dish.title,
+				price: dish.price,
+				description: dish.description,
+				image: dish.image,
+				restaurant_id: dish.restaurant_id,
 				toppings: toppings.toppings,
 				extras: extras.extras,
 			};
 		});
 
-		// return dishesResult;
-		// return toppingsResult;
-		// return extrasResult;
 		return combinedData;
 	}
 

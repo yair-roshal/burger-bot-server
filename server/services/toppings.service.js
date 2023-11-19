@@ -54,7 +54,7 @@ class dishesService {
 		console.log("req.body :>> ", req.body);
 		const { title, price, image, restaurant_id } = req.body;
 		const sqlQuery = `
-          INSERT INTO toppings (title, price, image,   restaurant_id)
+          INSERT INTO toppings (title, price, image, restaurant_id)
           VALUES (?, ?, ?, ?)
         `;
 
@@ -125,7 +125,12 @@ class dishesService {
 	// deleteTopping ================================================
 
 	async deleteTopping(req, res) {
-		const { id } = req.body;
+		// const { id } = req.body;
+		const topping_id = req.params.topping_id;
+
+		console.log('req.body222', req.body)
+		console.log('topping_id', topping_id)
+		
 		const sqlQuery = `
         DELETE FROM toppings
         WHERE id = ?

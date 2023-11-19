@@ -11,8 +11,7 @@ class ToppingsController {
 	//============================================
 
 	async getToppings(req, res) {
-		const restaurant_id = req.params.restaurant_id;
-		const result = await ToppingsService.getToppings(restaurant_id);
+		const result = await ToppingsService.getToppings(req, res);
 
 		if (result) return res.status(200).send(result);
 		else return res.status(500).send({ message: "error-getToppings" });

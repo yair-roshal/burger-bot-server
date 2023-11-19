@@ -3,9 +3,8 @@ const { sqlConfig } = require("../../constants/config");
 const axios = require("axios");
 const https = require("https");
 const { generateDateTime } = require("../helpers/utils");
-// const cloudinary = require("../helpers/cloudinary");
-
 const cloudinary = require("cloudinary").v2;
+const { options } = require("../../constants/constants");
 
 cloudinary.config({
 	cloud_name: "dvb3cxb9h",
@@ -32,29 +31,7 @@ class dishesService {
 			connection.release(); // Вернуть соединение в пул после использования
 		}
 	}
-
-	// createTopping ================================================
-
-	async createTopping(req, res) {
-		console.log("req.body :>> ", req.body);
-		const { title, price, image, restaurant_id } = req.body;
-		const sqlQuery = `
-          INSERT INTO toppings (title, price, image,   restaurant_id)
-          VALUES (?, ?, ?, ?)
-        `;
-
-		try {
-			const values = [title, price, image, restaurant_id];
-
-			const result = await this.executeQuery(sqlQuery, values);
-
-			return result;
-		} catch (error) {
-			console.error("Error creating topping:", error);
-			throw error;
-		}
-	}
-
+ 
 	// createDish ================================================
 
 	async createDish(req, res) {
@@ -67,14 +44,7 @@ class dishesService {
 
 		try {
 			let values = [title, price, image, description, restaurant_id];
-
-			const options = {
-				use_filename: true,
-				unique_filename: false,
-				overwrite: true,
-				// upload_preset: 'cafecafe',
-			};
-
+ 
 			if (image) {
 				const uploadedResponse = await cloudinary.uploader.upload(image, options);
 				console.log("uploadedResponse", uploadedResponse);
@@ -125,34 +95,11 @@ class dishesService {
 		});
 	}
 
+ 
+
 	// getDishes ================================================
-	async getDishes() {
-		const sqlQuery = `SELECT
-     m.id AS id, 
-     m.title,
-     m.price,
-     m.image,
-     m.description,
-     (
-       SELECT 
-         JSON_ARRAYAGG(
-           JSON_OBJECT(
-             'title', t.title,  
-             'price', t.price,
-             'image', t.image
-           )
-         )
-       FROM toppings t 
-       WHERE t.dish_id = m.id
-     ) AS toppings  
-   FROM dishes m`;
 
-		return this.executeQuery(sqlQuery, []);
-	}
-
-	// getDishesByRestaurantId ================================================
-
-	async getDishesByRestaurantId(restaurant_id) {
+	async getDishes(restaurant_id) {
 		console.log("restaurant_id", restaurant_id);
 
 		const dishesQuery = `
@@ -232,27 +179,8 @@ class dishesService {
 		return combinedData;
 	}
 
-	// getToppings ================================================
-	async getToppings() {
-		const sqlQuery = "SELECT * FROM toppings";
-		return this.executeQuery(sqlQuery, []);
-	}
-
-	// getToppingsByRestaurantId ================================================
-	async getToppingsByRestaurantId(restaurant_id) {
-		console.log("restaurant_id", restaurant_id);
-		const sqlQuery = `
-      SELECT
-        t.id  , 
-        t.title,
-        t.price,
-        t.image,
-        t.restaurant_id
-      FROM toppings t
-      WHERE t.restaurant_id = ?
-    `;
-		return this.executeQuery(sqlQuery, [restaurant_id]);
-	}
+ 
+ 
 
 	// getCategories ================================================
 	async getCategories() {

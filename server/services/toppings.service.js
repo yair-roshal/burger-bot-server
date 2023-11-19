@@ -5,6 +5,7 @@ const https = require("https");
 const { generateDateTime } = require("../helpers/utils");
 const cloudinary = require("cloudinary").v2;
 const { options } = require("../../constants/constants");
+const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
 cloudinary.config({
 	cloud_name: "dvb3cxb9h",
@@ -63,7 +64,7 @@ class dishesService {
 		try {
 			let values = [title, price, image, restaurant_id];
 
-			if (image) {
+			if (image && isPhotoUrl(image)) {
 				const uploadedResponse = await cloudinary.uploader.upload(
 					image,
 					options
@@ -97,7 +98,7 @@ class dishesService {
 		try {
 			let values = [title, price, image, restaurant_id, id];
 
-			if (image) {
+			if (image && isPhotoUrl(image)) {
 				const uploadedResponse = await cloudinary.uploader.upload(
 					image,
 					options

@@ -99,7 +99,8 @@ class dishesService {
 
 	// getDishes ================================================
 
-	async getDishes(restaurant_id) {
+	async getDishes(req, res) {
+		const restaurant_id = req.params.restaurant_id;
 		console.log("restaurant_id", restaurant_id);
 
 		const dishesQuery = `

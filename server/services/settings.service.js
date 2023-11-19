@@ -30,7 +30,8 @@ class SettingsService {
 	}
 
 	// getSettings ================================================
-	async getSettings(restaurant_id) {
+	async getSettings(req, res) {
+		  const restaurant_id = req.params.restaurant_id;
 		console.log("restaurant_id", restaurant_id);
 
 		const sqlQuery = "SELECT * FROM settings WHERE restaurant_id = ?";

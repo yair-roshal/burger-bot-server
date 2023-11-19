@@ -61,7 +61,7 @@ class dishesService {
         `;
 
 		try {
-			const values = [title, price, image, restaurant_id];
+			let values = [title, price, image, restaurant_id];
 
 			if (image) {
 				const uploadedResponse = await cloudinary.uploader.upload(
@@ -95,7 +95,7 @@ class dishesService {
     `;
 
 		try {
-			const values = [title, price, image, restaurant_id, id];
+			let values = [title, price, image, restaurant_id, id];
 
 			if (image) {
 				const uploadedResponse = await cloudinary.uploader.upload(

@@ -125,12 +125,13 @@ class dishesService {
 	// deleteTopping ================================================
 
 	async deleteTopping(req, res) {
-		// const { id } = req.body;
-		const topping_id = req.params.topping_id;
+		const { id } = req.params;
+		// const topping_id = req.params.topping_id;
 
-		console.log('req.body222', req.body)
-		console.log('topping_id', topping_id)
-		
+		// console.log('req.body222', req.body)
+		// console.log('topping_id', topping_id)
+		console.log("id", id);
+
 		const sqlQuery = `
         DELETE FROM toppings
         WHERE id = ?

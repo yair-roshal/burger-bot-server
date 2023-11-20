@@ -18,7 +18,20 @@ class extrasService {
 		this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
 	}
 
-	// ... (other methods remain unchanged)
+	// Метод для выполнения запросов к базе данных
+	async executeQuery(sqlQuery, values) {
+		const connection = await this.pool.getConnection();
+
+		try {
+			const [results] = await connection.execute(sqlQuery, values);
+			return results;
+		} catch (error) {
+			console.error("Error executing SQL query:", error);
+			throw error;
+		} finally {
+			connection.release(); // Вернуть соединение в пул после использования
+		}
+	}
 
 	// getExtras ================================================
 	async getExtras(req, res) {
@@ -41,14 +54,14 @@ class extrasService {
 
 	async createExtra(req, res) {
 		console.log("req.body :>> ", req.body);
-		const { title,   image, restaurant_id } = req.body;
+		const { title, image, restaurant_id } = req.body;
 		const sqlQuery = `
         INSERT INTO extras (title,  image, restaurant_id)
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?)
       `;
 
 		try {
-			let values = [title,   image, restaurant_id];
+			let values = [title, image, restaurant_id];
 
 			if (image && isPhotoUrl(image)) {
 				const uploadedResponse = await cloudinary.uploader.upload(
@@ -58,7 +71,7 @@ class extrasService {
 				console.log("uploadedResponse", uploadedResponse);
 
 				if (uploadedResponse) {
-					values = [title,  uploadedResponse.secure_url, restaurant_id];
+					values = [title, uploadedResponse.secure_url, restaurant_id];
 				}
 			}
 
@@ -74,7 +87,7 @@ class extrasService {
 	// updateExtra ================================================
 
 	async updateExtra(req, res) {
-		const { id, title,   image, restaurant_id } = req.body;
+		const { id, title, image, restaurant_id } = req.body;
 		const sqlQuery = `
       UPDATE extras
       SET title = ?,   image = ?, restaurant_id = ?
@@ -82,7 +95,7 @@ class extrasService {
     `;
 
 		try {
-			let values = [title,  image, restaurant_id, id];
+			let values = [title, image, restaurant_id, id];
 
 			if (image && isPhotoUrl(image)) {
 				const uploadedResponse = await cloudinary.uploader.upload(
@@ -92,12 +105,7 @@ class extrasService {
 				console.log("uploadedResponse", uploadedResponse);
 
 				if (uploadedResponse) {
-					values = [
-						title,
- 						uploadedResponse.secure_url,
-						restaurant_id,
-						id,
-					];
+					values = [title, uploadedResponse.secure_url, restaurant_id, id];
 				}
 			}
 

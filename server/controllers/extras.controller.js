@@ -1,20 +1,19 @@
 const ExtrasService = require("../services/extras.service.js");
 
 class ExtrasController {
-	async createExtra(req, res) {
-		const result = await ExtrasService.createExtra(req, res);
-
-		if (result) return res.status(200).send(result);
-		else return res.status(500).send({ message: "error-createExtra" });
-	}
-
-	//============================================
-
 	async getExtras(req, res) {
 		const result = await ExtrasService.getExtras(req, res);
 
 		if (result) return res.status(200).send(result);
 		else return res.status(500).send({ message: "error-getExtras" });
+	}
+
+	//============================================
+	async createExtra(req, res) {
+		const result = await ExtrasService.createExtra(req, res);
+
+		if (result) return res.status(200).send(result);
+		else return res.status(500).send({ message: "error-createExtra" });
 	}
 
 	//============================================

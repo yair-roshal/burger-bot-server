@@ -154,8 +154,8 @@ class dishesService {
                 )
             ) AS extras
         FROM dishes d
-        LEFT JOIN dishes_extra de ON d.id = de.dish_id
-        LEFT JOIN extra e ON de.extra_id = e.id
+        LEFT JOIN dishes_extras de ON d.id = de.dish_id
+        LEFT JOIN extras e ON de.extra_id = e.id
         WHERE d.restaurant_id = ?
         GROUP BY d.id;
     `;

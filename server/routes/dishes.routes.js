@@ -5,8 +5,7 @@ const DishesController = require("../controllers/dishes.controller.js")
 
 
 
-router.route("/dishes").get(DishesController.getDishes)
-router.route("/dishes/:restaurant_id").get(DishesController.getDishes);
+ router.route("/dishes/:restaurant_id").get(DishesController.getDishes);
 router.route("/dishes").post(DishesController.createDish); // Add this line for the createDish route
 router.route("/dishes/:dish_id").put(DishesController.updateDish); // Add this line for the updateDish route
 router.route("/dishes/:dish_id").delete(DishesController.deleteDish) // Добавляем метод для удаления блюда

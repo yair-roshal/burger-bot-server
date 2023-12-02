@@ -72,9 +72,6 @@ class TypesService {
   }
 
   async deleteType(req, res) {
-    // console.log('req.body_deleteType', req.body)
-    // const { id, restaurant_id } = req.body;
-
     const id = req.params.type_id;
     console.log("type_id", id);
 

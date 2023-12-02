@@ -72,14 +72,19 @@ class TypesService {
   }
 
   async deleteType(req, res) {
-    const { id, restaurant_id } = req.body;
+    // console.log('req.body_deleteType', req.body)
+    // const { id, restaurant_id } = req.body;
+
+    const id = req.params.type_id;
+    console.log("type_id", id);
+
     const sqlQuery = `
       DELETE FROM types
-      WHERE id = ? AND restaurant_id = ?
+      WHERE id = ? 
     `;
 
     try {
-      const result = await this.executeQuery(sqlQuery, [id, restaurant_id]);
+      const result = await this.executeQuery(sqlQuery, [id]);
       return result;
     } catch (error) {
       console.error("Error deleting type:", error);

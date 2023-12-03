@@ -8,138 +8,139 @@ const { options } = require("../../constants/constants");
 const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
 cloudinary.config({
-	cloud_name: "dvb3cxb9h",
-	api_key: "983895153435419",
-	api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
+  cloud_name: "dvb3cxb9h",
+  api_key: "983895153435419",
+  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
 });
 
 class extrasService {
-	constructor() {
-		this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
-	}
+  constructor() {
+    this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
+  }
 
-	// Метод для выполнения запросов к базе данных
-	async executeQuery(sqlQuery, values) {
-		const connection = await this.pool.getConnection();
+  // Метод для выполнения запросов к базе данных
+  async executeQuery(sqlQuery, values) {
+    const connection = await this.pool.getConnection();
 
-		try {
-			const [results] = await connection.execute(sqlQuery, values);
-			return results;
-		} catch (error) {
-			console.error("Error executing SQL query:", error);
-			throw error;
-		} finally {
-			connection.release(); // Вернуть соединение в пул после использования
-		}
-	}
+    try {
+      const [results] = await connection.execute(sqlQuery, values);
+      return results;
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      throw error;
+    } finally {
+      connection.release(); // Вернуть соединение в пул после использования
+    }
+  }
 
-	// getExtras ================================================
-	async getExtras(req, res) {
-		const restaurant_id = req.params.restaurant_id;
+  // getExtras ================================================
+  async getExtras(req, res) {
+    const restaurant_id = req.params.restaurant_id;
 
-		console.log("getExtras_restaurant_id", restaurant_id);
-		const sqlQuery = `
+    console.log("getExtras_restaurant_id", restaurant_id);
+    const sqlQuery = `
       SELECT
         t.id,
         t.title,
-         t.image,
+        t.type_id,
+        t.image,
         t.restaurant_id
       FROM extras t
       WHERE t.restaurant_id = ?
     `;
-		return this.executeQuery(sqlQuery, [restaurant_id]);
-	}
+    return this.executeQuery(sqlQuery, [restaurant_id]);
+  }
 
-	// createExtra ================================================
+  // createExtra ================================================
 
-	async createExtra(req, res) {
-		console.log("req.body :>> ", req.body);
-		const { title, image, restaurant_id } = req.body;
-		const sqlQuery = `
+  async createExtra(req, res) {
+    console.log("req.body :>> ", req.body);
+    const { title, image, restaurant_id } = req.body;
+    const sqlQuery = `
         INSERT INTO extras (title,  image, restaurant_id)
         VALUES (?, ?, ?)
       `;
 
-		try {
-			let values = [title, image, restaurant_id];
+    try {
+      let values = [title, image, restaurant_id];
 
-			if (image && isPhotoUrl(image)) {
-				const uploadedResponse = await cloudinary.uploader.upload(
-					image,
-					options
-				);
-				console.log("uploadedResponse", uploadedResponse);
+      if (image && isPhotoUrl(image)) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          image,
+          options
+        );
+        console.log("uploadedResponse", uploadedResponse);
 
-				if (uploadedResponse) {
-					values = [title, uploadedResponse.secure_url, restaurant_id];
-				}
-			}
+        if (uploadedResponse) {
+          values = [title, uploadedResponse.secure_url, restaurant_id];
+        }
+      }
 
-			const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values);
 
-			return result;
-		} catch (error) {
-			console.error("Error creating extra:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error creating extra:", error);
+      throw error;
+    }
+  }
 
-	// updateExtra ================================================
+  // updateExtra ================================================
 
-	async updateExtra(req, res) {
-		const { id, title, image, restaurant_id } = req.body;
-		const sqlQuery = `
+  async updateExtra(req, res) {
+    const { id, title, image, restaurant_id } = req.body;
+    const sqlQuery = `
       UPDATE extras
       SET title = ?,   image = ?, restaurant_id = ?
       WHERE id = ?
     `;
 
-		try {
-			let values = [title, image, restaurant_id, id];
+    try {
+      let values = [title, image, restaurant_id, id];
 
-			if (image && isPhotoUrl(image)) {
-				const uploadedResponse = await cloudinary.uploader.upload(
-					image,
-					options
-				);
-				console.log("uploadedResponse", uploadedResponse);
+      if (image && isPhotoUrl(image)) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          image,
+          options
+        );
+        console.log("uploadedResponse", uploadedResponse);
 
-				if (uploadedResponse) {
-					values = [title, uploadedResponse.secure_url, restaurant_id, id];
-				}
-			}
+        if (uploadedResponse) {
+          values = [title, uploadedResponse.secure_url, restaurant_id, id];
+        }
+      }
 
-			const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values);
 
-			return result;
-		} catch (error) {
-			console.error("Error updating extra:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error updating extra:", error);
+      throw error;
+    }
+  }
 
-	// deleteExtra ================================================
+  // deleteExtra ================================================
 
-	async deleteExtra(req, res) {
-		const id = req.params.extra_id;
+  async deleteExtra(req, res) {
+    const id = req.params.extra_id;
 
-		console.log("id", id);
-		console.log("req.params", req.params);
+    console.log("id", id);
+    console.log("req.params", req.params);
 
-		const sqlQuery = `
+    const sqlQuery = `
       DELETE FROM extras
       WHERE id = ?
     `;
 
-		try {
-			const result = await this.executeQuery(sqlQuery, [id]);
+    try {
+      const result = await this.executeQuery(sqlQuery, [id]);
 
-			return result;
-		} catch (error) {
-			console.error("Error deleting extra:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error deleting extra:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new extrasService();

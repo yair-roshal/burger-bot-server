@@ -11,6 +11,8 @@ class TypesService {
 
     try {
       const [results] = await connection.execute(sqlQuery, values);
+      console.error("Executing SQL query was success - results :", results);
+
       return results;
     } catch (error) {
       console.error("Error executing SQL query:", error);
@@ -23,7 +25,7 @@ class TypesService {
   async getTypes(req, res) {
     const restaurant_id = req.params.restaurant_id;
 
-    console.log("restaurant_id", restaurant_id);
+    console.log("getTypes_restaurant_id", restaurant_id);
     const sqlQuery = `
       SELECT
         id,

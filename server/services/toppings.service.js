@@ -1,44 +1,45 @@
 const mysql = require("mysql2/promise");
 const { sqlConfig } = require("../../constants/config");
-const axios = require("axios");
-const https = require("https");
-const { generateDateTime } = require("../helpers/utils");
+
 const cloudinary = require("cloudinary").v2;
 const { options } = require("../../constants/constants");
 const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
 cloudinary.config({
-	cloud_name: "dvb3cxb9h",
-	api_key: "983895153435419",
-	api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
+  cloud_name: "dvb3cxb9h",
+  api_key: "983895153435419",
+  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
 });
 
 class dishesService {
-	constructor() {
-		this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
-	}
+  constructor() {
+	console.log('sqlConfig', sqlConfig)
+    this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
+  }
 
-	// Метод для выполнения запросов к базе данных
-	async executeQuery(sqlQuery, values) {
-		const connection = await this.pool.getConnection();
+  // Метод для выполнения запросов к базе данных
+  async executeQuery(sqlQuery, values) {
+    const connection = await this.pool.getConnection();
 
-		try {
-			const [results] = await connection.execute(sqlQuery, values);
-			return results;
-		} catch (error) {
-			console.error("Error executing SQL query:", error);
-			throw error;
-		} finally {
-			connection.release(); // Вернуть соединение в пул после использования
-		}
-	}
+    try {
+      const [results] = await connection.execute(sqlQuery, values);
+	  console.error("Executing SQL query was success - results :", results);
 
-	// getToppings ================================================
-	async getToppings(req, res) {
-		const restaurant_id = req.params.restaurant_id;
+      return results;
+    } catch (error) {
+      console.error("Error executing SQL query:", error);
+      throw error;
+    } finally {
+      connection.release(); // Вернуть соединение в пул после использования
+    }
+  }
 
-		console.log("restaurant_id", restaurant_id);
-		const sqlQuery = `
+  // getToppings ================================================
+  async getToppings(req, res) {
+    const restaurant_id = req.params.restaurant_id;
+
+    console.log("getToppings_restaurant_id", restaurant_id);
+    const sqlQuery = `
 		  SELECT
 			t.id  , 
 			t.title,
@@ -48,108 +49,108 @@ class dishesService {
 		  FROM toppings t
 		  WHERE t.restaurant_id = ?
 		`;
-		return this.executeQuery(sqlQuery, [restaurant_id]);
-	}
+    return this.executeQuery(sqlQuery, [restaurant_id]);
+  }
 
-	// createTopping ================================================
+  // createTopping ================================================
 
-	async createTopping(req, res) {
-		console.log("req.body :>> ", req.body);
-		const { title, price, image, restaurant_id } = req.body;
-		const sqlQuery = `
+  async createTopping(req, res) {
+    console.log("req.body :>> ", req.body);
+    const { title, price, image, restaurant_id } = req.body;
+    const sqlQuery = `
           INSERT INTO toppings (title, price, image, restaurant_id)
           VALUES (?, ?, ?, ?)
         `;
 
-		try {
-			let values = [title, price, image, restaurant_id];
+    try {
+      let values = [title, price, image, restaurant_id];
 
-			if (image && isPhotoUrl(image)) {
-				const uploadedResponse = await cloudinary.uploader.upload(
-					image,
-					options
-				);
-				console.log("uploadedResponse", uploadedResponse);
+      if (image && isPhotoUrl(image)) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          image,
+          options
+        );
+        console.log("uploadedResponse", uploadedResponse);
 
-				if (uploadedResponse) {
-					values = [title, price, uploadedResponse.secure_url, restaurant_id];
-				}
-			}
+        if (uploadedResponse) {
+          values = [title, price, uploadedResponse.secure_url, restaurant_id];
+        }
+      }
 
-			const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values);
 
-			return result;
-		} catch (error) {
-			console.error("Error creating topping:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error creating topping:", error);
+      throw error;
+    }
+  }
 
-	// updateTopping ================================================
+  // updateTopping ================================================
 
-	async updateTopping(req, res) {
-		const { id, title, price, image, restaurant_id } = req.body;
-		const sqlQuery = `
+  async updateTopping(req, res) {
+    const { id, title, price, image, restaurant_id } = req.body;
+    const sqlQuery = `
         UPDATE toppings
         SET title = ?, price = ?, image = ?, restaurant_id = ?
         WHERE id = ?
     `;
 
-		try {
-			let values = [title, price, image, restaurant_id, id];
+    try {
+      let values = [title, price, image, restaurant_id, id];
 
-			if (image && isPhotoUrl(image)) {
-				const uploadedResponse = await cloudinary.uploader.upload(
-					image,
-					options
-				);
-				console.log("uploadedResponse", uploadedResponse);
+      if (image && isPhotoUrl(image)) {
+        const uploadedResponse = await cloudinary.uploader.upload(
+          image,
+          options
+        );
+        console.log("uploadedResponse", uploadedResponse);
 
-				if (uploadedResponse) {
-					values = [
-						title,
-						price,
-						uploadedResponse.secure_url,
-						restaurant_id,
-						id,
-					];
-				}
-			}
+        if (uploadedResponse) {
+          values = [
+            title,
+            price,
+            uploadedResponse.secure_url,
+            restaurant_id,
+            id,
+          ];
+        }
+      }
 
-			const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values);
 
-			return result;
-		} catch (error) {
-			console.error("Error updating topping:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error updating topping:", error);
+      throw error;
+    }
+  }
 
-	// deleteTopping ================================================
+  // deleteTopping ================================================
 
-	async deleteTopping(req, res) {
-		// const { id } = req.params;
-		const id = req.params.topping_id;
+  async deleteTopping(req, res) {
+    // const { id } = req.params;
+    const id = req.params.topping_id;
 
-		// console.log('req.body222', req.body)
-		// console.log('topping_id', topping_id)
-		console.log("id", id);
-		console.log("req.params", req.params);
+    // console.log('req.body222', req.body)
+    // console.log('topping_id', topping_id)
+    console.log("id", id);
+    console.log("req.params", req.params);
 
-		const sqlQuery = `
+    const sqlQuery = `
         DELETE FROM toppings
         WHERE id = ?
     `;
 
-		try {
-			const result = await this.executeQuery(sqlQuery, [id]);
+    try {
+      const result = await this.executeQuery(sqlQuery, [id]);
 
-			return result;
-		} catch (error) {
-			console.error("Error deleting topping:", error);
-			throw error;
-		}
-	}
+      return result;
+    } catch (error) {
+      console.error("Error deleting topping:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new dishesService();

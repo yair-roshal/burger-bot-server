@@ -1,4 +1,4 @@
-require("dotenv").config()
+require("dotenv").config();
 
 module.exports = {
   sqlConfig: {
@@ -8,4 +8,4 @@ module.exports = {
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "burger_db",
   },
-}
+};

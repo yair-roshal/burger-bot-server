@@ -102,7 +102,7 @@ class dishesService {
 
 	async getDishes(req, res) {
 		const restaurant_id = req.params.restaurant_id;
-		console.log("restaurant_id", restaurant_id);
+		console.log("getDishes_restaurant_id", restaurant_id);
 
 		const dishesQuery = `
         SELECT

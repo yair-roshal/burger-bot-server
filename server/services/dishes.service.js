@@ -197,8 +197,16 @@ class dishesService {
     const dish_id = req.params.dish_id;
     console.log("dish_id :>> ", dish_id);
     console.log("req.body :>> ", req.body);
-    const { id, title, price, image, description, toppings, restaurant_id } =
-      req.body;
+    const {
+      id,
+      title,
+      price,
+      image,
+      description,
+      toppings,
+      extras,
+      restaurant_id,
+    } = req.body;
     const sqlQuery = `
     UPDATE dishes 
     SET title = ?, price = ?, image = ?, description = ? 

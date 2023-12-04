@@ -96,7 +96,7 @@ class dishesService {
     //     WHERE d.restaurant_id = ?
     //     GROUP BY d.id;
     // `;
-    
+
     const extrasQuery = `
     SELECT
         d.id AS id,
@@ -116,7 +116,6 @@ class dishesService {
     GROUP BY d.id;
 `;
 
-
     const extrasResult = await this.executeQuery(extrasQuery, [restaurant_id]);
 
     const combinedData = dishesResult.map((dish) => {
@@ -130,8 +129,8 @@ class dishesService {
         description: dish.description,
         image: dish.image,
         restaurant_id: dish.restaurant_id,
-        toppings: toppings.toppings,
-        extras: extras.extras,
+        toppings: toppings?.toppings || [],
+        extras: extras?.extras || [],
       };
     });
 

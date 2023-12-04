@@ -78,24 +78,44 @@ class dishesService {
       restaurant_id,
     ]);
 
+    // const extrasQuery = `
+    //     SELECT
+    //         d.id AS id,
+    //         JSON_ARRAYAGG(
+    //             JSON_OBJECT(
+    //                 'id', e.id,
+    //                 'title', e.title,
+    //                 'image', e.image,
+    //                 'restaurant_id', e.restaurant_id,
+    //                 'type_id', e.type_id
+    //             )
+    //         ) AS extras
+    //     FROM dishes d
+    //     LEFT JOIN dishes_extras de ON d.id = de.dish_id
+    //     LEFT JOIN extras e ON de.extra_id = e.id
+    //     WHERE d.restaurant_id = ?
+    //     GROUP BY d.id;
+    // `;
+    
     const extrasQuery = `
-        SELECT
-            d.id AS id,
-            JSON_ARRAYAGG(
-                JSON_OBJECT(
-                    'id', e.id,
-                    'title', e.title,
-                    'image', e.image,
-                    'restaurant_id', e.restaurant_id,
-                    'type_id', e.type_id
-                )
-            ) AS extras
-        FROM dishes d
-        LEFT JOIN dishes_extras de ON d.id = de.dish_id
-        LEFT JOIN extras e ON de.extra_id = e.id
-        WHERE d.restaurant_id = ?
-        GROUP BY d.id;
-    `;
+    SELECT
+        d.id AS id,
+        JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'id', e.id,
+                'title', e.title,
+                'image', e.image,
+                'restaurant_id', e.restaurant_id,
+                'type_id', e.type_id
+            )
+        ) AS extras
+    FROM dishes d
+    LEFT JOIN dishes_extras de ON d.id = de.dish_id
+    LEFT JOIN extras e ON de.extra_id = e.id
+    WHERE d.restaurant_id = ? AND e.id IS NOT NULL
+    GROUP BY d.id;
+`;
+
 
     const extrasResult = await this.executeQuery(extrasQuery, [restaurant_id]);
 

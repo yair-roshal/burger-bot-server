@@ -241,6 +241,11 @@ class dishesService {
         await this.updateToppings(id, toppings);
       }
 
+      // If extras are provided, update them in the 'dishes_extras' table
+      if (extras && extras.length > 0) {
+        await this.updateExtras(id, extras);
+      }
+
       return result;
     } catch (error) {
       console.error("Error updating dish:", error);
@@ -271,6 +276,37 @@ class dishesService {
     } catch (error) {
       await connection.rollback();
       console.error("Error updating toppings:", error);
+      throw error;
+    } finally {
+      connection.release();
+    }
+  }
+
+  // Helper method to update extras for a dish
+  async updateExtras(dishId, extras) {
+    const deleteQuery = `DELETE FROM dishes_extras WHERE dish_id = ?`;
+    const insertQuery = `INSERT INTO dishes_extras (dish_id, extra_id) VALUES (?, ?)`;
+
+    const connection = await this.pool.getConnection();
+
+    try {
+      await connection.beginTransaction();
+
+      // Удаляем все extras для данного блюда
+      await connection.execute(deleteQuery, [dishId]);
+
+      // Если массив extras не пустой, вставляем новые значения
+      if (extras && extras.length > 0) {
+        for (const extra of extras) {
+          const values = [dishId, extra.id];
+          await connection.execute(insertQuery, values);
+        }
+      }
+
+      await connection.commit();
+    } catch (error) {
+      await connection.rollback();
+      console.error("Error updating extras:", error);
       throw error;
     } finally {
       connection.release();

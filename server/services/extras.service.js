@@ -88,15 +88,15 @@ class extrasService {
   // updateExtra ================================================
 
   async updateExtra(req, res) {
-    const { id, title, image, restaurant_id } = req.body;
+    const { id, title, image, restaurant_id,type_id } = req.body;
     const sqlQuery = `
       UPDATE extras
-      SET title = ?,   image = ?, restaurant_id = ?
+      SET title = ?,   image = ?, restaurant_id,type_id = ?
       WHERE id = ?
     `;
 
     try {
-      let values = [title, image, restaurant_id, id];
+      let values = [title, image, restaurant_id, id,type_id];
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
@@ -106,7 +106,7 @@ class extrasService {
         console.log("uploadedResponse", uploadedResponse);
 
         if (uploadedResponse) {
-          values = [title, uploadedResponse.secure_url, restaurant_id, id];
+          values = [title, uploadedResponse.secure_url, restaurant_id, id,type_id];
         }
       }
 

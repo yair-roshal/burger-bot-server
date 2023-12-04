@@ -237,12 +237,12 @@ class dishesService {
       const result = await this.executeQuery(sqlQuery, values);
 
       // If toppings are provided, update them in the 'dishes_toppings' table
-      if (toppings && toppings.length > 0) {
+      if (toppings) {
         await this.updateToppings(id, toppings);
       }
 
       // If extras are provided, update them in the 'dishes_extras' table
-      if (extras && extras.length > 0) {
+      if (extras) {
         await this.updateExtras(id, extras);
       }
 

@@ -85,22 +85,25 @@ module.exports = (bot) => {
         `\n`
       console.log("productsList_1--->>", productsList)
 
-      if (item.toppings?.length > 0) {
-        for (const topping of item.toppings) {
-          if (topping.count > 0) {
-            const toppingPrice =
-              (topping.price * item.quantity).toFixed(2) || ""
-            productsList +=
-              ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
-              "\n"
-          }
+      if (item.selectedExtrasNames) {
+        productsList += `-extras` + "\n"
+
+        for (const extra in item.selectedExtrasNames) {
+          productsList +=
+            `-- ${extra} - ${item.selectedExtrasNames[extra]} ` + "\n"
         }
       }
 
-      if (item.selectedExtrasNames) {
-        for (const extra in item.selectedExtrasNames) {
-          productsList +=
-            ` ${extra} - ${item.selectedExtrasNames[extra]} ` + "\n"
+      if (item.toppings?.length > 0) {
+        for (const topping of item.toppings) {
+          if (topping.count > 0) {
+            productsList += `-toppings` + "\n"
+            const toppingPrice =
+              (topping.price * item.quantity).toFixed(2) || ""
+            productsList +=
+              ` -- ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
+              "\n"
+          }
         }
       }
 
@@ -122,7 +125,7 @@ ________________
 <b>Total price: </b> ${totalPrice}₪
 ________________
 <b>Option Delivery: </b> ${optionDelivery}
-<b>Your comment: </b> ${comment ? comment : " - "}
+<b>Your comment: </b> ${comment?.trim().length > 0 ? comment : " - "}
 <b>Payment method: </b> ${paymentMethod}
 <b>Thanks! Your order № </b> ${generateIdTemp}
 ______________________________________________

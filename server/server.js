@@ -118,6 +118,7 @@ module.exports = (bot) => {
         input_message_content: {
           parse_mode: "HTML",
           message_text: `
+          
 <b>${user_name} thank for your order: </b>
 
 ${productsList}

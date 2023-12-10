@@ -97,7 +97,7 @@ module.exports = (bot) => {
         }
       }
 
-      if (item.selectedExtrasNames?.length > 0) {
+      if (item.selectedExtrasNames) {
         for (const extra in item.selectedExtrasNames) {
           productsList +=
             ` ${extra} - ${item.selectedExtrasNames[extra]} ` + "\n"
@@ -122,7 +122,7 @@ ________________
 <b>Total price: </b> ${totalPrice}₪
 ________________
 <b>Option Delivery: </b> ${optionDelivery}
-<b>Your comment: </b> ${comment}
+<b>Your comment: </b> ${comment ? comment : " - "}
 <b>Payment method: </b> ${paymentMethod}
 <b>Thanks! Your order № </b> ${generateIdTemp}
 ______________________________________________

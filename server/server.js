@@ -131,6 +131,10 @@ ________________
 <b>Thanks! Your order № </b> ${generateIdTemp}
 ______________________________________________
 `,
+
+          //todo change url to generic
+          thumb_url:
+            "https://dev--burger-web-app.netlify.app/static/media/Cafe_Cafe_Logo.1e03e875a5ae1e2be16a.png",
         },
       })
 

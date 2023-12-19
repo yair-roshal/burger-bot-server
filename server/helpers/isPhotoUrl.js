@@ -15,5 +15,5 @@ function isPhotoUrl(variable) {
   return false
 }
 
-// module.exports = { isPhotoUrl }
-export default isPhotoUrl
+module.exports = { isPhotoUrl }
+// export default isPhotoUrl

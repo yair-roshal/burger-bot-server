@@ -1,32 +1,32 @@
-const TelegramBot = require("node-telegram-bot-api")
+const TelegramBot = require('node-telegram-bot-api')
 CHAT_ID_ADMIN = 386212074
 
-const dotenv = require("dotenv")
+const dotenv = require('dotenv')
 dotenv.config()
 
-const token =
-  process.env.NODE_ENV === "prod"
-    ? process.env.TELEGRAM_BOT_TOKEN_prod
-    : process.env.TELEGRAM_BOT_TOKEN_dev
+const token = '6545709213:AAGYnLVz279g_kuSq5NFIgfpM7wLlKe8R_0'
 
-console.log("____________________________________________ :>> ")
-console.log("process.env.NODE_ENV :>> ", process.env.NODE_ENV)
-console.log(
-  "process.env.TELEGRAM_BOT_TOKEN_prod :>> ",
-  process.env.TELEGRAM_BOT_TOKEN_prod
-)
-console.log("token :>> ", token)
+// const token =
+//   process.env.NODE_ENV === "prod"
+//     ? process.env.TELEGRAM_BOT_TOKEN_prod
+//     : process.env.TELEGRAM_BOT_TOKEN_dev
+
+console.log('____________________________________________ :>> ')
+console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
+console.log('process.env.TELEGRAM_BOT_TOKEN_prod :>> ', process.env.TELEGRAM_BOT_TOKEN_prod)
+console.log('token :>> ', token)
 
 const bot = new TelegramBot(token, { polling: true })
-const formatDate = require("./utils/formatDate.js")
+const formatDate = require('./utils/formatDate.js')
 // const bot_on_callback_query = require('./utils/bot_on_callback_query.js')
 
 const {
   startMainMenu_Production,
-  callToAdminMenu,
-  give_me_keyboard,
-  only_keyboard,
-} = require("../constants/menus.js")
+  // callToAdminMenu,
+  // give_me_keyboard,
+  // only_inline_keyboard,
+  only_keyboard_callToAdminMenu,
+} = require('../constants/menus.js')
 
 const menuENV = startMainMenu_Production
 
@@ -37,8 +37,8 @@ const menuENV = startMainMenu_Production
 //   ? startMainMenu_Production
 //   : startMainMenu_Production
 
-const { text_html } = require("../constants/texts.js")
-const { webAppUrl } = require("../constants/constants.js")
+const { text_html,text_html_CafeCafe } = require('../constants/texts.js')
+// const { webAppUrl } = require("../constants/constants.js")
 
 //=========================
 
@@ -47,22 +47,24 @@ bot.onText(/\/start/, async (msg) => {
 
   //sendPhoto work++++  ====================================================
 
-  var photoPath = __dirname + "/images/PosterBurger.jpg"
+  var photoPath = __dirname + '/images/PosterBurger.jpg'
+  var photoPathCafeCafe = __dirname + '/images/CafeCafe.png'
 
   await bot
-    .sendPhoto(chatId, photoPath, startMainMenu_Production)
+    .sendPhoto(chatId, photoPathCafeCafe, startMainMenu_Production)
+    // .sendPhoto(chatId, photoPath, startMainMenu_Production)
     // .sendPhoto(chatId, photoPath)
     .then(() => {
-      console.log("Фотография успешно отправлена")
+      console.log('Фотография успешно отправлена')
     })
     .catch((error) => {
-      console.error("Ошибка при отправке фотографии:", error.message)
+      console.error('Ошибка при отправке фотографии:', error.message)
     })
 
   //sendMessage work+++ ====================================================
 
   // var optionsMessage = {
-  //   reply_markup: JSON.stringify(only_keyboard),
+  //   reply_markup: JSON.stringify(only_inline_keyboard),
   //   // startMainMenu_Production,
   //   parse_mode: "HTML",
   //   disable_web_page_preview: true, //disable because we don't want show description links
@@ -70,13 +72,23 @@ bot.onText(/\/start/, async (msg) => {
 
   // bot.sendMessage(chatId, text_html, optionsMessage)
 
-  
+  //testing ===============
+
+  var optionsMessage = {
+    // reply_markup: JSON.stringify(only_keyboard_callToAdminMenu),
+    // startMainMenu_Production,
+    parse_mode: 'HTML',
+    disable_web_page_preview: true, //disable because we don't want show description links
+  }
+
+  bot.sendMessage(chatId, text_html_CafeCafe, optionsMessage)
+  // bot.sendMessage(chatId, text_html, optionsMessage)
 })
 
 //=========================
 
 // send message to admin with ask to add anything
-bot.on("contact", (msg) => {
+bot.on('contact', (msg) => {
   bot.sendMessage(
     CHAT_ID_ADMIN,
     `Message from ${msg.from.first_name}  :
@@ -94,17 +106,18 @@ bot.on("contact", (msg) => {
 // })
 
 // callback_query ===========================================
-bot.on("callback_query", (query) => {
+bot.on('callback_query', (query) => {
   const chatId = query.message.chat.id
   const data = query.data
 
-  if (data === "auth") {
+  if (data === 'auth') {
     const chatId = msg.chat.id
     bot.sendMessage(
       chatId,
-      text_html,
+      // text_html,
+      text_html_CafeCafe,
       {
-        parse_mode: "HTML",
+        parse_mode: 'HTML',
         //disable because we don't want show description links
         disable_web_page_preview: true,
       },
@@ -181,14 +194,11 @@ bot.on("callback_query", (query) => {
 
 //======================
 
-// bot.on("webAppData", (webAppMes) => {
-//   console.log(webAppMes) // вся информация о сообщении
-//   console.log(webAppMes.webAppData) // конкретно то, что мы передали в бота
-//   bot.sendMessage(
-//     webAppMes.chat.id,
-//     `получили информацию из веб-приложения: ${webAppMes.webAppData}`
-//   )
-//   // отправляем сообщение в ответ на отправку данных из веб-приложения
-// })
+bot.on('webAppData', (webAppMes) => {
+  console.log(webAppMes) // вся информация о сообщении
+  console.log(webAppMes.webAppData) // конкретно то, что мы передали в бота
+  bot.sendMessage(webAppMes.chat.id, `получили информацию из веб-приложения: ${webAppMes.webAppData}`)
+  // отправляем сообщение в ответ на отправку данных из веб-приложения
+})
 
 module.exports = { bot }

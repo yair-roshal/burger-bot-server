@@ -6,63 +6,38 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
-const errorHandler = require("middleware/error-handler")
+// const errorHandler = require("middleware/error-handler")
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
-
-const path = require("path")
-httpsOptions = {
-  key: fs.readFileSync(
-    path.join(__dirname, "./certificates/burgerim.ru.key"),
-    "utf8"
-  ),
-
-  cert: fs.readFileSync(
-    path.join(__dirname, "./certificates/burgerim.ru.crt"),
-    "utf8"
-  ),
-}
+const { httpsOptions, corsOptions } = require("../constants/config")
 
 module.exports = (bot) => {
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
+  // app.use(bodyParser.urlencoded({ extended: false }))
+  // app.use(bodyParser.json())
+
+  // Adjust the limits for incoming requests
+  app.use(bodyParser.json({ limit: "10mb" })) // Change the limit according to your needs
+  app.use(bodyParser.urlencoded({ limit: "10mb", extended: true })) // Change the limit according to your needs
 
   //=========================================================================
 
   // const allowedOrigins = [
-  //   "https://heroic-puffpuff-e7da0d.netlify.app",
-  //   "https://heroic-puffpuff-e7da0d.netlify.app/checkout",
-  //   "https://serene-moonbeam-93eead.netlify.app/static/js",
-  //   "https://master--serene-moonbeam-93eead.netlify.app",
+  // webAppUrl,
   //   "http://localhost:8889",
   //   "https://api.telegram.org",
   // ]
 
-  const corsOptions = {
-    // origin: function (origin, callback) {
-    //   if (allowedOrigins.includes(origin) || !origin) {
-    //     callback(null, true)
-    //   } else {
-    //     callback(new Error("Not allowed by CORS"))
-    //   }
-    // },
-
-    origin: "*", // Разрешить запросы с любого источника
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-  }
   app.use(cors(corsOptions))
   // app.use(cors())
 
   app.use("/", routes)
 
   // api routes
-  app.use("/users", require("./controllers/users.controller"))
+  // app.use("/users", require("./controllers/users.controller"))
 
   // global error handler
-  app.use(errorHandler)
+  // app.use(errorHandler)
   // =========================================================================
 
   let generateIdTemp = generateDateId()
@@ -77,6 +52,7 @@ module.exports = (bot) => {
       // address,
       optionDelivery,
       paymentMethod,
+      user_name,
     } = req.body
 
     console.log("for_proshli_num_paamim--------------->>>")
@@ -86,17 +62,17 @@ module.exports = (bot) => {
     //   console.log('item_send_sms_tele', item)
     //   const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-    //   productsQuantityPrice =
-    //     productsQuantityPrice +
+    //   productsList =
+    //     productsList +
     //     `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
     //     `\n`
     // }
-    // console.log('productsQuantityPrice', productsQuantityPrice)
+    // console.log('productsList', productsList)
 
     // with toppings ========================================
 
-    let productsQuantityPrice = ``
-    console.log("productsQuantityPrice", productsQuantityPrice)
+    let productsList = ``
+    console.log("productsList", productsList)
 
     console.log("cartItems", cartItems)
 
@@ -104,23 +80,34 @@ module.exports = (bot) => {
       console.log("item_send_sms_tele", item)
       const itemPrice = (item.price * item.quantity).toFixed(2) || ""
 
-      productsQuantityPrice +=
+      productsList +=
         `<b>${item.title} = </b>${item.price}₪ * ${item.quantity} = ${itemPrice}₪` +
         `\n`
-      console.log("productsQuantityPrice_1--->>", productsQuantityPrice)
+      console.log("productsList_1--->>", productsList)
+
+      if (item.selectedExtrasNames) {
+        productsList += `-extras` + "\n"
+
+        for (const extra in item.selectedExtrasNames) {
+          productsList +=
+            `-- ${extra} - ${item.selectedExtrasNames[extra]} ` + "\n"
+        }
+      }
 
       if (item.toppings?.length > 0) {
         for (const topping of item.toppings) {
           if (topping.count > 0) {
+            productsList += `-toppings` + "\n"
             const toppingPrice =
               (topping.price * item.quantity).toFixed(2) || ""
-            productsQuantityPrice +=
-              ` - ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
+            productsList +=
+              ` -- ${topping.title} = ${topping.price}₪ * ${item.quantity} = ${toppingPrice}₪` +
               "\n"
           }
         }
       }
-      console.log("productsQuantityPrice_2--->>", productsQuantityPrice)
+
+      console.log("productsList_2--->>", productsList)
     }
 
     try {
@@ -131,18 +118,23 @@ module.exports = (bot) => {
         input_message_content: {
           parse_mode: "HTML",
           message_text: `
-<b>You ordered: </b>
-  
-${productsQuantityPrice}
+          
+<b>${user_name} thank for your order: </b>
+
+${productsList}
 ________________
 <b>Total price: </b> ${totalPrice}₪
 ________________
 <b>Option Delivery: </b> ${optionDelivery}
-<b>Your comment: </b> ${comment}
+<b>Your comment: </b> ${comment?.trim().length > 0 ? comment : " - "}
 <b>Payment method: </b> ${paymentMethod}
 <b>Thanks! Your order № </b> ${generateIdTemp}
 ______________________________________________
 `,
+
+          //todo change url to generic
+          thumb_url:
+            "https://dev--burger-web-app.netlify.app/static/media/Cafe_Cafe_Logo.1e03e875a5ae1e2be16a.png",
         },
       })
 
@@ -159,8 +151,17 @@ ______________________________________________
   })
 
   // const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+  // let port = 8081
 
-  https.createServer(httpsOptions, app).listen(443, () => {
-    console.log("https Web server started at port : ", 443)
+  let port1 = 5005
+
+  app.listen(port1, () => {
+    console.log(`Server is running on port ${port1}`)
+  })
+
+  let port = 443
+
+  https.createServer(httpsOptions, app).listen(port, () => {
+    console.log("https Web server started at port : ", port)
   })
 }

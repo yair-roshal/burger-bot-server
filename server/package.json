@@ -16,6 +16,7 @@
     "mysql2": "^2.1.0",
     "node-jose": "^2.1.1",
     "rootpath": "^0.1.2",
+    "cloudinary": "^1.41.0",
     "sequelize": "^6.3.4"
   },
   "devDependencies": {

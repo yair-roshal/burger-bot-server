@@ -11,6 +11,7 @@ class OrdersService {
 
 	// Метод для выполнения запросов к базе данных
 	async executeQuery(sqlQuery, values) {
+		console.log('values_OrdersService :>> ', values);
 		const connection = await this.pool.getConnection()
 
 		try {

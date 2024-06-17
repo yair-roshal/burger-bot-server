@@ -1,10 +1,11 @@
 const TelegramBot = require('node-telegram-bot-api')
-CHAT_ID_ADMIN = 386212074
-
+const chat_id_admin = process.env.CHAT_ID_ADMIN
+ 
 const dotenv = require('dotenv')
 dotenv.config()
 
-const token = '6545709213:AAGYnLVz279g_kuSq5NFIgfpM7wLlKe8R_0'
+// const token = '6545709213:AAGYnLVz279g_kuSq5NFIgfpM7wLlKe8R_0'
+const token = process.env.TELEGRAM_BOT_TOKEN
 
 // const token =
 //   process.env.NODE_ENV === "prod"
@@ -13,7 +14,9 @@ const token = '6545709213:AAGYnLVz279g_kuSq5NFIgfpM7wLlKe8R_0'
 
 console.log('____________________________________________ :>> ')
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)
-console.log('process.env.TELEGRAM_BOT_TOKEN_prod :>> ', process.env.TELEGRAM_BOT_TOKEN_prod)
+console.log('chat_id_admin :>> ', chat_id_admin)
+
+// console.log('process.env.TELEGRAM_BOT_TOKEN_prod :>> ', process.env.TELEGRAM_BOT_TOKEN_prod)
 console.log('token :>> ', token)
 
 const bot = new TelegramBot(token, { polling: true })
@@ -90,7 +93,7 @@ bot.onText(/\/start/, async (msg) => {
 // send message to admin with ask to add anything
 bot.on('contact', (msg) => {
   bot.sendMessage(
-    CHAT_ID_ADMIN,
+    chat_id_admin,
     `Message from ${msg.from.first_name}  :
          ${msg.contact.phone_number}`
   )

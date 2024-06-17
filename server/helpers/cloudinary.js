@@ -15,4 +15,10 @@ cloudinary.config({
   api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc"
 })
 
+console.log(  cloud_name, "--cloud_name",
+  api_key, "--api_key",
+  api_secret, "--api_secret"
+
+);
+
 module.exports = cloudinary

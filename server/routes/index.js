@@ -6,6 +6,7 @@ const settingsRoutes = require("./settings.routes")
 const toppingsRoutes = require("./toppings.routes")
 const extrasRoutes = require("./extras.routes")
 const typesRoutes = require("./types.routes")
+const groupsRoutes = require("./groups.routes")
 const restaurantsRoutes = require("./restaurants.routes")
 
 router.get("/", (req, res) => {
@@ -21,6 +22,7 @@ router.use("/", settingsRoutes)
 router.use("/", toppingsRoutes)
 router.use("/", extrasRoutes)
 router.use("/", typesRoutes)
+router.use("/", groupsRoutes)
 router.use("/", restaurantsRoutes)
 
 module.exports = router

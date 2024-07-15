@@ -6,6 +6,7 @@
     "scripts": {
         "start": "NODE_ENV=prod node index.js",
         "dev": "NODE_ENV=dev nodemon index.js",
+        "windows_dev": "set NODE_ENV=dev&&nodemon index.js",
         "dev_debug": "NODE_ENV=dev DEBUG=*  nodemon index.js",
         "prod": "NODE_ENV=prod node index.js"
     },

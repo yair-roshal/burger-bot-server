@@ -42,6 +42,7 @@ class dishesService {
     const dishesQuery = `
         SELECT
             d.id AS id,
+            d.group_id,
             d.title AS title,
             d.price AS price,
             d.description AS description,
@@ -125,6 +126,7 @@ class dishesService {
       return {
         id: dish.id,
         title: dish.title,
+        group: dish.group_id,
         price: dish.price,
         description: dish.description,
         image: dish.image,
@@ -143,13 +145,15 @@ class dishesService {
     console.log("req.body :>> ", req.body);
     const { title, price, image, description, toppings, restaurant_id } =
       req.body;
+
+      const group = req.body.group?.id;
     const sqlQuery = `
-        INSERT INTO dishes (title, price, image, description, restaurant_id)
+        INSERT INTO dishes (title, group_id, price, image, description, restaurant_id)
         VALUES (?, ?, ?, ?, ?)
       `;
 
     try {
-      let values = [title, price, image, description, restaurant_id];
+      let values = [title, group, price, image, description, restaurant_id];
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
@@ -161,6 +165,7 @@ class dishesService {
         if (uploadedResponse) {
           values = [
             title,
+            group,
             price,
             uploadedResponse.secure_url,
             description,
@@ -226,14 +231,17 @@ class dishesService {
       extras,
       restaurant_id,
     } = req.body;
+
+    const group = req.body.group?.id || null;
+
     const sqlQuery = `
     UPDATE dishes 
-    SET title = ?, price = ?, image = ?, description = ? 
+    SET title = ?, group_id = ?, price = ?, image = ?, description = ? 
     WHERE id = ? AND restaurant_id = ?
   `;
 
     try {
-      let values = [title, price, image, description, id, restaurant_id];
+      let values = [title, group, price, image, description, id, restaurant_id];
 
       const options = {
         use_filename: true,
@@ -251,6 +259,7 @@ class dishesService {
         if (uploadedResponse) {
           values = [
             title,
+            group,
             price,
             uploadedResponse.secure_url,
             description,

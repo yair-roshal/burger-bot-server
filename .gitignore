@@ -16,7 +16,7 @@ zzz-backup
 .env
 .eslintcache
 old
-certificates
+# certificates
 
 
 # classic ignoring files===============

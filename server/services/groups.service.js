@@ -7,18 +7,22 @@ class GroupsService {
   }
 
   async executeQuery(sqlQuery, values) {
-    const connection = await this.pool.getConnection();
-
+    let connection;
     try {
+      connection = await this.pool.getConnection();
       const [results] = await connection.execute(sqlQuery, values);
       console.error("Executing SQL query was success - results :", results);
-
       return results;
     } catch (error) {
-      console.error("Error executing SQL query:", error);
+      console.log('error.code :>> ', error.code);
+      if (error.code === 'EHOSTUNREACH') {
+        console.error("Error: Host unreachable. Please check your internet connection.");
+      } else {
+        console.error("Error executing SQL query:", error);
+      }
       throw error;
     } finally {
-      connection.release();
+      if (connection) connection.release();
     }
   }
 

@@ -16,6 +16,7 @@ zzz-backup
 .env
 .eslintcache
 old
+package-lock.json
 # certificates
 
 

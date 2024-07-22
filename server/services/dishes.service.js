@@ -143,29 +143,29 @@ class dishesService {
 
   async createDish(req, res) {
     console.log("req.body :>> ", req.body);
-    const { title, price, image, description, toppings, restaurant_id } =
+    const { title, price, image, description, toppings, extras, restaurant_id } =
       req.body;
-
-      const group = req.body.group?.id;
+  
+    const group_id = req.body.group?.id || null;
     const sqlQuery = `
         INSERT INTO dishes (title, group_id, price, image, description, restaurant_id)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
       `;
-
+  
     try {
-      let values = [title, group, price, image, description, restaurant_id];
-
+      let values = [title, group_id, price, image, description, restaurant_id];
+  
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           options
         );
         console.log("uploadedResponse", uploadedResponse);
-
+  
         if (uploadedResponse) {
           values = [
             title,
-            group,
+            group_id,
             price,
             uploadedResponse.secure_url,
             description,
@@ -173,23 +173,47 @@ class dishesService {
           ];
         }
       }
-
+  
       // Insert the dish into the 'dishes' table
       const result = await this.executeQuery(sqlQuery, values);
-
-      // If toppings are provided, insert them into the 'toppings' table
+  
+      // If toppings are provided, insert them into the 'dishes_toppings' table
       if (toppings && toppings.length > 0) {
         const dishId = result.insertId;
         await this.insertToppings(dishId, toppings);
       }
-
+  
+      // If extras are provided, insert them into the 'dishes_extras' table
+      if (extras && extras.length > 0) {
+        const dishId = result.insertId;
+        await this.insertExtras(dishId, extras);
+      }
+  
       return result;
     } catch (error) {
       console.error("Error creating dish:", error);
       throw error;
     }
   }
-
+  
+  // Helper method to insert extras for a dish
+  async insertExtras(dishId, extras) {
+    const sqlQuery = `
+      INSERT INTO dishes_extras (dish_id, extra_id)
+      VALUES (?, ?)
+    `;
+  
+    extras.forEach(async (extra) => {
+      const values = [dishId, extra.id];
+      try {
+        // Insert relationship between dish and extra into the 'dishes_extras' table
+        await this.executeQuery(sqlQuery, values);
+      } catch (error) {
+        console.error("Error inserting extras:", error);
+        throw error;
+      }
+    });
+  }
   // Helper method to insert toppings for a dish
   async insertToppings(dishId, toppings) {
     const sqlQuery = `
@@ -219,8 +243,8 @@ class dishesService {
 
   async updateDish(req, res) {
     const dish_id = req.params.dish_id;
-    console.log("dish_id :>> ", dish_id);
-    console.log("req.body :>> ", req.body);
+    console.log("updateDish_dish_id :>> ", dish_id);
+    console.log("updateDish_req.body :>> ", req.body);
     const {
       id,
       title,
@@ -232,7 +256,7 @@ class dishesService {
       restaurant_id,
     } = req.body;
 
-    const group = req.body.group?.id || null;
+    const group_id = req.body.group?.id || null;
 
     const sqlQuery = `
     UPDATE dishes 
@@ -241,7 +265,7 @@ class dishesService {
   `;
 
     try {
-      let values = [title, group, price, image, description, id, restaurant_id];
+      let values = [title, group_id, price, image, description, id, restaurant_id];
 
       const options = {
         use_filename: true,
@@ -259,7 +283,7 @@ class dishesService {
         if (uploadedResponse) {
           values = [
             title,
-            group,
+            group_id,
             price,
             uploadedResponse.secure_url,
             description,

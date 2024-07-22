@@ -44,6 +44,34 @@ class RestaurantsService {
      `
     return this.executeQuery(sqlQuery)
   }
+
+  async getUserRestaurant(req, res) {
+    const user_sub = req.params.user_sub;
+    const sqlQuery = `
+      SELECT * FROM restaurants WHERE user_sub = ?
+    `;
+    return this.executeQuery(sqlQuery, [user_sub]);
+  }
+
+  async createRestaurant(userSub) {
+    try {
+      let sqlQuery = `
+        INSERT INTO restaurants (user_sub) VALUES (?)
+      `;
+      const results = await this.executeQuery(sqlQuery, [userSub]);
+      const restaurant_id = results.insertId;
+
+      sqlQuery = `
+        INSERT INTO settings (restaurant_id) VALUES (?)
+      `;
+      await this.executeQuery(sqlQuery, [restaurant_id]);
+
+      return { id: restaurant_id };
+    } catch (error) {
+      console.error("Error creating restaurant:", error);
+      throw new Error("Internal Server Error");
+    }
+  }
 }
 
 module.exports = new RestaurantsService()

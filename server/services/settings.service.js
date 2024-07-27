@@ -1,6 +1,6 @@
-const mysql = require("mysql2/promise")
+const db = require("../helpers/db")
+
 const {
-  sqlConfig,
   cloudinaryConfig,
   optionsCloudinary,
 } = require("../../constants/constants")
@@ -9,25 +9,6 @@ const cloudinary = require("cloudinary").v2
 cloudinary.config(cloudinaryConfig)
 
 class SettingsService {
-  constructor() {
-    this.pool = mysql.createPool(sqlConfig) // Создаем пул соединений
-  }
-
-  // Метод для выполнения запросов к базе данных
-  async executeQuery(sqlQuery, values) {
-    const connection = await this.pool.getConnection()
-
-    try {
-      const [results] = await connection.execute(sqlQuery, values)
-      return results
-    } catch (error) {
-      console.error("Error executing SQL query:", error)
-      throw error
-    } finally {
-      connection.release() // Вернуть соединение в пул после использования
-    }
-  }
-
   // getSettings ================================================
   async getSettings(req, res) {
     const restaurant_id = req.params.restaurant_id
@@ -35,7 +16,7 @@ class SettingsService {
 
     const sqlQuery = "SELECT * FROM settings WHERE restaurant_id = ?"
 
-    return this.executeQuery(sqlQuery, [restaurant_id])
+    return db.executeQuery(sqlQuery, [restaurant_id])
   }
 
   // updateSettings ================================================
@@ -96,7 +77,7 @@ class SettingsService {
         }
       }
 
-      const result = await this.executeQuery(sqlQuery, values)
+      const result = await db.executeQuery(sqlQuery, values)
 
       return result
     } catch (error) {

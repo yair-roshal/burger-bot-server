@@ -1,11 +1,11 @@
 const db = require("../helpers/db")
 
 class QRCodesService {
-  async getQRCodes(restaurantId) {
-    console.log('getQRCodes_restaurantId :>> ', restaurantId)
+  async getQRCodes(restaurant_id) {
+    console.log("getQRCodes_restaurant_id :>> ", restaurant_id)
 
-    if (restaurantId === undefined) {
-      throw new Error("restaurantId is undefined")
+    if (restaurant_id === undefined) {
+      throw new Error("restaurant_id is undefined")
     }
 
     const sqlQuery = `
@@ -13,13 +13,13 @@ class QRCodesService {
       FROM qr_codes
       WHERE restaurant_id = ?
     `
-    return db.executeQuery(sqlQuery, [restaurantId])
+    return db.executeQuery(sqlQuery, [restaurant_id])
   }
 
-  async saveQRCode(restaurantId, codeName, codeValue) {
-    console.log('saveQRCode params :>> ', { restaurantId, codeName, codeValue })
+  async saveQRCode(restaurant_id, codeName, codeValue) {
+    console.log("saveQRCode params :>> ", { restaurant_id, codeName, codeValue })
 
-    if (restaurantId === undefined) restaurantId = null
+    if (restaurant_id === undefined) restaurant_id = null
     if (codeName === undefined) codeName = null
     if (codeValue === undefined) codeValue = ""
 
@@ -27,12 +27,16 @@ class QRCodesService {
       INSERT INTO qr_codes (restaurant_id, code_name, code_value, created_at)
       VALUES (?, ?, ?, NOW())
     `
-    const result = await db.executeQuery(sqlQuery, [restaurantId, codeName, codeValue])
+    const result = await db.executeQuery(sqlQuery, [
+      restaurant_id,
+      codeName,
+      codeValue,
+    ])
     return { id: result.insertId }
   }
 
   async deleteQRCode(codeId) {
-    console.log('deleteQRCode codeId :>> ', codeId)
+    console.log("deleteQRCode codeId :>> ", codeId)
 
     if (codeId === undefined) {
       throw new Error("codeId is undefined")

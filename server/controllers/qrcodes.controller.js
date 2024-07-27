@@ -12,10 +12,10 @@ class QRCodesController {
   }
 
   async saveQRCode(req, res) {
-    const { restaurantId, codeName, codeValue } = req.body;
+    const { restaurant_id, codeName, codeValue } = req.body;
 
     try {
-      const result = await QRCodesService.saveQRCode(restaurantId, codeName, codeValue);
+      const result = await QRCodesService.saveQRCode(restaurant_id, codeName, codeValue);
       return res.status(201).send(result);
     } catch (error) {
       console.error("Error saving QR code:", error);

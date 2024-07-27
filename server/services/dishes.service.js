@@ -1,43 +1,13 @@
-const mysql = require("mysql2/promise")
-const { sqlConfig } = require("../../constants/constants")
-const axios = require("axios")
-const https = require("https")
-const { generateDateTime } = require("../helpers/utils")
-const cloudinary = require("cloudinary").v2
-const { optionsCloudinary } = require("../../constants/constants")
-const { isPhotoUrl } = require("../helpers/isPhotoUrl")
-
- 
-
 const {
- 
+  optionsCloudinary,
   cloudinaryConfig,
- 
 } = require("../../constants/constants")
-
- cloudinary.config(cloudinaryConfig)
-
+const cloudinary = require("cloudinary").v2
+const { isPhotoUrl } = require("../helpers/isPhotoUrl")
+const db = require("../helpers/db")
+cloudinary.config(cloudinaryConfig)
 
 class dishesService {
-  constructor() {
-    this.pool = mysql.createPool(sqlConfig) // Создаем пул соединений
-  }
-
-  // Метод для выполнения запросов к базе данных
-  async executeQuery(sqlQuery, values) {
-    const connection = await this.pool.getConnection()
-
-    try {
-      const [results] = await connection.execute(sqlQuery, values)
-      return results
-    } catch (error) {
-      console.error("Error executing SQL query:", error)
-      throw error
-    } finally {
-      connection.release() // Вернуть соединение в пул после использования
-    }
-  }
-
   // getDishes ================================================
 
   async getDishes(req, res) {
@@ -57,7 +27,7 @@ class dishesService {
         WHERE d.restaurant_id = ?;
     `
 
-    const dishesResult = await this.executeQuery(dishesQuery, [restaurant_id])
+    const dishesResult = await db.executeQuery(dishesQuery, [restaurant_id])
 
     const toppingsQuery = `
         SELECT
@@ -80,28 +50,7 @@ class dishesService {
         GROUP BY d.id;
     `
 
-    const toppingsResult = await this.executeQuery(toppingsQuery, [
-      restaurant_id,
-    ])
-
-    // const extrasQuery = `
-    //     SELECT
-    //         d.id AS id,
-    //         JSON_ARRAYAGG(
-    //             JSON_OBJECT(
-    //                 'id', e.id,
-    //                 'title', e.title,
-    //                 'image', e.image,
-    //                 'restaurant_id', e.restaurant_id,
-    //                 'type_id', e.type_id
-    //             )
-    //         ) AS extras
-    //     FROM dishes d
-    //     LEFT JOIN dishes_extras de ON d.id = de.dish_id
-    //     LEFT JOIN extras e ON de.extra_id = e.id
-    //     WHERE d.restaurant_id = ?
-    //     GROUP BY d.id;
-    // `;
+    const toppingsResult = await db.executeQuery(toppingsQuery, [restaurant_id])
 
     const extrasQuery = `
     SELECT
@@ -122,7 +71,7 @@ class dishesService {
     GROUP BY d.id;
 `
 
-    const extrasResult = await this.executeQuery(extrasQuery, [restaurant_id])
+    const extrasResult = await db.executeQuery(extrasQuery, [restaurant_id])
 
     const combinedData = dishesResult.map((dish) => {
       const toppings = toppingsResult.find((item) => item.id === dish.id)
@@ -172,7 +121,7 @@ class dishesService {
           image,
           optionsCloudinary
         )
-        console.log("uploadedResponse", uploadedResponse)
+        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [
@@ -187,18 +136,18 @@ class dishesService {
       }
 
       // Insert the dish into the 'dishes' table
-      const result = await this.executeQuery(sqlQuery, values)
+      const result = await db.executeQuery(sqlQuery, values)
 
       // If toppings are provided, insert them into the 'dishes_toppings' table
       if (toppings && toppings.length > 0) {
         const dishId = result.insertId
-        await this.insertToppings(dishId, toppings)
+        await dishesService.insertToppings(dishId, toppings)
       }
 
       // If extras are provided, insert them into the 'dishes_extras' table
       if (extras && extras.length > 0) {
         const dishId = result.insertId
-        await this.insertExtras(dishId, extras)
+        await dishesService.insertExtras(dishId, extras)
       }
 
       return result
@@ -209,7 +158,7 @@ class dishesService {
   }
 
   // Helper method to insert extras for a dish
-  async insertExtras(dishId, extras) {
+  static async insertExtras(dishId, extras) {
     const sqlQuery = `
       INSERT INTO dishes_extras (dish_id, extra_id)
       VALUES (?, ?)
@@ -219,7 +168,7 @@ class dishesService {
       const values = [dishId, extra.id]
       try {
         // Insert relationship between dish and extra into the 'dishes_extras' table
-        await this.executeQuery(sqlQuery, values)
+        await db.executeQuery(sqlQuery, values)
       } catch (error) {
         console.error("Error inserting extras:", error)
         throw error
@@ -227,7 +176,7 @@ class dishesService {
     })
   }
   // Helper method to insert toppings for a dish
-  async insertToppings(dishId, toppings) {
+  static async insertToppings(dishId, toppings) {
     const sqlQuery = `
       INSERT INTO dishes_toppings (dish_id, topping_id)
       VALUES (?, ?)
@@ -237,7 +186,7 @@ class dishesService {
       const values = [dishId, topping.id]
       try {
         // Insert relationship between dish and topping into the 'dishes_toppings' table
-        await this.executeQuery(sqlQuery, values)
+        await db.executeQuery(sqlQuery, values)
       } catch (error) {
         console.error("Error inserting toppings:", error)
         throw error
@@ -248,7 +197,7 @@ class dishesService {
   // getCategories ================================================
   async getCategories() {
     const sqlQuery = "SELECT * FROM categories"
-    return this.executeQuery(sqlQuery, [])
+    return db.executeQuery(sqlQuery, [])
   }
 
   // updateDish ================================================
@@ -292,7 +241,7 @@ class dishesService {
           image,
           optionsCloudinary
         )
-        console.log("uploadedResponse", uploadedResponse)
+        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [
@@ -308,16 +257,16 @@ class dishesService {
       }
 
       // Update the dish in the 'dishes' table
-      const result = await this.executeQuery(sqlQuery, values)
+      const result = await db.executeQuery(sqlQuery, values)
 
       // If toppings are provided, update them in the 'dishes_toppings' table
       if (toppings) {
-        await this.updateToppings(id, toppings)
+        await dishesService.updateToppings(id, toppings)
       }
 
       // If extras are provided, update them in the 'dishes_extras' table
       if (extras) {
-        await this.updateExtras(id, extras)
+        await dishesService.updateExtras(id, extras)
       }
 
       return result
@@ -328,11 +277,11 @@ class dishesService {
   }
 
   // Helper method to update toppings for a dish
-  async updateToppings(dishId, toppings) {
+  static async updateToppings(dishId, toppings) {
     const deleteQuery = `DELETE FROM dishes_toppings WHERE dish_id = ?`
     const insertQuery = `INSERT INTO dishes_toppings (dish_id, topping_id) VALUES (?, ?)`
 
-    const connection = await this.pool.getConnection()
+    const connection = await db.pool.getConnection()
 
     try {
       await connection.beginTransaction()
@@ -357,11 +306,11 @@ class dishesService {
   }
 
   // Helper method to update extras for a dish
-  async updateExtras(dishId, extras) {
+  static async updateExtras(dishId, extras) {
     const deleteQuery = `DELETE FROM dishes_extras WHERE dish_id = ?`
     const insertQuery = `INSERT INTO dishes_extras (dish_id, extra_id) VALUES (?, ?)`
 
-    const connection = await this.pool.getConnection()
+    const connection = await db.pool.getConnection()
 
     try {
       await connection.beginTransaction()
@@ -394,7 +343,7 @@ class dishesService {
     const deleteDishQuery = "DELETE FROM dishes WHERE id = ?"
 
     try {
-      const result = await this.executeQuery(deleteDishQuery, [dishId])
+      const result = await db.executeQuery(deleteDishQuery, [dishId])
       return result
     } catch (error) {
       console.error("Error deleting dish:", error)

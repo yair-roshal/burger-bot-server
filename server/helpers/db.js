@@ -8,9 +8,6 @@ const db = {}
 async function initialize() {
   const { host, port, user, password, database } = sqlConfig
 
-  // console.log("sqlConfig----------->>>>>>>", sqlConfig)
-  // console.log("database----------->>>>>>>", sqlConfig.database)
-
   const connection = await mysql.createConnection(sqlConfig)
 
   await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`)
@@ -21,23 +18,32 @@ async function initialize() {
     dialect: "mysql",
   })
 
-  // init models and add them to the exported db object
-  // db.User = require("../models/user.model")(sequelize)
-
   // Create a connection pool
   db.pool = mysql.createPool(sqlConfig)
 
   // Add a method to execute queries
-  db.executeQuery = async (sqlQuery, values) => {
-    const connection = await db.pool.getConnection()
+  db.executeQuery = async function(sqlQuery, values) {
+    let connection
     try {
+      connection = await this.pool.getConnection()
       const [results] = await connection.execute(sqlQuery, values)
+      console.error(
+        "GroupsService --Executing SQL query was success - results :",
+        results
+      )
       return results
     } catch (error) {
-      console.error("Error executing SQL query:", error)
+      console.log("error.code :>> ", error.code)
+      if (error.code === "EHOSTUNREACH") {
+        console.error(
+          "Error: Host unreachable. Please check your internet connection."
+        )
+      } else {
+        console.error("Error executing SQL query:", error)
+      }
       throw error
     } finally {
-      connection.release()
+      if (connection) connection.release()
     }
   }
 

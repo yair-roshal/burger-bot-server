@@ -1,10 +1,8 @@
-const mysql = require("mysql2/promise")
-
+const db = require("../helpers/db")
 const cloudinary = require("cloudinary").v2
 const { isPhotoUrl } = require("../helpers/isPhotoUrl")
 
 const {
-  sqlConfig,
   cloudinaryConfig,
   optionsCloudinary,
 } = require("../../constants/constants")
@@ -12,27 +10,6 @@ const {
 cloudinary.config(cloudinaryConfig)
 
 class ToppingsService {
-  constructor() {
-    this.pool = mysql.createPool(sqlConfig) // Создаем пул соединений
-  }
-
-  // Метод для выполнения запросов к базе данных
-  async executeQuery(sqlQuery, values) {
-    const connection = await this.pool.getConnection()
-
-    try {
-      const [results] = await connection.execute(sqlQuery, values)
-      console.error("Executing SQL query was success - results :", results)
-
-      return results
-    } catch (error) {
-      console.error("Error executing SQL query:", error)
-      throw error
-    } finally {
-      connection.release() // Вернуть соединение в пул после использования
-    }
-  }
-
   // getToppings ================================================
   async getToppings(req, res) {
     const restaurant_id = req.params.restaurant_id
@@ -48,7 +25,7 @@ class ToppingsService {
 		  FROM toppings t
 		  WHERE t.restaurant_id = ?
 		`
-    return this.executeQuery(sqlQuery, [restaurant_id])
+    return db.executeQuery(sqlQuery, [restaurant_id])
   }
 
   // createTopping ================================================
@@ -69,14 +46,14 @@ class ToppingsService {
           image,
           optionsCloudinary
         )
-        console.log("uploadedResponse", uploadedResponse)
+        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [title, price, uploadedResponse.secure_url, restaurant_id]
         }
       }
 
-      const result = await this.executeQuery(sqlQuery, values)
+      const result = await db.executeQuery(sqlQuery, values)
 
       return result
     } catch (error) {
@@ -103,7 +80,7 @@ class ToppingsService {
           image,
           optionsCloudinary
         )
-        console.log("uploadedResponse", uploadedResponse)
+        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [
@@ -116,7 +93,7 @@ class ToppingsService {
         }
       }
 
-      const result = await this.executeQuery(sqlQuery, values)
+      const result = await db.executeQuery(sqlQuery, values)
 
       return result
     } catch (error) {
@@ -142,7 +119,7 @@ class ToppingsService {
     `
 
     try {
-      const result = await this.executeQuery(sqlQuery, [id])
+      const result = await db.executeQuery(sqlQuery, [id])
 
       return result
     } catch (error) {

@@ -1,43 +1,43 @@
-const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/constants");
+const mysql = require("mysql2/promise")
 
-const cloudinary = require("cloudinary").v2;
-const { optionsCloudinary } = require("../../constants/constants");
-const { isPhotoUrl } = require("../helpers/isPhotoUrl");
+const cloudinary = require("cloudinary").v2
+const { isPhotoUrl } = require("../helpers/isPhotoUrl")
 
-cloudinary.config({
-  cloud_name: "dvb3cxb9h",
-  api_key: "983895153435419",
-  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
-});
+const {
+  sqlConfig,
+  cloudinaryConfig,
+  optionsCloudinary,
+} = require("../../constants/constants")
+
+cloudinary.config(cloudinaryConfig)
 
 class ToppingsService {
   constructor() {
-    this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
+    this.pool = mysql.createPool(sqlConfig) // Создаем пул соединений
   }
 
   // Метод для выполнения запросов к базе данных
   async executeQuery(sqlQuery, values) {
-    const connection = await this.pool.getConnection();
+    const connection = await this.pool.getConnection()
 
     try {
-      const [results] = await connection.execute(sqlQuery, values);
-	  console.error("Executing SQL query was success - results :", results);
+      const [results] = await connection.execute(sqlQuery, values)
+      console.error("Executing SQL query was success - results :", results)
 
-      return results;
+      return results
     } catch (error) {
-      console.error("Error executing SQL query:", error);
-      throw error;
+      console.error("Error executing SQL query:", error)
+      throw error
     } finally {
-      connection.release(); // Вернуть соединение в пул после использования
+      connection.release() // Вернуть соединение в пул после использования
     }
   }
 
   // getToppings ================================================
   async getToppings(req, res) {
-    const restaurant_id = req.params.restaurant_id;
+    const restaurant_id = req.params.restaurant_id
 
-    console.log("getToppings_restaurant_id", restaurant_id);
+    console.log("getToppings_restaurant_id", restaurant_id)
     const sqlQuery = `
 		  SELECT
 			t.id  , 
@@ -47,63 +47,63 @@ class ToppingsService {
 			t.restaurant_id
 		  FROM toppings t
 		  WHERE t.restaurant_id = ?
-		`;
-    return this.executeQuery(sqlQuery, [restaurant_id]);
+		`
+    return this.executeQuery(sqlQuery, [restaurant_id])
   }
 
   // createTopping ================================================
 
   async createTopping(req, res) {
-    console.log("req.body :>> ", req.body);
-    const { title, price, image, restaurant_id } = req.body;
+    console.log("req.body :>> ", req.body)
+    const { title, price, image, restaurant_id } = req.body
     const sqlQuery = `
           INSERT INTO toppings (title, price, image, restaurant_id)
           VALUES (?, ?, ?, ?)
-        `;
+        `
 
     try {
-      let values = [title, price, image, restaurant_id];
+      let values = [title, price, image, restaurant_id]
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           optionsCloudinary
-        );
-        console.log("uploadedResponse", uploadedResponse);
+        )
+        console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
-          values = [title, price, uploadedResponse.secure_url, restaurant_id];
+          values = [title, price, uploadedResponse.secure_url, restaurant_id]
         }
       }
 
-      const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values)
 
-      return result;
+      return result
     } catch (error) {
-      console.error("Error creating topping:", error);
-      throw error;
+      console.error("Error creating topping:", error)
+      throw error
     }
   }
 
   // updateTopping ================================================
 
   async updateTopping(req, res) {
-    const { id, title, price, image, restaurant_id } = req.body;
+    const { id, title, price, image, restaurant_id } = req.body
     const sqlQuery = `
         UPDATE toppings
         SET title = ?, price = ?, image = ?, restaurant_id = ?
         WHERE id = ?
-    `;
+    `
 
     try {
-      let values = [title, price, image, restaurant_id, id];
+      let values = [title, price, image, restaurant_id, id]
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           optionsCloudinary
-        );
-        console.log("uploadedResponse", uploadedResponse);
+        )
+        console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [
@@ -112,16 +112,16 @@ class ToppingsService {
             uploadedResponse.secure_url,
             restaurant_id,
             id,
-          ];
+          ]
         }
       }
 
-      const result = await this.executeQuery(sqlQuery, values);
+      const result = await this.executeQuery(sqlQuery, values)
 
-      return result;
+      return result
     } catch (error) {
-      console.error("Error updating topping:", error);
-      throw error;
+      console.error("Error updating topping:", error)
+      throw error
     }
   }
 
@@ -129,27 +129,27 @@ class ToppingsService {
 
   async deleteTopping(req, res) {
     // const { id } = req.params;
-    const id = req.params.topping_id;
+    const id = req.params.topping_id
 
     // console.log('req.body222', req.body)
     // console.log('topping_id', topping_id)
-    console.log("id", id);
-    console.log("req.params", req.params);
+    console.log("id", id)
+    console.log("req.params", req.params)
 
     const sqlQuery = `
         DELETE FROM toppings
         WHERE id = ?
-    `;
+    `
 
     try {
-      const result = await this.executeQuery(sqlQuery, [id]);
+      const result = await this.executeQuery(sqlQuery, [id])
 
-      return result;
+      return result
     } catch (error) {
-      console.error("Error deleting topping:", error);
-      throw error;
+      console.error("Error deleting topping:", error)
+      throw error
     }
   }
 }
 
-module.exports = new ToppingsService();
+module.exports = new ToppingsService()

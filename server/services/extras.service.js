@@ -1,17 +1,15 @@
 const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/constants");
-const axios = require("axios");
-const https = require("https");
-const { generateDateTime } = require("../helpers/utils");
-const cloudinary = require("cloudinary").v2;
-const { optionsCloudinary } = require("../../constants/constants");
-const { isPhotoUrl } = require("../helpers/isPhotoUrl");
+ 
+ const cloudinary = require("cloudinary").v2;
+ const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
-cloudinary.config({
-  cloud_name: "dvb3cxb9h",
-  api_key: "983895153435419",
-  api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
-});
+const {
+  sqlConfig,
+  cloudinaryConfig,
+  optionsCloudinary,
+} = require("../../constants/constants")
+
+ cloudinary.config(cloudinaryConfig)
 
 class extrasService {
   constructor() {

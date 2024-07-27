@@ -1,31 +1,6 @@
 const db = require("../helpers/db")
 
 class GroupsService {
-  async executeQuery(sqlQuery, values) {
-    let connection
-    try {
-      connection = await this.pool.getConnection()
-      const [results] = await connection.execute(sqlQuery, values)
-      console.error(
-        "GroupsService --Executing SQL query was success - results :",
-        results
-      )
-      return results
-    } catch (error) {
-      console.log("error.code :>> ", error.code)
-      if (error.code === "EHOSTUNREACH") {
-        console.error(
-          "Error: Host unreachable. Please check your internet connection."
-        )
-      } else {
-        console.error("Error executing SQL query:", error)
-      }
-      throw error
-    } finally {
-      if (connection) connection.release()
-    }
-  }
-
   async getGroups(req, res) {
     const restaurant_id = req.params.restaurant_id
 

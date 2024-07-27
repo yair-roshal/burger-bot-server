@@ -5,12 +5,13 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 // const token = '6545709213:AAGYnLVz279g_kuSq5NFIgfpM7wLlKe8R_0'
-const token = process.env.TELEGRAM_BOT_TOKEN
 
-// const token =
-//   process.env.NODE_ENV === "prod"
-//     ? process.env.TELEGRAM_BOT_TOKEN_prod
-//     : process.env.TELEGRAM_BOT_TOKEN_dev
+// const token = process.env.TELEGRAM_BOT_TOKEN
+
+const token =
+  process.env.NODE_ENV === "prod"
+    ? process.env.TELEGRAM_BOT_TOKEN_prod
+    : process.env.TELEGRAM_BOT_TOKEN_dev
 
 console.log('____________________________________________ :>> ')
 console.log('process.env.NODE_ENV :>> ', process.env.NODE_ENV)

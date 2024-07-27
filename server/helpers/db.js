@@ -1,7 +1,7 @@
 const config = require("config.json")
 const mysql = require("mysql2/promise")
 const { Sequelize } = require("sequelize")
-const { sqlConfig } = require("../../constants/sqlConfig")
+const { sqlConfig } = require("../../constants/constants")
 
 module.exports = db = {}
 

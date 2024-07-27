@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config()
 
 const devConfig = {
   host: process.env.DB_HOST || "localhost",
@@ -6,7 +6,7 @@ const devConfig = {
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "burger_db",
-};
+}
 
 const prodConfig = {
   host: process.env.DB_HOST,
@@ -14,10 +14,13 @@ const prodConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-};
+}
 
-const sqlConfig = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
+const sqlConfig = process.env.NODE_ENV === "production" ? prodConfig : devConfig
+console.log("sqlConfig", sqlConfig)
+
+
 
 module.exports = {
   sqlConfig,
-};
+ }

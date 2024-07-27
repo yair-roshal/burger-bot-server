@@ -1,8 +1,8 @@
 const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/sqlConfig");
+const { sqlConfig } = require("../../constants/constants");
 
 const cloudinary = require("cloudinary").v2;
-const { options } = require("../../constants/constants");
+const { optionsCloudinary } = require("../../constants/constants");
 const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
 cloudinary.config({
@@ -11,9 +11,8 @@ cloudinary.config({
   api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
 });
 
-class dishesService {
+class ToppingsService {
   constructor() {
-	console.log('sqlConfig', sqlConfig)
     this.pool = mysql.createPool(sqlConfig); // Создаем пул соединений
   }
 
@@ -68,7 +67,7 @@ class dishesService {
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
-          options
+          optionsCloudinary
         );
         console.log("uploadedResponse", uploadedResponse);
 
@@ -102,7 +101,7 @@ class dishesService {
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
-          options
+          optionsCloudinary
         );
         console.log("uploadedResponse", uploadedResponse);
 
@@ -153,4 +152,4 @@ class dishesService {
   }
 }
 
-module.exports = new dishesService();
+module.exports = new ToppingsService();

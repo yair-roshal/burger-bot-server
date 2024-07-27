@@ -1,5 +1,5 @@
 const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/sqlConfig");
+const { sqlConfig } = require("../../constants/constants");
 
 class GroupsService {
   constructor() {
@@ -11,7 +11,7 @@ class GroupsService {
     try {
       connection = await this.pool.getConnection();
       const [results] = await connection.execute(sqlQuery, values);
-      console.error("Executing SQL query was success - results :", results);
+      console.error("GroupsService --Executing SQL query was success - results :", results);
       return results;
     } catch (error) {
       console.log('error.code :>> ', error.code);

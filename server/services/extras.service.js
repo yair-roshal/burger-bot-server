@@ -1,10 +1,10 @@
 const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/sqlConfig");
+const { sqlConfig } = require("../../constants/constants");
 const axios = require("axios");
 const https = require("https");
 const { generateDateTime } = require("../helpers/utils");
 const cloudinary = require("cloudinary").v2;
-const { options } = require("../../constants/constants");
+const { optionsCloudinary } = require("../../constants/constants");
 const { isPhotoUrl } = require("../helpers/isPhotoUrl");
 
 cloudinary.config({
@@ -67,7 +67,7 @@ class extrasService {
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
-          options
+          optionsCloudinary
         );
         console.log("uploadedResponse", uploadedResponse);
 
@@ -103,7 +103,7 @@ class extrasService {
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
-          options
+          optionsCloudinary
         );
         console.log("uploadedResponse", uploadedResponse);
 

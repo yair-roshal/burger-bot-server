@@ -1,8 +1,7 @@
 const mysql = require("mysql2/promise");
-const { sqlConfig } = require("../../constants/sqlConfig");
+const { sqlConfig } = require("../../constants/constants");
 
-console.log('sqlConfig :>> ', sqlConfig);
-
+ 
 class QRCodesService {
   constructor() {
     this.pool = mysql.createPool(sqlConfig);

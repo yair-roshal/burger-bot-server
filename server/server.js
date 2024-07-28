@@ -6,43 +6,26 @@ const app = express()
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const routes = require("./routes/index")
-// const errorHandler = require("middleware/error-handler")
+const authRoutes = require("./routes/auth.routes")
+const dotenv = require("dotenv")
 
 const { generateDateId } = require("./helpers/utils")
 console.log("generateDateId", generateDateId())
 const { httpsOptions, corsOptions } = require("../constants/config")
 
-module.exports = (bot) => {
-  // app.use(bodyParser.urlencoded({ extended: false }))
-  // app.use(bodyParser.json())
+dotenv.config()
 
+module.exports = (bot) => {
   // Adjust the limits for incoming requests
   app.use(bodyParser.json({ limit: "10mb" })) // Change the limit according to your needs
   app.use(bodyParser.urlencoded({ limit: "10mb", extended: true })) // Change the limit according to your needs
 
-  //=========================================================================
-
-  // const allowedOrigins = [
-  // webAppUrl,
-  //   "http://localhost:8889",
-  //   "https://api.telegram.org",
-  // ]
-
   app.use(cors(corsOptions))
-  
- 
 
- 
-  // app.use(cors())
+  // Use authentication routes
+  app.use("/auth", authRoutes)
 
   app.use("/", routes)
-
-  // api routes
-  // app.use("/users", require("./controllers/users.controller"))
-
-  // global error handler
-  // app.use(errorHandler)
-  // =========================================================================
 
   let generateIdTemp = generateDateId()
 
@@ -53,27 +36,12 @@ module.exports = (bot) => {
       cartItems,
       comment,
       totalPrice,
-      // address,
       optionDelivery,
       paymentMethod,
       user_name,
     } = req.body
 
     console.log("for_proshli_num_paamim--------------->>>")
-
-    // fix without toppings ========================================
-    // for (const item of cartItems) {
-    //   console.log('item_send_sms_tele', item)
-    //   const itemPrice = (item.price * item.quantity).toFixed(2) || ""
-
-    //   productsList =
-    //     productsList +
-    //     `<b>${item.title}</b> * ${item.quantity} = ${itemPrice} ₪` +
-    //     `\n`
-    // }
-    // console.log('productsList', productsList)
-
-    // with toppings ========================================
 
     let productsList = ``
     console.log("productsList", productsList)
@@ -153,9 +121,6 @@ ______________________________________________
       })
     }
   })
-
-  // const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
-  // let port = 8081
 
   let port1 = 5005
 

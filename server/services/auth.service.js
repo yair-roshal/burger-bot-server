@@ -32,7 +32,7 @@ class AuthService {
       console.log('username :>> ', username);
       console.log('password :>> ', password);
   
-      const [users] = await db.executeQuery('SELECT * FROM users WHERE username = ?', [username]);
+      const users = await db.executeQuery('SELECT * FROM users WHERE username = ?', [username]);
       const user = users[0];
       console.log('user from DB :>> ', user);
   

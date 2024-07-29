@@ -3,7 +3,7 @@ const OrdersService = require("../services/orders.service.js")
 class OrdersController {
 	async getOrders(req, res) {
 		const result = await OrdersService.getOrders(req, res)
-
+console.log('result :>> ', result);
 		if (result) return res.status(200).send(result)
 		else return res.status(500).send({ message: "error_getOrders" })
 	}

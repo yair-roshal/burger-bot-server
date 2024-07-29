@@ -5,9 +5,48 @@ const https = require("https")
 
 class OrdersService {
   // getOrders ================================================
-  async getOrders() {
-    const sqlQuery = "SELECT * FROM orders"
-    return db.executeQuery(sqlQuery, [])
+  async getOrders(req, res) {
+    
+    const restaurant_id = req.params.restaurant_id
+    console.log("getOrders_restaurant_id :>> ", restaurant_id)
+    console.log("req :>> ", req)
+    const sqlQuery = "SELECT * FROM orders WHERE restaurant_id = ?"
+    return db.executeQuery(sqlQuery, [restaurant_id])
+  }
+
+  // create_order_db ================================================
+  async create_order_db(req, res) {
+    const orderData = req.body
+    // const timeOrder =   generateDateTime()
+    const timeOrder = new Date()
+
+    const values = [
+      orderData.queryId,
+      JSON.stringify(orderData.cartItems),
+      orderData.comment,
+      orderData.totalPrice,
+      orderData.address,
+      orderData.optionDelivery,
+      orderData.user_id,
+      orderData.user_name,
+      timeOrder,
+      // orderData.order_date,
+      orderData.paymentMethod,
+    ]
+
+    const sqlQuery = `INSERT INTO orders 
+                      (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+
+    try {
+      const result = await db.executeQuery(sqlQuery, values)
+
+      console.log('"create_order_db_ Заказ успешно создан" ')
+      return result
+    } catch (error) {
+      console.error("create_order_db Ошибка при создании заказа:", error)
+      throw error
+    }
   }
 
   // pay_credit_card ================================================
@@ -76,40 +115,6 @@ class OrdersService {
       .catch((error) => {
         console.error(error)
       })
-  }
-
-  async create_order_db(req, res) {
-    const orderData = req.body
-    // const timeOrder =   generateDateTime()
-    const timeOrder = new Date()
-
-    const values = [
-      orderData.queryId,
-      JSON.stringify(orderData.cartItems),
-      orderData.comment,
-      orderData.totalPrice,
-      orderData.address,
-      orderData.optionDelivery,
-      orderData.user_id,
-      orderData.user_name,
-      timeOrder,
-      // orderData.order_date,
-      orderData.paymentMethod,
-    ]
-
-    const sqlQuery = `INSERT INTO orders 
-                      (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-
-    try {
-      const result = await db.executeQuery(sqlQuery, values)
-
-      console.log('"create_order_db_ Заказ успешно создан" ')
-      return result
-    } catch (error) {
-      console.error("create_order_db Ошибка при создании заказа:", error)
-      throw error
-    }
   }
 }
 

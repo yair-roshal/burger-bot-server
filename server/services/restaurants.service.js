@@ -27,7 +27,6 @@ class RestaurantsService {
   async getUserRestaurant(req, res) {
     const user_sub = decodeURIComponent(req.params.user_sub)
     
-    
     console.log('user_sub :>> ', user_sub);
     const sqlQuery = `
       SELECT * FROM restaurants WHERE user_sub = ?

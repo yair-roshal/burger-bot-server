@@ -1,28 +1,32 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../helpers/db');
+// const bcrypt = require('bcrypt');
 
 class AuthService {
-// In the AuthService.register function
-async register(username, password) {
-  try {
-    // Check if username already exists
-    const existingUser = await db.executeQuery('SELECT * FROM users WHERE username = ?', [username]);
 
-    // If existingUser is not an array, it means the query returned no results
-    if (!Array.isArray(existingUser) || existingUser.length === 0) {
-      // Insert the new user
-      await db.executeQuery('INSERT INTO users (username, password) VALUES (?, ?)', [username, password]);
-      return { success: true };
-    } else {
-      // Username already exists
-      return { success: false, error: 'Username already exists' };
+  // В AuthService.register
+  async register(username, password) {
+    try {
+      // Проверяем, существует ли пользователь с таким именем
+      const existingUser = await db.executeQuery('SELECT * FROM users WHERE username = ?', [username]);
+  
+      if (!Array.isArray(existingUser) || existingUser.length === 0) {
+        // Хешируем пароль
+        const hashedPassword = await bcrypt.hash(password, 10);
+  
+        // Вставляем нового пользователя с захешированным паролем
+        await db.executeQuery('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+        return { success: true };
+      } else {
+        // Имя пользователя уже занято
+        return { success: false, error: 'Username already exists' };
+      }
+    } catch (error) {
+      console.error('Ошибка при регистрации:', error);
+      throw error;
     }
-  } catch (error) {
-    console.error('Error during registration:', error);
-    throw error;
   }
-}
   async login(username, password) {
     try {
       console.log('username :>> ', username);

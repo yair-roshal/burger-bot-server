@@ -4,7 +4,7 @@ const RestaurantsController = require("../controllers/restaurants.controller.js"
 
 // Middleware для логирования запросов
 function logRequest(req, res, next) {
-	if (req.path.startsWith("/restaurants/user/")) {
+	if (req.path.startsWith("/restaurants/")) {
 	  console.log(`Запрос по пути: ${req.path}`);
 	}
 	next();

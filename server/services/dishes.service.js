@@ -17,7 +17,7 @@ class dishesService {
     const dishesQuery = `
         SELECT
             d.id AS id,
-            d.group_id,
+            d.group_obj,
             d.title AS title,
             d.price AS price,
             d.description AS description,
@@ -85,7 +85,7 @@ class dishesService {
       return {
         id: dish.id,
         title: dish.title,
-        group: dish.group_id,
+        group_obj: dish.group_obj,
         price: parseFloat(dish.price),
         description: dish.description,
         image: dish.image,
@@ -111,17 +111,17 @@ class dishesService {
       description,
       toppings,
       extras,
-      restaurant_id,
+      restaurant_id,group_obj
     } = req.body
 
-    const group_id = req.body.group?.id || null
+    // const group_id = req.body.group?.id || null
     const sqlQuery = `
-        INSERT INTO dishes (title, group_id, price, image, description, restaurant_id)
+        INSERT INTO dishes (title, group_obj, price, image, description, restaurant_id)
         VALUES (?, ?, ?, ?, ?, ?)
       `
 
     try {
-      let values = [title, group_id, price, image, description, restaurant_id]
+      let values = [title, group_obj, price, image, description, restaurant_id]
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
@@ -133,7 +133,7 @@ class dishesService {
         if (uploadedResponse) {
           values = [
             title,
-            group_id,
+            group_obj,
             price,
             uploadedResponse.secure_url,
             description,
@@ -208,6 +208,8 @@ class dishesService {
   }
 
   // updateDish ================================================
+  //   ================================================
+  //   ================================================
 
  
 
@@ -226,21 +228,21 @@ class dishesService {
       restaurant_id,
       translations,
       translations_descriptions,
-      group,
+      group_obj,
     } = req.body
 
-    const group_id = group?.id || null
+    // const group_id = group?.id || null
 
     const sqlQuery = `
     UPDATE dishes 
-    SET title = ?, group_id = ?, price = ?, image = ?, description = ?, translations = ?, translations_descriptions = ? 
+    SET title = ?, group_obj = ?, price = ?, image = ?, description = ?, translations = ?, translations_descriptions = ? 
     WHERE id = ? AND restaurant_id = ?
     `
 
     try {
       let values = [
         title,
-        group_id,
+        group_obj,
         price,
         image,
         description,
@@ -260,7 +262,7 @@ class dishesService {
         if (uploadedResponse) {
           values = [
             title,
-            group_id,
+            group_obj,
             price,
             uploadedResponse.secure_url,
             description,

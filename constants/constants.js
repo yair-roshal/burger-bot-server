@@ -21,6 +21,7 @@ const devConfig = {
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "burger_db",
+  connectTimeout: 10000 // 10 seconds
 }
 
 const prodConfig = {
@@ -29,6 +30,8 @@ const prodConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  connectTimeout: 10000 // 10 seconds
+
 }
 
 const sqlConfig = process.env.NODE_ENV === "production" ? prodConfig : devConfig

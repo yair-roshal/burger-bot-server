@@ -86,7 +86,7 @@ class dishesService {
         id: dish.id,
         title: dish.title,
         group: dish.group_id,
-        price: dish.price,
+        price: parseFloat(dish.price),
         description: dish.description,
         image: dish.image,
         restaurant_id: dish.restaurant_id,
@@ -96,7 +96,7 @@ class dishesService {
         translations_descriptions: dish.translations_descriptions,
       }
     })
-
+    console.log("getDishes_combinedData :>> ", combinedData)
     return combinedData
   }
 
@@ -209,10 +209,12 @@ class dishesService {
 
   // updateDish ================================================
 
+ 
+
   async updateDish(req, res) {
-    const dish_id = req.params.dish_id;
-    console.log("updateDish_dish_id :>> ", dish_id);
-    console.log("updateDish_req.body :>> ", req.body);
+    const dish_id = req.params.dish_id
+    console.log("updateDish_dish_id :>> ", dish_id)
+    console.log("updateDish_req.body :>> ", req.body)
     const {
       id,
       title,
@@ -224,16 +226,17 @@ class dishesService {
       restaurant_id,
       translations,
       translations_descriptions,
-    } = req.body;
-  
-    const group_id = req.body.group || null;
-  
+      group,
+    } = req.body
+
+    const group_id = group?.id || null
+
     const sqlQuery = `
     UPDATE dishes 
     SET title = ?, group_id = ?, price = ?, image = ?, description = ?, translations = ?, translations_descriptions = ? 
     WHERE id = ? AND restaurant_id = ?
-    `;
-  
+    `
+
     try {
       let values = [
         title,
@@ -245,13 +248,15 @@ class dishesService {
         translations_descriptions,
         id,
         restaurant_id,
-      ];
-  
+     ].map(param => param === undefined ? null : param);
+
+ 
+
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           optionsCloudinary
-        );
+        )
         if (uploadedResponse) {
           values = [
             title,
@@ -263,30 +268,30 @@ class dishesService {
             translations_descriptions,
             id,
             restaurant_id,
-          ];
+          ]
         }
       }
-  
-      console.log("Values before executing query:", values);
-      
+
+      console.log("Values before executing query:", values)
+
       // Update the dish in the 'dishes' table
-      const result = await db.executeQuery(sqlQuery, values);
-      console.log("Update result:", result);
-  
+      const result = await db.executeQuery(sqlQuery, values)
+      console.log("Update result:", result)
+
       // If toppings are provided, update them in the 'dishes_toppings' table
-      if (toppings) {
-        await dishesService.updateToppings(id, toppings);
+      if (toppings.length>0) {
+        await dishesService.updateToppings(id, toppings)
       }
-  
+
       // If extras are provided, update them in the 'dishes_extras' table
-      if (extras) {
-        await dishesService.updateExtras(id, extras);
+      if (extras.length>0) {
+        await dishesService.updateExtras(id, extras)
       }
-  
-      return result;
+
+      return result
     } catch (error) {
-      console.error("Error updating dish:", error);
-      throw error;
+      console.error("Error updating dish:", error)
+      throw error
     }
   }
   // Helper method to update toppings for a dish

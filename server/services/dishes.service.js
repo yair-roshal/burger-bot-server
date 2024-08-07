@@ -22,6 +22,11 @@ class dishesService {
             d.price AS price,
             d.description AS description,
             d.image AS image,
+            d.translations AS translations,
+            d.translations_descriptions AS translations_descriptions,
+            
+              
+        
             d.restaurant_id AS restaurant_id
         FROM dishes d
         WHERE d.restaurant_id = ?;
@@ -89,6 +94,8 @@ class dishesService {
         restaurant_id: dish.restaurant_id,
         toppings: toppings?.toppings || [],
         extras: extras?.extras || [],
+        translations: dish.translations  ,
+        translations_descriptions: dish.translations_descriptions  ,
       };
     });
 

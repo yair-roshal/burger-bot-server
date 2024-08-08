@@ -9,6 +9,7 @@ const typesRoutes = require("./types.routes")
 const groupsRoutes = require("./groups.routes")
 const restaurantsRoutes = require("./restaurants.routes")
 const qrcodesRoutes = require("./qrcodes.routes")
+const translations = require("./translations.routes")
 
 router.get("/", (req, res) => {
   // res.send("Server success started 🔋")
@@ -26,6 +27,7 @@ router.use("/", typesRoutes)
 router.use("/", groupsRoutes)
 router.use("/", restaurantsRoutes)
 router.use("/", qrcodesRoutes)
+router.use("/", translations)
 
  
 

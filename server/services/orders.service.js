@@ -32,11 +32,12 @@ class OrdersService {
       timeOrder,
       // orderData.order_date,
       orderData.paymentMethod,
+      orderData.restaurantId,
     ]
 
     const sqlQuery = `INSERT INTO orders 
-                      (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+                      (queryId, cartItems, comment, totalPrice, address, optionDelivery, user_id, user_name, order_date, paymentMethod, restaurant_id) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
     try {
       const result = await db.executeQuery(sqlQuery, values)

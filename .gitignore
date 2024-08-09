@@ -17,7 +17,8 @@ zzz-backup
 .eslintcache
 old
 package-lock.json
-# certificates
+**/certificates
+certificates
 
 
 # classic ignoring files===============

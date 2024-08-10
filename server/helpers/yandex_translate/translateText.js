@@ -58,9 +58,9 @@ module.exports = async function translateText(texts, target_language) {
     )
     console.log("translate :>> ", translate)
   } catch (err) {
-    console.log("yandex_api_ERROR_translate: ")
-    console.error("err.message", err?.message)
-    console.error("err.data", err?.data)
+    console.log("yandex_api_ERROR_translate: ===")
+    console.error("err.message -> ", err?.message)
+    console.error("err.data -> ", err?.data)
   }
   return translate
 }

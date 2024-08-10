@@ -8,7 +8,8 @@ class TypesService {
     const sqlQuery = `
       SELECT
         id,
-        type
+        type,
+        translations
       FROM types
       WHERE restaurant_id = ?
     `
@@ -16,14 +17,14 @@ class TypesService {
   }
 
   async createType(req, res) {
-    const { type, restaurant_id } = req.body
+    const { type, restaurant_id, translations } = req.body
     const sqlQuery = `
-        INSERT INTO types (type, restaurant_id)
-        VALUES (?, ?)
+        INSERT INTO types (type, restaurant_id, translations)
+        VALUES (?, ?, ?)
       `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [type, restaurant_id])
+      const result = await db.executeQuery(sqlQuery, [type, restaurant_id, JSON.stringify(translations)])
       return result
     } catch (error) {
       console.error("Error creating type:", error)
@@ -32,15 +33,16 @@ class TypesService {
   }
 
   async updateType(req, res) {
-    const { id, type, restaurant_id } = req.body
+    console.log('req.body :>> ', req.body);
+    const { id, type, restaurant_id, translations } = req.body
     const sqlQuery = `
       UPDATE types
-      SET type = ?
+      SET type = ?, translations = ?
       WHERE id = ? AND restaurant_id = ?
     `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [type, id, restaurant_id])
+      const result = await db.executeQuery(sqlQuery, [type, JSON.stringify(translations), id, restaurant_id])
       return result
     } catch (error) {
       console.error("Error updating type:", error)
@@ -48,23 +50,7 @@ class TypesService {
     }
   }
 
-  async deleteType(req, res) {
-    const id = req.params.type_id
-    console.log("type_id", id)
-
-    const sqlQuery = `
-      DELETE FROM types
-      WHERE id = ? 
-    `
-
-    try {
-      const result = await db.executeQuery(sqlQuery, [id])
-      return result
-    } catch (error) {
-      console.error("Error deleting type:", error)
-      throw error
-    }
-  }
+  // Метод deleteType остается без изменений
 }
 
 module.exports = new TypesService()

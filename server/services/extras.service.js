@@ -1,5 +1,4 @@
 const db = require("../helpers/db")
-
 const cloudinary = require("cloudinary").v2
 const { isPhotoUrl } = require("../helpers/isPhotoUrl")
 
@@ -22,7 +21,8 @@ class extrasService {
         t.title,
         t.type_id,
         t.image,
-        t.restaurant_id
+        t.restaurant_id,
+        t.translations  -- Добавлено: столбец translations
       FROM extras t
       WHERE t.restaurant_id = ?
     `
@@ -32,25 +32,13 @@ class extrasService {
   // createExtra ================================================
 
   async createExtra(req, res) {
-    // const restaurant_id = req.params.restaurant_id
-
-    const { title, image, restaurantId, type_id } = req.body
+    const { title, image, restaurantId, type_id, translations } = req.body  // Добавлено: translations
     
-    // restaurant_id
-    
-    // console.log(
-    //   "createExtra_req.body :>> ",
-    //   title,
-    //   !!image,
-    //   restaurant_id,
-    //   type_id
-    // )
-    
-    console.log('req.body11111 :>> ', req.body);
+    console.log('req.body :>> ', req.body);
 
     const sqlQuery = `
-        INSERT INTO extras (title,  image, restaurant_id, type_id)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO extras (title, image, restaurant_id, type_id, translations)  -- Добавлено: столбец translations
+        VALUES (?, ?, ?, ?, ?)
       `
 
     try {
@@ -59,18 +47,23 @@ class extrasService {
         image || null,
         restaurantId || null,
         type_id || null,
+        JSON.stringify(translations) || null  // Добавлено: translations
       ]
 
- 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           optionsCloudinary
         )
-        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
-          values = [title, uploadedResponse.secure_url, restaurantId, type_id]
+          values = [
+            title,
+            uploadedResponse.secure_url,
+            restaurantId,
+            type_id,
+            JSON.stringify(translations) || null  // Добавлено: translations
+          ]
           console.log("uploadedResponse_values :>> ", values)
         }
       }
@@ -87,24 +80,30 @@ class extrasService {
   // updateExtra ================================================
 
   async updateExtra(req, res) {
-    const { id, title, image, restaurant_id, type_id } = req.body
+    const { id, title, image, restaurant_id, type_id, translations } = req.body  // Добавлено: translations
     console.log("updateExtra_req.body", req.body)
 
     const sqlQuery = `
       UPDATE extras
-      SET title = ?, image = ?, restaurant_id= ?, type_id = ?
+      SET title = ?, image = ?, restaurant_id= ?, type_id = ?, translations = ?  -- Добавлено: столбец translations
       WHERE id = ?
     `
 
     try {
-      let values = [title, image, restaurant_id, type_id, id]
+      let values = [
+        title,
+        image,
+        restaurant_id,
+        type_id,
+        JSON.stringify(translations) || null,  // Добавлено: translations
+        id
+      ]
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
           image,
           optionsCloudinary
         )
-        // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
           values = [
@@ -112,7 +111,8 @@ class extrasService {
             uploadedResponse.secure_url,
             restaurant_id,
             type_id,
-            id,
+            JSON.stringify(translations) || null,  // Добавлено: translations
+            id
           ]
         }
       }

@@ -34,7 +34,8 @@ async function getIAMToken() {
 
 module.exports = async function translateText(texts, target_language) {
   
-  if (!texts || !Array.isArray(texts) || texts.length === 0) {
+  if (!texts  || texts.length === 0) {
+    console.log('texts :>> ', texts);
     console.error("Invalid texts provided. Ensure that texts is a non-empty array.")
     return null // or throw an error depending on your use case
   }

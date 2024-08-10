@@ -8,7 +8,8 @@ class GroupsService {
     const sqlQuery = `
       SELECT
         id,
-        name
+        name,
+        translations
       FROM \`groups\`
       WHERE restaurant_id = ?
     `
@@ -16,14 +17,14 @@ class GroupsService {
   }
 
   async createGroup(req, res) {
-    const { name, restaurant_id } = req.body
+    const { name, restaurant_id, translations } = req.body
     const sqlQuery = `
-        INSERT INTO \`groups\` (name, restaurant_id)
-        VALUES (?, ?)
+        INSERT INTO \`groups\` (name, restaurant_id, translations)
+        VALUES (?, ?, ?)
       `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [name, restaurant_id])
+      const result = await db.executeQuery(sqlQuery, [name, restaurant_id, JSON.stringify(translations)])
       return result
     } catch (error) {
       console.error("Error creating group:", error)
@@ -32,18 +33,19 @@ class GroupsService {
   }
 
   async updateGroup(req, res) {
-    const { id, name, restaurant_id } = req.body
+    console.log('req.body :>> ', req.body);
+    const { id, name, restaurant_id, translations } = req.body
     const sqlQuery = `
       UPDATE \`groups\`
-      SET name = ?
+      SET name = ?, translations = ?
       WHERE id = ? AND restaurant_id = ?
     `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [name, id, restaurant_id])
+      const result = await db.executeQuery(sqlQuery, [name, JSON.stringify(translations), id, restaurant_id])
       return result
     } catch (error) {
-      console.error("Error updating type:", error)
+      console.error("Error updating group:", error)
       throw error
     }
   }
@@ -61,7 +63,7 @@ class GroupsService {
       const result = await db.executeQuery(sqlQuery, [id])
       return result
     } catch (error) {
-      console.error("Error deleting type:", error)
+      console.error("Error deleting group:", error)
       throw error
     }
   }

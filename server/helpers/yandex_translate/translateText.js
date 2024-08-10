@@ -1,9 +1,8 @@
 const axios = require("axios")
-const {
-  source_language,
-  target_language,
-} = require("../../constants/languages")
 const refreshTokenIAM = require("./refreshTokenIAM")
+const getTokenJWT = require("./getTokenJWT.js")
+const changeTokenToIAM = require("./changeTokenToIAM.js")
+const checkTokenExpiration = require("./checkTokenExpiration.js")
 
 const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -11,8 +10,7 @@ const sleep = (ms) => {
 
 const repeatedly_request_to_translate = async (url, body, headers, n) => {
   try {
-    // console.log('url, body, headers, n :>> ', url, body, headers, n)
-
+ 
     const response = await axios.post(url, body, headers)
     const translate = response.data.translations[0].text
     return translate
@@ -30,9 +28,18 @@ const repeatedly_request_to_translate = async (url, body, headers, n) => {
   }
 }
 
-module.exports = async function translateText(texts, IAM_TOKEN) {
+async function getIAMToken() {
+  const tokenJWT = await getTokenJWT()
+  return await changeTokenToIAM({ jwt: tokenJWT })
+}
+
+module.exports = async function translateText(texts, target_language) {
+  
+  
+  const IAM_TOKEN = await getIAMToken()
+
   const body = {
-    sourceLanguageCode: source_language,
+    sourceLanguageCode: "",
     targetLanguageCode: target_language,
     texts: texts,
     folderId: process.env.folder_id,

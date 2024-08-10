@@ -16,15 +16,16 @@ class ToppingsService {
 
     console.log("getToppings_restaurant_id", restaurant_id)
     const sqlQuery = `
-		  SELECT
-			t.id  , 
-			t.title,
-			t.price,
-			t.image,
-			t.restaurant_id
-		  FROM toppings t
-		  WHERE t.restaurant_id = ?
-		`
+      SELECT
+        t.id, 
+        t.title,
+        t.price,
+        t.image,
+        t.restaurant_id,
+        t.translations  -- Add translations column here
+      FROM toppings t
+      WHERE t.restaurant_id = ?
+    `
     return db.executeQuery(sqlQuery, [restaurant_id])
   }
 
@@ -32,14 +33,14 @@ class ToppingsService {
 
   async createTopping(req, res) {
     console.log("req.body :>> ", req.body)
-    const { title, price, image, restaurant_id } = req.body
+    const { title, price, image, restaurant_id, translations } = req.body  // Add translations to destructuring
     const sqlQuery = `
-          INSERT INTO toppings (title, price, image, restaurant_id)
-          VALUES (?, ?, ?, ?)
+          INSERT INTO toppings (title, price, image, restaurant_id, translations)  -- Add translations column
+          VALUES (?, ?, ?, ?, ?)
         `
 
     try {
-      let values = [title, price, image, restaurant_id]
+      let values = [title, price, image, restaurant_id, JSON.stringify(translations)]  // Add translations to values
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
@@ -49,7 +50,7 @@ class ToppingsService {
         // console.log("uploadedResponse", uploadedResponse)
 
         if (uploadedResponse) {
-          values = [title, price, uploadedResponse.secure_url, restaurant_id]
+          values = [title, price, uploadedResponse.secure_url, restaurant_id, JSON.stringify(translations)]  // Add translations to values
         }
       }
 
@@ -65,15 +66,15 @@ class ToppingsService {
   // updateTopping ================================================
 
   async updateTopping(req, res) {
-    const { id, title, price, image, restaurant_id } = req.body
+    const { id, title, price, image, restaurant_id, translations } = req.body  // Add translations to destructuring
     const sqlQuery = `
         UPDATE toppings
-        SET title = ?, price = ?, image = ?, restaurant_id = ?
+        SET title = ?, price = ?, image = ?, restaurant_id = ?, translations = ?  -- Add translations to update query
         WHERE id = ?
     `
 
     try {
-      let values = [title, price, image, restaurant_id, id]
+      let values = [title, price, image, restaurant_id, JSON.stringify(translations), id]  // Add translations to values
 
       if (image && isPhotoUrl(image)) {
         const uploadedResponse = await cloudinary.uploader.upload(
@@ -88,6 +89,7 @@ class ToppingsService {
             price,
             uploadedResponse.secure_url,
             restaurant_id,
+            JSON.stringify(translations),  // Add translations to values
             id,
           ]
         }

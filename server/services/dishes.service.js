@@ -44,6 +44,7 @@ class dishesService {
                         'id', t.id,
                         'title', t.title,
                         'price', t.price,
+                        'translations', t.translations,
                         'image', t.image
                     )
                 )
@@ -66,6 +67,7 @@ class dishesService {
                 'title', e.title,
                 'image', e.image,
                 'restaurant_id', e.restaurant_id,
+                'translations', e.translations,
                 'type_id', e.type_id
             )
         ) AS extras

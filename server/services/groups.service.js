@@ -1,6 +1,7 @@
 const db = require("../helpers/db")
 
 class GroupsService {
+  // Получение групп
   async getGroups(req, res) {
     const restaurant_id = req.params.restaurant_id
 
@@ -9,22 +10,24 @@ class GroupsService {
       SELECT
         id,
         name,
-        translations
+        translations,
+        \`order\`
       FROM \`groups\`
       WHERE restaurant_id = ?
     `
     return db.executeQuery(sqlQuery, [restaurant_id])
   }
 
+  // Создание новой группы
   async createGroup(req, res) {
-    const { name, restaurant_id, translations } = req.body
+    const { name, restaurant_id, translations, order } = req.body
     const sqlQuery = `
-        INSERT INTO \`groups\` (name, restaurant_id, translations)
-        VALUES (?, ?, ?)
+        INSERT INTO \`groups\` (name, restaurant_id, translations, \`order\`)
+        VALUES (?, ?, ?, ?)
       `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [name, restaurant_id, JSON.stringify(translations)])
+      const result = await db.executeQuery(sqlQuery, [name, restaurant_id, JSON.stringify(translations), order])
       return result
     } catch (error) {
       console.error("Error creating group:", error)
@@ -32,17 +35,18 @@ class GroupsService {
     }
   }
 
+  // Обновление группы
   async updateGroup(req, res) {
     console.log('req.body :>> ', req.body);
-    const { id, name, restaurant_id, translations } = req.body
+    const { id, name, restaurant_id, translations, order } = req.body
     const sqlQuery = `
       UPDATE \`groups\`
-      SET name = ?, translations = ?
+      SET name = ?, translations = ?, \`order\` = ?
       WHERE id = ? AND restaurant_id = ?
     `
 
     try {
-      const result = await db.executeQuery(sqlQuery, [name, JSON.stringify(translations), id, restaurant_id])
+      const result = await db.executeQuery(sqlQuery, [name, JSON.stringify(translations), order, id, restaurant_id])
       return result
     } catch (error) {
       console.error("Error updating group:", error)
@@ -50,6 +54,7 @@ class GroupsService {
     }
   }
 
+  // Удаление группы
   async deleteGroup(req, res) {
     const id = req.params.id
     console.log("group_id", id)

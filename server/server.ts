@@ -29,6 +29,11 @@ export default (bot?: any) => {
 
   app.use(cors(corsOptions));
 
+  // Handle root path explicitly
+  app.get('/', (req: Request, res: Response) => {
+    res.status(404).send('Not Found');
+  });
+
   app.use("/", routes);
 
   let generateIdTemp = generateDateId();
@@ -87,14 +92,15 @@ export default (bot?: any) => {
     }
 
     try {
-      await bot.answerWebAppQuery(queryId, {
-        type: "article",
-        id: generateIdTemp,
-        title: "Successful purchase",
-        input_message_content: {
-          parse_mode: "HTML",
-          message_text: `
-          
+      if (bot && bot.answerWebAppQuery) {
+        await bot.answerWebAppQuery(queryId, {
+          type: "article",
+          id: generateIdTemp,
+          title: "Successful purchase",
+          input_message_content: {
+            parse_mode: "HTML",
+            message_text: `
+            
 <b>${user_name} thank for your order: </b>
 
 ${productsList}
@@ -102,15 +108,16 @@ ________________
 <b>Total price: </b> ${totalPrice}₪
 ________________
 <b>Option Delivery: </b> ${optionDelivery}
-<b>Your comment: </b> ${comment?.trim().length > 0 ? comment : " - "}
+<b>Your comment: </b> ${comment ? (comment.trim().length > 0 ? comment : " - ") : " - "}
 <b>Payment method: </b> ${paymentMethod}
 <b>Thanks! Your order № </b> ${generateIdTemp}
 ______________________________________________
 `,
-          thumb_url:
-            "https://dev--burger-web-app.netlify.app/static/media/Cafe_Cafe_Logo.1e03e875a5ae1e2be16a.png",
-        },
-      });
+            thumb_url:
+              "https://dev--burger-web-app.netlify.app/static/media/Cafe_Cafe_Logo.1e03e875a5ae1e2be16a.png",
+          },
+        });
+      }
 
       console.log("send_sms_tele__success-200  !!!--->>>");
       return res.status(200).json({ titleStatus: "send_sms_tele__success-200" });
@@ -124,15 +131,19 @@ ______________________________________________
     }
   });
 
-  let port1 = 5005;
+  return app;
+};
+
+if (require.main === module) {
+  const app = exports.default();
+  const port1 = 5005;
+  const port = 443;
 
   app.listen(port1, () => {
     console.log(`Server is running on port ${port1}`);
   });
 
-  let port = 443;
-
   https.createServer(httpsOptions, app).listen(port, () => {
     console.log("https Web server started at port : ", port);
   });
-};
+}

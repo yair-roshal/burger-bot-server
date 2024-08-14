@@ -32,6 +32,6 @@
     "mysql"
   ],
   "author": "Yair",
-  "main": "server.js",
+  "main": "server.ts",
   "license": "ISC"
 }

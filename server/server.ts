@@ -134,7 +134,7 @@ ______________________________________________
   return app;
 };
 
-if (require.main === module) {
+// if (require.main === module) {
   const app = exports.default();
   const port1 = 5005;
   const port = 443;
@@ -146,4 +146,4 @@ if (require.main === module) {
   https.createServer(httpsOptions, app).listen(port, () => {
     console.log("https Web server started at port : ", port);
   });
-}
+// }

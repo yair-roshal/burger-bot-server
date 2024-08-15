@@ -30,7 +30,7 @@ export default (bot?: any) => {
   app.use(cors(corsOptions))
 
   // Handle root path explicitly
-  app.get("/", (res: Response) => {
+  app.get("/", (req: Request, res: Response) => {
     res.status(404).send("Not Found")
   })
 

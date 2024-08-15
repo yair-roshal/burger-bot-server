@@ -1,5 +1,5 @@
-const config: any = {
-  apps: [
+module.exports = {
+    apps: [
     {
       name: "burger_01",
       script: "ts-node",
@@ -44,4 +44,4 @@ const config: any = {
   ],
 }
 
-export = config
+ 

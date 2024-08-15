@@ -2,14 +2,14 @@
     "name": "burger-bot",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "build/index.js",
     "scripts": {
         "pm2": "NODE_ENV=production pm2 start build/index.js --name burger_bot_server --watch -i max",
-        "start": "NODE_ENV=prod node dist/index.js",
+        "start": "NODE_ENV=prod node build/index.js",
         "dev": "NODE_ENV=dev nodemon --exec ts-node index.ts",
         "windows_dev": "set NODE_ENV=dev&&nodemon --exec ts-node index.ts",
         "dev_debug": "NODE_ENV=dev DEBUG=* nodemon --exec ts-node index.ts",
-        "prod": "NODE_ENV=prod node dist/index.js",
+        "prod": "NODE_ENV=prod node build/index.js",
         "build": "rimraf build && tsc -p tsconfig.json",
         "watch": "tsc -w",
         "test": "jest"

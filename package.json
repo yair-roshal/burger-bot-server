@@ -4,7 +4,7 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "pm2": "NODE_ENV=production pm2 start build/index.js --watch -i max",
+        "pm2": "NODE_ENV=production pm2 start build/index.js --name burger_bot_server --watch -i max",
         "start": "NODE_ENV=prod node dist/index.js",
         "dev": "NODE_ENV=dev nodemon --exec ts-node index.ts",
         "windows_dev": "set NODE_ENV=dev&&nodemon --exec ts-node index.ts",

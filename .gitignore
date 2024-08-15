@@ -24,6 +24,9 @@ burger_bot_server_error.log
 burger_bot_server_out.log
 server/certificates.tar.gz
 
+*.log
+*.tar.gz
+
 # classic ignoring files===============
 
 # next.js

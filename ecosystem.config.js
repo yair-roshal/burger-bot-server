@@ -3,15 +3,11 @@ module.exports = {
     {
       name: "burger_01",
 
-      // // Указываем файл для запуска
-      // script: "./server/server.ts", 
-      // // Указываем интерпретатор
-      // interpreter: "ts-node", 
-      // // Аргументы для ts-node
-      // interpreter_args: "-P tsconfig.json",
-
-      script: "ts-node", // or locally "./node_modules/.bin/_ts-node" 
-      args: "server/server.ts",
+      script: 'server/server.ts',
+      exec_mode: 'fork',
+      cwd: './server',
+      interpreter: 'node',
+      interpreter_args: '--require ts-node/register --require tsconfig-paths/register',
 
 
       exec_mode: "cluster", // Используем кластерный режим для масштабирования

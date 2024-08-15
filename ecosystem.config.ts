@@ -2,7 +2,7 @@ const config: any = {
     apps: [
         {
             name: 'burger_bot_server',
-            script: './index.ts', // Ensure that TypeScript files are supported
+            script: './build/index.ts', // Ensure that TypeScript files are supported
             exec_mode: 'cluster', // Use cluster mode for scaling
             instances: 'max', // Automatically scale based on the number of CPUs
 

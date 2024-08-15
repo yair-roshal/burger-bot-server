@@ -15,7 +15,7 @@ class DishesController {
     if (result) return res.status(200).send(result);
     else return res.status(500).send({ message: "error_createDish" });
   }
-
+// @ts-ignore
   async getCategories(req: Request, res: Response): Promise<Response> {
     const result = await DishesService.getCategories();
 

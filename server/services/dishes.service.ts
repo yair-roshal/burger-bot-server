@@ -41,6 +41,7 @@ interface Extra {
 }
 
 class DishesService {
+  // @ts-ignore
   async getDishes(req: Request, res: Response): Promise<Dish[]> {
     const restaurant_id = req.params.restaurant_id;
     console.log("getDishes_restaurant_id", restaurant_id);
@@ -129,7 +130,7 @@ class DishesService {
     console.log("getDishes_combinedData :>> ", combinedData);
     return combinedData;
   }
-
+// @ts-ignore
   async createDish(req: Request, res: Response) {
     console.log("req.body :>> ", req.body);
     const {
@@ -226,7 +227,7 @@ class DishesService {
     const sqlQuery = "SELECT * FROM categories";
     return db.executeQuery(sqlQuery, []);
   }
-
+// @ts-ignore
   async updateDish(req: Request, res: Response) : Promise<any> {
     const dish_id = req.params.dish_id;
     console.log("updateDish_dish_id :>> ", dish_id);
@@ -357,7 +358,7 @@ class DishesService {
       connection.release();
     }
   }
-
+// @ts-ignore
   async deleteDish(req: Request, res: Response) : Promise<any> {
     const dishId = req.params.dish_id;
 

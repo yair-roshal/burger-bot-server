@@ -9,10 +9,11 @@ class OrdersController {
     if (result) return res.status(200).send(result);
     else return res.status(500).send({ message: "error_getOrders" });
   }
-
-  async pay_credit_card(req: Request, res: Response): Promise<Response> {
+// @ts-ignore
+  async pay_credit_card(req: Request, res: Response):  Promise<Response> {
+ 
     try {
-      const result = await OrdersService.pay_credit_card(req, res);
+      const result = await OrdersService.pay_credit_card(  );
       // console.log("result_pay_credit_card", result);
 
       if (result) {

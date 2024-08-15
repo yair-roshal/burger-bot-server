@@ -32,21 +32,21 @@ const startMainMenu_Production: Menu = {
   },
 };
 
-const startMainMenu_Production222: Menu = {
-  reply_markup: {
-    inline_keyboard: [
-      [
-        {
-          text: 'click to open menu',
-          callback_data: 'auth',
-          web_app: { url: webAppUrl },
-        },
-      ],
-    ],
-    resize_keyboard: true,
-    one_time_keyboard: true,
-  },
-};
+// const startMainMenu_Production222: Menu = {
+//   reply_markup: {
+//     inline_keyboard: [
+//       [
+//         {
+//           text: 'click to open menu',
+//           callback_data: 'auth',
+//           web_app: { url: webAppUrl },
+//         },
+//       ],
+//     ],
+//     resize_keyboard: true,
+//     one_time_keyboard: true,
+//   },
+// };
 
 const callToAdminMenu: Menu = {
   reply_markup: {

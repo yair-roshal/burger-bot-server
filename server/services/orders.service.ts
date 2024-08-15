@@ -18,6 +18,7 @@ interface Order {
 }
 
 class OrdersService {
+  // @ts-ignore
   async getOrders(req: Request, res: Response) {
     const restaurant_id = req.params.restaurant_id;
     console.log("getOrders_restaurant_id :>> ", restaurant_id);
@@ -25,7 +26,7 @@ class OrdersService {
     const sqlQuery = "SELECT * FROM orders WHERE restaurant_id = ?";
     return db.executeQuery(sqlQuery, [restaurant_id]);
   }
-
+// @ts-ignore
   async create_order_db(req: Request, res: Response) {
     console.log('req.body :>> ', req.body);
     const orderData: Order = req.body;
@@ -59,7 +60,8 @@ class OrdersService {
     }
   }
 
-  async pay_credit_card(req: Request, res: Response) {
+  async pay_credit_card( ) {
+  // async pay_credit_card(req: Request, res: Response) {
     const queryParameters = {
       supplier: "burger",
       sum: "45.70",

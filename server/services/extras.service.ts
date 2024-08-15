@@ -82,7 +82,7 @@ class ExtrasService {
       throw error;
     }
   }
-
+// @ts-ignore
   async updateExtra(req: Request, res: Response) {
     const { id, title, image, restaurant_id, type_id, translations } = req.body;
     console.log("updateExtra_req.body", req.body);
@@ -129,7 +129,7 @@ class ExtrasService {
       throw error;
     }
   }
-
+// @ts-ignore
   async deleteExtra(req: Request, res: Response) {
     const id = req.params.extra_id;
 

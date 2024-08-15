@@ -19,6 +19,7 @@ interface Topping {
 }
 
 class ToppingsService {
+  // @ts-ignore
   async getToppings(req: Request, res: Response): Promise<Topping[]> {
     const restaurant_id = req.params.restaurant_id;
 
@@ -36,7 +37,7 @@ class ToppingsService {
     `;
     return db.executeQuery(sqlQuery, [restaurant_id]);
   }
-
+// @ts-ignore
   async createTopping(req: Request, res: Response) {
     console.log("req.body :>> ", req.body);
     const { title, price, image, restaurant_id, translations } = req.body;
@@ -67,7 +68,7 @@ class ToppingsService {
       throw error;
     }
   }
-
+// @ts-ignore
   async updateTopping(req: Request, res: Response) {
     const { id, title, price, image, restaurant_id, translations } = req.body;
     const sqlQuery = `
@@ -105,7 +106,7 @@ class ToppingsService {
       throw error;
     }
   }
-
+// @ts-ignore
   async deleteTopping(req: Request, res: Response) {
     const id = req.params.topping_id;
 

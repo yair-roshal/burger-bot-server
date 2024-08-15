@@ -1,7 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
 import path from 'path';
-import formatDate from './utils/formatDate';
 import { startMainMenu_Production, only_keyboard_callToAdminMenu } from '../constants/menus';
 import { text_html, text_html_CafeCafe } from '../constants/texts';
 
@@ -20,38 +19,46 @@ console.log('token :>> ', token);
 
 const bot = new TelegramBot(token!, { polling: true });
 
-const menuENV = startMainMenu_Production;
+// Ensure menuENV is correctly typed
+const menuENV: TelegramBot.SendMessageOptions = {
+  parse_mode: 'HTML',
+  disable_web_page_preview: true,
+  reply_markup: startMainMenu_Production.reply_markup as TelegramBot.InlineKeyboardMarkup | TelegramBot.ReplyKeyboardMarkup | TelegramBot.ReplyKeyboardRemove | TelegramBot.ForceReply,
+};
 
+// Handle /start command
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
-
   const photoPathCafeCafe = path.join(__dirname, 'images', 'CafeCafe.png');
 
   try {
-    await bot.sendPhoto(chatId, photoPathCafeCafe, startMainMenu_Production);
-    console.log('Фотография успешно отправлена');
+    // Send photo with options
+    const sendPhotoOptions: TelegramBot.SendPhotoOptions = {
+      caption: 'Welcome to CafeCafe!', // Customize caption as needed
+      reply_markup: menuENV.reply_markup as TelegramBot.InlineKeyboardMarkup | TelegramBot.ReplyKeyboardMarkup | TelegramBot.ReplyKeyboardRemove | TelegramBot.ForceReply,
+    };
+
+    await bot.sendPhoto(chatId, photoPathCafeCafe, sendPhotoOptions);
+    console.log('Photo successfully sent');
   } catch (error) {
-    console.error('Ошибка при отправке фотографии:', error);
+    console.error('Error sending photo:', error);
   }
 
-  const optionsMessage = {
-    parse_mode: 'HTML' as const,
-    disable_web_page_preview: true,
-  };
-
-  bot.sendMessage(chatId, text_html_CafeCafe, optionsMessage);
+  // Send message with options
+  bot.sendMessage(chatId, text_html_CafeCafe, menuENV);
 });
 
+// Handle contact sharing
 bot.on('contact', (msg) => {
   if (chat_id_admin) {
     bot.sendMessage(
       chat_id_admin,
-      `Message from ${msg.from?.first_name}  :
-         ${msg.contact?.phone_number}`
+      `Message from ${msg.from?.first_name}:\nPhone number: ${msg.contact?.phone_number}`
     );
   }
 });
 
+// Handle callback queries
 bot.on('callback_query', (query) => {
   if (!query.message) return;
 
@@ -65,16 +72,23 @@ bot.on('callback_query', (query) => {
       {
         parse_mode: 'HTML',
         disable_web_page_preview: true,
-        ...menuENV
+        reply_markup: menuENV.reply_markup as TelegramBot.InlineKeyboardMarkup | TelegramBot.ReplyKeyboardMarkup | TelegramBot.ReplyKeyboardRemove | TelegramBot.ForceReply
       }
     );
   }
 });
 
-bot.on('webAppData', (webAppMes) => {
-  console.log(webAppMes);
-  console.log(webAppMes.web_app_data);
-  bot.sendMessage(webAppMes.chat.id, `получили информацию из веб-приложения: ${webAppMes.web_app_data?.data}`);
+// Handle messages with web app data
+bot.on('message', (msg) => {
+  if (msg.web_app_data) {
+    const webAppData = msg.web_app_data.data;
+    console.log(webAppData); // Log data received from the web app
+
+    // Send data to admin chat
+    if (chat_id_admin) {
+      bot.sendMessage(chat_id_admin, `Received data from web app: ${webAppData}`);
+    }
+  }
 });
 
 export { bot };

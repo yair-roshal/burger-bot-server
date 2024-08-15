@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 
-dotenv.config();
-
+// const webAppUrl = "https://burger-web-app.netlify.app/"
 export const webAppUrl = "https://dev--burger-web-app.netlify.app/";
 
 export const optionsCloudinary = {
@@ -16,6 +15,8 @@ export const cloudinaryConfig = {
   api_secret: "Poz4uTvsD0TKuZiXfAIT3Sk_9gc",
 };
 
+dotenv.config();
+
 interface DbConfig {
   host: string;
   port: number;
@@ -27,7 +28,7 @@ interface DbConfig {
 
 const devConfig: DbConfig = {
   host: process.env.DB_HOST || "localhost",
-  port: parseInt(process.env.DB_PORT || "3306", 10),
+  port: parseInt(process.env.DB_PORT || "3306"),
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "burger_db",
@@ -35,11 +36,11 @@ const devConfig: DbConfig = {
 };
 
 const prodConfig: DbConfig = {
-  host: process.env.DB_HOST!,
-  port: parseInt(process.env.DB_PORT!, 10),
-  user: process.env.DB_USER!,
-  password: process.env.DB_PASSWORD!,
-  database: process.env.DB_NAME!,
+  host: process.env.DB_HOST || "",
+  port: parseInt(process.env.DB_PORT || "3306"),
+  user: process.env.DB_USER || "",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "",
   connectTimeout: 10000 // 10 seconds
 };
 

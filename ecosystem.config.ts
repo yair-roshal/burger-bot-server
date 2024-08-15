@@ -3,7 +3,7 @@ const config: any = {
     apps: [
         {
             name: 'burger_bot_server',
-            script: './index.js',
+            script: './index.ts',
             max_memory_restart: '300M',
             // Logging
             out_file: './burger_bot_server_out.log',

@@ -5,6 +5,7 @@ const config: any = {
             script: './build/index.ts', // Ensure that TypeScript files are supported
             exec_mode: 'cluster', // Use cluster mode for scaling
             instances: 'max', // Automatically scale based on the number of CPUs
+            interpreter: 'node', // Убедитесь, что используется Node.js
 
             max_memory_restart: '300M', // Restart if memory exceeds this limit
 

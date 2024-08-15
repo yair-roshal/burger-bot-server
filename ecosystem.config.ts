@@ -2,9 +2,15 @@ module.exports = {
   apps: [
     {
       name: "burger_01",
-      script: "./server/server.ts", // Указываем файл для запуска
-      interpreter: "ts-node", // Указываем интерпретатор
-      interpreter_args: "-P tsconfig.json", // Аргументы для ts-node
+      
+      // script: "./server/server.ts", // Указываем файл для запуска
+      // interpreter: "ts-node", // Указываем интерпретатор
+      // interpreter_args: "-P tsconfig.json", // Аргументы для ts-node
+      
+       script: "ts-node", // or locally "./node_modules/.bin/_ts-node" 
+       args: "server/server.ts"
+    
+    
       exec_mode: "cluster", // Используем кластерный режим для масштабирования
       instances: "max", // Автоматическое масштабирование на основе количества CPU
       max_memory_restart: "300M", // Перезапуск, если память превышает этот лимит

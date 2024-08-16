@@ -27,7 +27,17 @@ export default (bot?: any) => {
   app.use(bodyParser.json({ limit: "10mb" }))
   app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }))
 
-  app.use(cors(corsOptions))
+  // app.use(cors(corsOptions))
+
+  // Allow CORS for all origins
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    )
+    next()
+  })
 
   // Handle root path explicitly
   app.get("/", (req: Request, res: Response) => {

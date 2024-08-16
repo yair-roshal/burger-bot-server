@@ -31,7 +31,7 @@ export default (bot?: any) => {
 
   // Handle root path explicitly
   app.get("/", (req: Request, res: Response) => {
-    res.status(404).send("Not Found")
+    res.status(404).send("This is a home page. Please select a different route")
   })
 
   app.use("/", routes)

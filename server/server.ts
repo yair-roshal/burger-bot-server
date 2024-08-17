@@ -137,15 +137,17 @@ ______________________________________________
 }
 
 // if (require.main === module) {
+
 const app = exports.default()
 const port1 = 5005
-const port = 443
+const port2 = 443
 
 app.listen(port1, () => {
   console.log(`Server is running on port ${port1}`)
 })
 
-https.createServer(httpsOptions, app).listen(port, () => {
-  console.log("https Web server started at port : ", port)
-})
+// https.createServer(httpsOptions, app).listen(port2, () => {
+//   console.log("https Web server started at port : ", port2)
+// })
+
 // }

@@ -30,21 +30,22 @@ const httpsOptions: HttpsOptions = {
   ),
 }
 
+const allowedOrigins = [
+  "https://burgerim.ru",
+  "http://burgerim.ru",
+  "http://localhost:8889",
+]
+
 const corsOptions: CorsOptions = {
-  // origin: function (origin, callback) {
-  //   if (allowedOrigins.includes(origin) || !origin) {
-  //     callback(null, true)
-  //   } else {
-  //     callback(new Error("Not allowed by CORS"))
-  //   }
-  // },
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
 
   // origin: "*", // Разрешить запросы с любого источника
-  // credentials: true,
-  // methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  // allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
-
-  origin: "*", // Разрешить запросы с любого источника
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Разрешить все основные HTTP-методы
   allowedHeaders: [
     "Origin",

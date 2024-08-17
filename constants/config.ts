@@ -46,7 +46,7 @@ const corsOptions: CorsOptions = {
   },
 
   // origin: "*", // Разрешить запросы с любого источника
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Разрешить все основные HTTP-методы
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"], // Разрешить все основные HTTP-методы
   allowedHeaders: [
     "Origin",
     "X-Requested-With",

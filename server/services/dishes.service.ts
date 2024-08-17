@@ -127,7 +127,7 @@ class DishesService {
         translations_descriptions: dish.translations_descriptions,
       };
     });
-    console.log("getDishes_combinedData :>> ", combinedData);
+    // console.log("getDishes_combinedData :>> ", combinedData);
     return combinedData;
   }
 // @ts-ignore

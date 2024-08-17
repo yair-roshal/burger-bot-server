@@ -24,9 +24,16 @@ interface ExtendedRequest extends Request {
 export default (bot?: any) => {
   const app = express()
 
+  // Логирование запроса для отладки CORS
+  app.use((req, res, next) => {
+    console.log("CORS middleware triggered")
+    next()
+  })
+
   app.use(bodyParser.json({ limit: "10mb" }))
   app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }))
 
+  // console.log('corsOptions :>> ', corsOptions);
   app.use(cors(corsOptions))
 
   // Handle root path explicitly

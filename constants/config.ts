@@ -20,12 +20,14 @@ interface CorsOptions {
 
 const httpsOptions: HttpsOptions = {
   key: fs.readFileSync(
-    path.join(__dirname, "../server/certificates/burgerim.ru.key"),
+    path.join(__dirname, "../server/certificates/certificate.key"),
+    // path.join(__dirname, "../server/certificates/burgerim.ru.key"),
     "utf8"
   ),
 
   cert: fs.readFileSync(
-    path.join(__dirname, "../server/certificates/burgerim.ru.crt"),
+    path.join(__dirname, "../server/certificates/certificate.crt"),
+    // path.join(__dirname, "../server/certificates/burgerim.ru.crt"),
     "utf8"
   ),
 }

@@ -162,8 +162,8 @@ app.listen(port1, () => {
   console.log(`Server is running on port ${port1}`)
 })
 
-// https.createServer(httpsOptions, app).listen(port2, () => {
-//   console.log("https Web server started at port : ", port2)
-// })
+https.createServer(httpsOptions, app).listen(port2, () => {
+  console.log("https Web server started at port : ", port2)
+})
 
 // }

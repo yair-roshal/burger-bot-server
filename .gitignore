@@ -17,8 +17,8 @@ zzz-backup
 .eslintcache
 old
 package-lock.json
-**/certificates
-certificates
+# **/certificates
+# certificates
 000-save
 burger_bot_server_error.log
 burger_bot_server_out.log

@@ -32,8 +32,8 @@ class SettingsService {
 // @ts-ignore
   async updateSettings(req: Request, res: Response) {
     const restaurant_id = req.params.restaurant_id;
-    console.log("updateSettings_restaurant_id :>> ", restaurant_id);
-    console.log("req.body :>> ", req.body);
+    // console.log("updateSettings_restaurant_id :>> ", restaurant_id);
+    // console.log("req.body :>> ", req.body);
     const {
       link,
       logoImage,

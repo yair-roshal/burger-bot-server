@@ -39,7 +39,7 @@ class ToppingsService {
   }
 // @ts-ignore
   async createTopping(req: Request, res: Response) {
-    console.log("req.body :>> ", req.body);
+    // console.log("req.body :>> ", req.body);
     const { title, price, image, restaurant_id, translations } = req.body;
     const sqlQuery = `
           INSERT INTO toppings (title, price, image, restaurant_id, translations)

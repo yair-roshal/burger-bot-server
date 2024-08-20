@@ -40,7 +40,7 @@ class ExtrasService {
   async createExtra(req: Request, res: Response) {
     const { title, image, restaurantId, type_id, translations } = req.body;
     
-    console.log('req.body :>> ', req.body);
+    // console.log('req.body :>> ', req.body);
 
     const sqlQuery = `
         INSERT INTO extras (title, image, restaurant_id, type_id, translations)

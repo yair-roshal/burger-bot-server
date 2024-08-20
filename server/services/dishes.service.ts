@@ -132,7 +132,7 @@ class DishesService {
   }
 // @ts-ignore
   async createDish(req: Request, res: Response) {
-    console.log("req.body :>> ", req.body);
+    // console.log("req.body :>> ", req.body);
     const {
       title,
       price,
@@ -230,8 +230,8 @@ class DishesService {
 // @ts-ignore
   async updateDish(req: Request, res: Response) : Promise<any> {
     const dish_id = req.params.dish_id;
-    console.log("updateDish_dish_id :>> ", dish_id);
-    console.log("updateDish_req.body :>> ", req.body);
+    // console.log("updateDish_dish_id :>> ", dish_id);
+    // console.log("updateDish_req.body :>> ", req.body);
     const {
       id,
       title,

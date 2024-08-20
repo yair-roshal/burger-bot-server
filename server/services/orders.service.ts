@@ -28,7 +28,7 @@ class OrdersService {
   }
 // @ts-ignore
   async create_order_db(req: Request, res: Response) {
-    console.log('req.body :>> ', req.body);
+    // console.log('req.body :>> ', req.body);
     const orderData: Order = req.body;
     const timeOrder = new Date();
 
@@ -60,14 +60,16 @@ class OrdersService {
     }
   }
 
-  async pay_credit_card( ) {
-  // async pay_credit_card(req: Request, res: Response) {
+  // async pay_credit_card(req, res){
+  async pay_credit_card(req: Request, res: Response) {
+    console.log('pay_credit_card :>> '  );
     const queryParameters = {
       supplier: "burger",
       sum: "45.70",
       currency: "1",
       ccno: "12312312",
-      expdate: "0824",
+      // выводить ошибки !!! например дата конец карты
+      expdate: "0925",
     };
 
     const queryString = Object.entries(queryParameters)
@@ -87,6 +89,7 @@ class OrdersService {
       })
       .then((response) => {
         const result = response.data;
+        console.log('pay_credit_card__result :>> ', result);
         const responseArray = result.split("&");
         const responseAssoc: { [key: string]: string } = {};
 
@@ -110,7 +113,7 @@ class OrdersService {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.error("pay_credit_card_error--->",error);
       });
   }
 }

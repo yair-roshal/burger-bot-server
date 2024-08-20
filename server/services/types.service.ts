@@ -45,7 +45,7 @@ class TypesService {
   }
 
   async updateType(req: Request, res: Response) {
-    console.log("req.body :>> ", req.body)
+    // console.log("req.body :>> ", req.body)
     const { id, type, restaurant_id, translations } = req.body
     const sqlQuery = `
       UPDATE types

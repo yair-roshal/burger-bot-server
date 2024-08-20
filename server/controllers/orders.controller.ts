@@ -13,8 +13,8 @@ class OrdersController {
   async pay_credit_card(req: Request, res: Response):  Promise<Response> {
  
     try {
-      const result = await OrdersService.pay_credit_card(  );
-      // console.log("result_pay_credit_card", result);
+      const result = await OrdersService.pay_credit_card(req, res);
+      console.log("pay_credit_card_result--->>>", result);
 
       if (result) {
         return res.status(200).send(result);

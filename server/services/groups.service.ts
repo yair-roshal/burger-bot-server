@@ -26,7 +26,7 @@ class GroupsService {
   }
 
   async createGroup(req: Request, res: Response) {
-    console.log('req.body :>> ', req.body);
+    // console.log('req.body :>> ', req.body);
     const { name, restaurant_id, translations, order } = req.body;
     const sqlQuery = `
         INSERT INTO \`groups\` (name, restaurant_id, translations, \`order\`)
@@ -43,7 +43,7 @@ class GroupsService {
   }
 
   async updateGroup(req: Request, res: Response) {
-    console.log('req.body :>> ', req.body);
+    // console.log('req.body :>> ', req.body);
     const { id, name, restaurant_id, translations, order } = req.body;
     const sqlQuery = `
       UPDATE \`groups\`

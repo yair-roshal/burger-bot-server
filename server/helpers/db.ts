@@ -23,7 +23,7 @@ async function initialize() {
         try {
           connection = await this.pool.getConnection();
           const [results] = await connection.execute(sqlQuery, values);
-          console.error("Executing SQL query was success");
+          // console.error("Executing SQL query was success");
           return results;
         } catch (error: any) {
           if (error.code === "ETIMEDOUT" || error.code === "ECONNREFUSED") {

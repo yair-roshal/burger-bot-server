@@ -4,10 +4,12 @@ interface QRCode {
   id: number;
   code_name: string;
   code_value: string;
+  qr_color: string;
   created_at: Date;
 }
 
 class QRCodesService {
+  
   async getQRCodes(restaurant_id: number | string): Promise<QRCode[]> {
     console.log("getQRCodes_restaurant_id :>> ", restaurant_id);
 
@@ -16,28 +18,29 @@ class QRCodesService {
     }
 
     const sqlQuery = `
-      SELECT id, code_name, code_value, created_at
+      SELECT id, code_name, code_value, qr_color,created_at
       FROM qr_codes
       WHERE restaurant_id = ?
     `;
     return db.executeQuery(sqlQuery, [restaurant_id]);
   }
 
-  async saveQRCode(restaurant_id: number | string | null, codeName: string | null, codeValue: string): Promise<{ id: number }> {
-    console.log("saveQRCode params :>> ", { restaurant_id, codeName, codeValue });
+  async saveQRCode(restaurant_id: number | string | null, codeName: string | null, codeValue: string, qrColor: string ): Promise<{ id: number }> {
+    console.log("saveQRCode params :>> ", { restaurant_id, codeName, codeValue,qrColor });
 
     if (restaurant_id === undefined) restaurant_id = null;
     if (codeName === undefined) codeName = null;
     if (codeValue === undefined) codeValue = "";
+    if (qrColor === undefined) qrColor = "";
 
     const sqlQuery = `
-      INSERT INTO qr_codes (restaurant_id, code_name, code_value, created_at)
-      VALUES (?, ?, ?, NOW())
+      INSERT INTO qr_codes (restaurant_id, code_name, code_value, qr_color,  created_at)
+      VALUES (?, ?, ?, ?,NOW())
     `;
     const result = await db.executeQuery(sqlQuery, [
       restaurant_id,
       codeName,
-      codeValue,
+      codeValue,qrColor,
     ]);
     return { id: result.insertId };
   }

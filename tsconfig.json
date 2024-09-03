@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "lib": ["es2015", "dom"],
-    "sourceMap": true,                       
+    "sourceMap": true,
     "outDir": "./build",
 
     "strict": true,
@@ -22,8 +22,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true
-},
+  },
   "include": ["./**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts",    "tests"
-]
+  "exclude": ["node_modules", "**/*.spec.ts", "tests"]
 }

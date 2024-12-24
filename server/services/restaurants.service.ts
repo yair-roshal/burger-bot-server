@@ -5,6 +5,7 @@ interface Restaurant {
   id: number;
   name: string;
   user_sub?: string;
+  is_admin?: number;
 }
 
 class RestaurantsService {
@@ -14,7 +15,8 @@ class RestaurantsService {
     const sqlQuery = `
       SELECT
         id,
-        name
+        name,
+        is_admin
        FROM restaurants
       WHERE id = ?
     `;
@@ -25,7 +27,8 @@ class RestaurantsService {
     const sqlQuery = `
       SELECT
         id,
-        name
+        name,
+        is_admin
        FROM restaurants
      `;
     return db.executeQuery(sqlQuery);

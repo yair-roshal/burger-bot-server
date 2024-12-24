@@ -20,6 +20,15 @@ class RestaurantsController {
     console.log("getUserRestaurant req.params :>> ", req.params);
     const result = await RestaurantsService.getUserRestaurant(req, res);
 
+    // проверяем актуальность is_subscription_active
+    if (result[0]?.subscription_end_date && result[0].is_subscription_active) {
+      if (result[0].subscription_end_date < new Date()) {
+        RestaurantsService.updateSubscriptionStatus(result[0].id, 0);
+
+        result[0].is_subscription_active = 0;
+      }
+    }
+
     if (result) return res.status(200).send(result);
     else return res.status(500).send({ message: "error-getUserRestaurant" });
   }

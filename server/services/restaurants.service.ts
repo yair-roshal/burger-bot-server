@@ -5,6 +5,9 @@ interface Restaurant {
   id: number;
   name: string;
   user_sub?: string;
+  subscription_start_date?: Date;
+  subscription_end_date?: Date;
+  is_subscription_active?: number;
 }
 
 class RestaurantsService {
@@ -49,9 +52,15 @@ class RestaurantsService {
   async createRestaurant(userSub: string): Promise<{ id: number }> {
     try {
       let sqlQuery = `
-        INSERT INTO restaurants (user_sub) VALUES (?)
+        INSERT INTO restaurants (user_sub, subscription_start_date, subscription_end_date, is_subscription_active) VALUES (?, ?, ?, ?)
       `;
-      const results = await db.executeQuery(sqlQuery, [userSub]);
+
+      const subscription_start_date = new Date();
+      const subscription_end_date = new Date(Date.now() + 1000 * 60 * 60 * 24 * 14);
+      const is_subscription_active = 1;
+
+      const results = await db.executeQuery(sqlQuery, [userSub, subscription_start_date, subscription_end_date, is_subscription_active]);
+
       const restaurant_id = results.insertId;
 
       sqlQuery = `
@@ -64,6 +73,16 @@ class RestaurantsService {
       console.error("Error creating restaurant:", error);
       throw new Error("Internal Server Error");
     }
+  }
+
+  async updateSubscriptionStatus(id: number, status: number) {
+    const sqlUpdatingQuery = `
+          UPDATE restaurants
+          SET is_subscription_active = ?
+          WHERE id = ?
+        `;
+
+        db.executeQuery(sqlUpdatingQuery, [status, id]);
   }
 }
 

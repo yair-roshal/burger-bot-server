@@ -56,7 +56,11 @@ const corsOptions: CorsOptions = {
     "Accept",
     "Authorization",
   ], // Разрешить все необходимые заголовки
-  credentials: true, // Разрешить отправку куки и авторизационных заголовков
+  
+    // Если в вашем коде credentials: true, то origin: "*" работать не будет. 
+  // credentials: true, // Разрешить отправку куки и авторизационных заголовков
+  credentials: false, // Отключить поддержку авторизационных заголовков и куки
+  
   preflightContinue: false, // Не продолжать preflight запросы (OPTIONS)
   optionsSuccessStatus: 204, // Для preflight-запросов возвращать статус 204
 }

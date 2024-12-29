@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../helpers/db';
 
-interface Restaurant {
+export interface Restaurant {
   id: number;
   name: string;
   user_sub?: string;
@@ -17,10 +17,14 @@ class RestaurantsService {
     const sqlQuery = `
       SELECT
         id,
-        name
+        name,
+        subscription_start_date, 
+        subscription_end_date, 
+        is_subscription_active
        FROM restaurants
       WHERE id = ?
     `;
+    
     return db.executeQuery(sqlQuery, [restaurant_id]);
   }
 
@@ -46,6 +50,7 @@ class RestaurantsService {
     const sqlQuery = `
       SELECT * FROM restaurants WHERE user_sub = ?
     `;
+
     return db.executeQuery(sqlQuery, [user_sub]);
   }
 
@@ -76,13 +81,33 @@ class RestaurantsService {
   }
 
   async updateSubscriptionStatus(id: number, status: number) {
-    const sqlUpdatingQuery = `
-          UPDATE restaurants
-          SET is_subscription_active = ?
-          WHERE id = ?
-        `;
+    try {
+      const sqlUpdatingQuery = `
+        UPDATE restaurants
+        SET is_subscription_active = ?
+        WHERE id = ?
+      `;
 
-        db.executeQuery(sqlUpdatingQuery, [status, id]);
+      await db.executeQuery(sqlUpdatingQuery, [status, id]);
+    } catch (error) {
+      console.error("Error update subscription status:", error);
+      throw new Error("Internal Server Error");
+    }
+  }
+
+  async updateSubscriptionDatesAndStatus(id: number, status: number, date_start: Date, date_end: Date) {
+    try {
+      const sqlUpdatingQuery = `
+        UPDATE restaurants
+        SET is_subscription_active = ?, subscription_start_date = ?, subscription_end_date = ?
+        WHERE id = ?
+      `;
+
+      return await db.executeQuery(sqlUpdatingQuery, [status, date_start, date_end, id]);
+    } catch (error) {
+      console.error("Error update subscription dates and status:", error);
+      throw new Error("Internal Server Error");
+    }
   }
 }
 

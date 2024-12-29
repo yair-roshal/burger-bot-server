@@ -10,6 +10,7 @@ import restaurantsRoutes from "./restaurants.routes";
 import qrcodesRoutes from "./qrcodes.routes";
 import translations from "./translations.routes";
 import othersRoutes from "./others.routes"; // Импорт маршрутов others
+import paymentRoutes from "./payment.routes";
 
 const createRouter = (bot: any): Router => {
   const router = Router();
@@ -28,6 +29,7 @@ const createRouter = (bot: any): Router => {
   router.use("/", restaurantsRoutes);
   router.use("/", qrcodesRoutes);
   router.use("/", translations);
+  router.use("/", paymentRoutes);
   router.use("/", othersRoutes(bot)); // Передаем bot в маршруты others
 
   return router;
